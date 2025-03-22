@@ -3,7 +3,7 @@
 ## README
 
 ### Overview
-This repository provides a comprehensive roadmap for learning Artificial Intelligence (AI) in 2024. It follows a hands-on, project-based approach, covering essential mathematics, programming tools, machine learning fundamentals, deep learning techniques, and natural language processing. This README file includes an overview of the course structure, recommended resources, and placeholders for YouTube video links that will be added to enhance the learning experience.
+This repository provides a comprehensive roadmap for learning Artificial Intelligence (AI) in 2024. It follows a hands-on, project-based approach, covering essential mathematics, programming tools, machine learning fundamentals, deep learning techniques, and natural language processing. This README file includes an overview of the course structure and recommended resources.
 
 ### Table of Contents
 1. [Introduction](#introduction)
@@ -36,5 +36,46 @@ The course begins with an introduction to the overall structure and objectives. 
 
 ### Tools for AI Development
 
-#### SQLite Database Management 
-- YouTube Video Link
+#### SQLite Database Management
+
+#### Python Programming
+
+#### PyTorch Framework
+
+### Mathematics for AI
+
+#### Linear Algebra
+
+#### Calculus
+
+#### Probability and Statistics
+
+### Machine Learning Basics
+
+#### Fundamentals
+
+#### Writing Algorithms from Scratch
+
+#### Machine Learning Competitions
+
+### Deep Learning
+
+#### Introduction to Deep Learning
+
+#### Implementing Deep Learning Papers
+
+### Natural Language Processing (NLP)
+
+#### NLP Fundamentals
+
+#### Large Language Models
+
+#### Fine-Tuning and Deployment
+
+### Practical Projects and Competitions
+
+### Staying Updated in AI
+
+### Supplementary Resources
+
+### Final Exam
