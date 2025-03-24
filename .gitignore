@@ -1,3 +1,4 @@
 /data/kaggle_datasets
 *.exe
 *.pyc
+/coding/Sliding_window/.ipynb_checkpoints
