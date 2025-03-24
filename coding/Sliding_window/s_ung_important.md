@@ -1,0 +1,11 @@
+| Problem Number | Problem Title                                              | LeetCode Link                                                                 | Acceptance Rate | Topic                  |
+|----------------|------------------------------------------------------------|-------------------------------------------------------------------------------|-----------------|------------------------|
+| 42             | Trapping Rain Water                                        | [Link](https://leetcode.com/problems/trapping-rain-water/)                    | 64.4%           | Two Pointers           |
+| 53             | Maximum Subarray                                            | [Link](https://leetcode.com/problems/maximum-subarray/)                       | 51.8%           | Dynamic Programming    |
+| 215            | Kth Largest Element in an Array                            | [Link](https://leetcode.com/problems/kth-largest-element-in-an-array/)        | 67.7%           | Heap                   |
+| 300            | Longest Increasing Subsequence                             | [Link](https://leetcode.com/problems/longest-increasing-subsequence/)         | 57.3%           | Dynamic Programming    |
+| 402            | Remove K Digits                                             | [Link](https://leetcode.com/problems/remove-k-digits/)                        | 34.5%           | Stack                  |
+| 849            | Maximize Distance to Closest Person                        | [Link](https://leetcode.com/problems/maximize-distance-to-closest-person/)    | 48.8%           | Array                  |
+| 1464           | Maximum Product of Two Elements in an Array                 | [Link](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/) | 83.1%           | Array                  |
+| 1590           | Make Sum Divisible by P                                     | [Link](https://leetcode.com/problems/make-sum-divisible-by-p/)                | 39.5%           | Array                  |
+| 2035           | Partition Array Into Two Arrays to Minimize Sum Difference | [Link](https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/) | 21.4%           | Array                  |
