@@ -1,0 +1,139 @@
+Index,Problem,Percentage,Difficulty,Count,Status
+1,# Coding Problems by Tags,## Array / String,- **Merge Sorted Array**,138,visited
+2,Easy*,- **Remove Element**,Easy*,138,visited
+3,- **Remove Duplicates from Sorted Array**,Easy*,- **Remove Duplicates from Sorted Array II**,138,visited
+4,Medium*,- **Majority Element**,Easy*,138,visited
+5,- **Rotate Array**,Medium*,- **Best Time to Buy and Sell Stock**,138,visited
+6,Easy*,- **Best Time to Buy and Sell Stock II**,Medium*,138,visited
+7,- **Jump Game**,Medium*,- **Jump Game II**,138,visited
+8,Medium*,- **H-Index**,Medium*,138,visited
+9,- **Insert Delete GetRandom O(1)**,Medium*,- **Product of Array Except Self**,138,visited
+10,Medium*,- **Gas Station**,Medium*,138,visited
+11,- **Candy**,Hard*,- **Trapping Rain Water**,138,visited
+12,Hard*,- **Roman to Integer**,Easy*,138,visited
+13,- **Integer to Roman**,Medium*,- **Length of Last Word**,138,visited
+14,Easy*,- **Longest Common Prefix**,Easy*,138,visited
+15,- **Reverse Words in a String**,Medium*,- **Zigzag Conversion**,138,visited
+16,Medium*,- **Find the Index of the First Occurrence in a String**,Easy*,138,visited
+17,- **Text Justification**,Hard*,---,138,visited
+18,## Two Pointers,- **Valid Palindrome**,Easy*,138,visited
+19,- **Is Subsequence**,Easy*,- **Two Sum II - Input Array Is Sorted**,138,visited
+20,Medium*,- **Container With Most Water**,Medium*,138,visited
+21,- **3Sum**,Medium*,---,138,visited
+22,## Sliding Window,- **Minimum Size Subarray Sum**,Medium*,138,visited
+23,- **Longest Substring Without Repeating Characters**,Medium*,- **Substring with Concatenation of All Words**,138,visited
+24,Hard*,- **Minimum Window Substring**,Hard*,138,visited
+25,---,## Matrix,- **Valid Sudoku**,138,visited
+26,Medium*,- **Spiral Matrix**,Medium*,138,visited
+27,- **Rotate Image**,Medium*,- **Set Matrix Zeroes**,138,visited
+28,Medium*,- **Game of Life**,Medium*,138,visited
+29,---,## Hashmap,- **Ransom Note**,138,visited
+30,Easy*,- **Isomorphic Strings**,Easy*,138,visited
+31,- **Word Pattern**,Easy*,- **Valid Anagram**,138,visited
+32,Easy*,- **Group Anagrams**,Medium*,138,visited
+33,- **Two Sum**,Easy*,- **Happy Number**,138,visited
+34,Easy*,- **Contains Duplicate II**,Easy*,138,visited
+35,- **Longest Consecutive Sequence**,Medium*,---,138,visited
+36,## Intervals,- **Summary Ranges**,Easy*,138,visited
+37,- **Merge Intervals**,Medium*,- **Insert Interval**,138,visited
+38,Medium*,- **Minimum Number of Arrows to Burst Balloons**,Medium*,138,visited
+39,---,## Stack,- **Valid Parentheses**,138,visited
+40,Easy*,- **Simplify Path**,Medium*,138,visited
+41,- **Min Stack**,Medium*,- **Evaluate Reverse Polish Notation**,138,visited
+42,Medium*,- **Basic Calculator**,Hard*,138,visited
+43,---,## Linked List,- **Linked List Cycle**,138,visited
+44,Easy*,- **Add Two Numbers**,Medium*,138,visited
+45,- **Merge Two Sorted Lists**,Easy*,- **Copy List with Random Pointer**,138,visited
+46,Medium*,- **Reverse Linked List II**,Medium*,138,visited
+47,- **Reverse Nodes in k-Group**,Hard*,- **Remove Nth Node From End of List**,138,visited
+48,Medium*,- **Remove Duplicates from Sorted List II**,Medium*,138,visited
+49,- **Rotate List**,Medium*,- **Partition List**,138,visited
+50,Medium*,- **LRU Cache**,Medium*,138,visited
+51,---,## Binary Tree General,- **Maximum Depth of Binary Tree**,138,visited
+52,Easy*,- **Same Tree**,Easy*,138,visited
+53,- **Invert Binary Tree**,Easy*,- **Symmetric Tree**,138,visited
+54,Easy*,- **Construct Binary Tree from Preorder and Inorder Traversal**,Medium*,138,visited
+55,- **Construct Binary Tree from Inorder and Postorder Traversal**,Medium*,- **Populating Next Right Pointers in Each Node II**,138,visited
+56,Medium*,- **Flatten Binary Tree to Linked List**,Medium*,138,visited
+57,- **Path Sum**,Easy*,- **Sum Root to Leaf Numbers**,138,visited
+58,Medium*,- **Binary Tree Maximum Path Sum**,Hard*,138,visited
+59,- **Binary Search Tree Iterator**,Medium*,- **Count Complete Tree Nodes**,138,visited
+60,Easy*,- **Lowest Common Ancestor of a Binary Tree**,Medium*,138,visited
+61,---,## Binary Tree BFS,- **Binary Tree Right Side View**,138,visited
+62,Medium*,- **Average of Levels in Binary Tree**,Easy*,138,visited
+63,- **Binary Tree Level Order Traversal**,Medium*,- **Binary Tree Zigzag Level Order Traversal**,138,visited
+64,Medium*,---,## Binary Search Tree,138,visited
+65,- **Minimum Absolute Difference in BST**,Easy*,- **Kth Smallest Element in a BST**,138,visited
+66,Medium*,- **Validate Binary Search Tree**,Medium*,138,visited
+67,---,## Graph General,- **Number of Islands**,138,visited
+68,Medium*,- **Surrounded Regions**,Medium*,138,visited
+69,- **Clone Graph**,Medium*,- **Evaluate Division**,138,visited
+70,Medium*,- **Course Schedule**,Medium*,138,visited
+71,- **Course Schedule II**,Medium*,---,138,visited
+72,## Graph BFS,- **Snakes and Ladders**,Medium*,138,visited
+73,- **Minimum Genetic Mutation**,Medium*,- **Word Ladder**,138,visited
+74,Hard*,---,## Trie,138,visited
+75,- **Implement Trie (Prefix Tree)**,Medium*,- **Design Add and Search Words Data Structure**,138,visited
+76,Medium*,- **Word Search II**,Hard*,138,visited
+77,---,## Backtracking,- **Letter Combinations of a Phone Number**,138,visited
+78,Medium*,- **Combinations**,Medium*,138,visited
+79,- **Permutations**,Medium*,- **Combination Sum**,138,visited
+80,Medium*,- **N-Queens II**,Hard*,138,visited
+81,- **Generate Parentheses**,Medium*,- **Word Search**,138,visited
+82,Medium*,---,## Divide & Conquer,138,visited
+83,- **Convert Sorted Array to Binary Search Tree**,Easy*,- **Sort List**,138,visited
+84,Medium*,- **Construct Quad Tree**,Medium*,138,visited
+85,- **Merge k Sorted Lists**,Hard*,---,138,visited
+86,## Kadane's Algorithm,- **Maximum Subarray**,Medium*,138,visited
+87,- **Maximum Sum Circular Subarray**,Medium*,---,138,visited
+88,## Binary Search,- **Search Insert Position**,Easy*,138,visited
+89,- **Search a 2D Matrix**,Medium*,- **Find Peak Element**,138,visited
+90,Medium*,- **Search in Rotated Sorted Array**,Medium*,138,visited
+91,- **Find First and Last Position of Element in Sorted Array**,Medium*,- **Find Minimum in Rotated Sorted Array**,138,visited
+92,Medium*,- **Median of Two Sorted Arrays**,Hard*,138,visited
+93,---,## Heap,- **Kth Largest Element in an Array**,138,visited
+94,Medium*,- **IPO**,Hard*,138,visited
+95,- **Find K Pairs with Smallest Sums**,Medium*,- **Find Median from Data Stream**,138,visited
+96,Hard*,---,## Bit Manipulation,138,visited
+97,- **Add Binary**,Easy*,- **Reverse Bits**,138,visited
+98,Easy*,- **Number of 1 Bits**,Easy*,138,visited
+99,- **Single Number**,Easy*,- **Single Number II**,138,visited
+100,Medium*,- **Bitwise AND of Numbers Range**,Medium*,138,visited
+101,---,## Math,- **Palindrome Number**,138,visited
+102,Easy*,- **Plus One**,Easy*,138,visited
+103,- **Factorial Trailing Zeroes**,Medium*,- **Sqrt(x)**,138,visited
+104,Easy*,"- **Pow(x, n)**",Medium*,138,visited
+105,- **Max Points on a Line**,Hard*,---,138,visited
+106,## 1D DP,- **Climbing Stairs**,Easy*,138,visited
+107,- **House Robber**,Medium*,- **Word Break**,138,visited
+108,Medium*,- **Coin Change**,Medium*,138,visited
+109,- **Longest Increasing Subsequence**,Medium*,---,138,visited
+110,## Multidimensional DP,- **Triangle**,Medium*,138,visited
+111,- **Minimum Path Sum**,Medium*,- **Unique Paths II**,138,visited
+112,Medium*,- **Longest Palindromic Substring**,Medium*,138,visited
+113,- **Interleaving String**,Medium*,- **Edit Distance**,138,visited
+114,Medium*,- **Best Time to Buy and Sell Stock III**,Hard*,138,visited
+115,- **Best Time to Buy and Sell Stock IV**,Hard*,- **Maximal Square**,138,visited
+116,[Difficulty not specified]*,---,## Additional Tags,138,visited
+117,### (These tags represent other topics/techniques),#### Heap,- **Kth Largest Element in an Array**,138,visited
+118,Medium*,- **IPO**,Hard*,138,visited
+119,- **Find K Pairs with Smallest Sums**,Medium*,- **Find Median from Data Stream**,138,visited
+120,Hard*,#### Bit Manipulation,- **Add Binary**,138,visited
+121,Easy*,- **Reverse Bits**,Easy*,138,visited
+122,- **Number of 1 Bits**,Easy*,- **Single Number**,138,visited
+123,Easy*,- **Single Number II**,Medium*,138,visited
+124,- **Bitwise AND of Numbers Range**,Medium*,#### Math,138,visited
+125,- **Palindrome Number**,Easy*,- **Plus One**,138,visited
+126,Easy*,- **Factorial Trailing Zeroes**,Medium*,138,visited
+127,- **Sqrt(x)**,Easy*,"- **Pow(x, n)**",138,visited
+128,Medium*,- **Max Points on a Line**,Hard*,138,visited
+129,#### 1D DP,- **Climbing Stairs**,Easy*,138,visited
+130,- **House Robber**,Medium*,- **Word Break**,138,visited
+131,Medium*,- **Coin Change**,Medium*,138,visited
+132,- **Longest Increasing Subsequence**,Medium*,#### Multidimensional DP,138,visited
+133,- **Triangle**,Medium*,- **Minimum Path Sum**,138,visited
+134,Medium*,- **Unique Paths II**,Medium*,138,visited
+135,- **Longest Palindromic Substring**,Medium*,- **Interleaving String**,138,visited
+136,Medium*,- **Edit Distance**,Medium*,138,visited
+137,- **Best Time to Buy and Sell Stock III**,Hard*,- **Best Time to Buy and Sell Stock IV**,138,visited
+138,Hard*,- **Maximal Square**,[Difficulty not specified]*,138,visited

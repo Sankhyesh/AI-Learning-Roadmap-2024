@@ -1,0 +1,224 @@
+Index,Problem,Percentage,Difficulty,Status
+1,1. Two Sum,55.3%,Easy,~visited
+2,2667. Create Hello World Function,82.0%,Easy,~visited
+3,1768. Merge Strings Alternately,82.0%,Easy,~visited
+4,1757. Recyclable and Low Fat Products,89.3%,Easy,~visited
+5,9. Palindrome Number,58.8%,Easy,~visited
+6,42. Trapping Rain Water,64.5%,Hard,~visited
+7,4. Median of Two Sorted Arrays,43.2%,Hard,~visited
+8,3. Longest Substring Without Repeating Characters,36.5%,Med.,~visited
+9,15. 3Sum,36.6%,Med.,~visited
+10,88. Merge Sorted Array,52.4%,Easy,~visited
+11,2. Add Two Numbers,45.7%,Med.,~visited
+12,14. Longest Common Prefix,45.1%,Easy,~visited
+13,70. Climbing Stairs,53.4%,Easy,~visited
+14,53. Maximum Subarray,51.8%,Med.,~visited
+15,11. Container With Most Water,57.3%,Med.,~visited
+16,169. Majority Element,65.6%,Easy,~visited
+17,20. Valid Parentheses,42.0%,Easy,~visited
+18,200. Number of Islands,61.8%,Med.,~visited
+19,5. Longest Palindromic Substring,35.4%,Med.,~visited
+20,2235. Add Two Integers,88.1%,Easy,~visited
+21,35. Search Insert Position,48.5%,Easy,~visited
+22,1101. The Earliest Moment When Everyone Become Friends,65.6%,Med.,~visited
+23,7. Reverse Integer,30.0%,Med.,~visited
+24,48. Rotate Image,77.4%,Med.,~visited
+25,283. Move Zeroes,62.6%,Easy,~visited
+26,31. Next Permutation,42.5%,Med.,~visited
+27,75. Sort Colors,66.6%,Med.,~visited
+28,51. N-Queens,72.0%,Hard,~visited
+29,22. Generate Parentheses,76.7%,Med.,~visited
+30,21. Merge Two Sorted Lists,66.4%,Easy,~visited
+31,26. Remove Duplicates from Sorted Array,59.7%,Easy,~visited
+32,13. Roman to Integer,64.4%,Easy,~visited
+33,206. Reverse Linked List,78.8%,Easy,~visited
+34,131. Palindrome Partitioning,71.6%,Med.,~visited
+35,347. Top K Frequent Elements,64.2%,Med.,~visited
+36,189. Rotate Array,42.6%,Med.,~visited
+37,"50. Pow(x, n)",36.6%,Med.,~visited
+38,27. Remove Element,59.6%,Easy,~visited
+39,584. Find Customer Referee,71.7%,Easy,~visited
+40,84. Largest Rectangle in Histogram,46.8%,Hard,~visited
+41,215. Kth Largest Element in an Array,67.7%,Med.,~visited
+42,78. Subsets,80.4%,Med.,~visited
+43,1825. Finding MK Average,38.0%,Hard,~visited
+44,242. Valid Anagram,66.3%,Easy,~visited
+45,198. House Robber,52.1%,Med.,~visited
+46,66. Plus One,47.2%,Easy,~visited
+47,128. Longest Consecutive Sequence,47.1%,Med.,~visited
+48,23. Merge k Sorted Lists,56.1%,Hard,~visited
+49,238. Product of Array Except Self,67.5%,Med.,~visited
+50,146. LRU Cache,44.7%,Med.,~visited
+51,217. Contains Duplicate,62.9%,Easy,~visited
+52,540. Single Element in a Sorted Array,59.2%,Med.,~visited
+53,354. Russian Doll Envelopes,37.2%,Hard,~visited
+54,19. Remove Nth Node From End of List,48.3%,Med.,~visited
+55,994. Rotting Oranges,56.1%,Med.,~visited
+56,207. Course Schedule,48.7%,Med.,~visited
+57,121. Best Time to Buy and Sell Stock,54.9%,Easy,~visited
+58,100. Same Tree,64.6%,Easy,~visited
+59,345. Reverse Vowels of a String,57.3%,Easy,~visited
+60,1004. Max Consecutive Ones III,65.4%,Med.,~visited
+61,39. Combination Sum,74.1%,Med.,~visited
+62,16. 3Sum Closest,46.7%,Med.,~visited
+63,231. Power of Two,48.2%,Easy,~visited
+64,1207. Unique Number of Occurrences,78.1%,Easy,~visited
+65,560. Subarray Sum Equals K,45.1%,Med.,~visited
+66,67. Add Binary,55.3%,Easy,~visited
+67,17. Letter Combinations of a Phone Number,63.3%,Med.,~visited
+68,37. Sudoku Solver,63.7%,Hard,~visited
+69,103. Binary Tree Zigzag Level Order Traversal,61.2%,Med.,~visited
+70,2337. Move Pieces to Obtain a String,56.9%,Med.,~visited
+71,2633. Convert Object to JSON String,77.8%,Med.,~visited
+72,1071. Greatest Common Divisor of Strings,52.7%,Easy,~visited
+73,253. Meeting Rooms II,52.0%,Med.,~visited
+74,1780. Check if Number is a Sum of Powers of Three,79.3%,Med.,~visited
+75,74. Search a 2D Matrix,51.9%,Med.,~visited
+76,402. Remove K Digits,34.6%,Med.,~visited
+77,279. Perfect Squares,55.5%,Med.,~visited
+78,142. Linked List Cycle II,54.2%,Med.,~visited
+79,636. Exclusive Time of Functions,64.3%,Med.,~visited
+80,98. Validate Binary Search Tree,34.1%,Med.,~visited
+81,38. Count and Say,58.1%,Med.,~visited
+82,3472. Longest Palindromic Subsequence After at Most K Operations,35.7%,Med.,~visited
+83,2965. Find Missing and Repeated Values,83.7%,Easy,~visited
+84,62. Unique Paths,65.5%,Med.,~visited
+85,528. Random Pick with Weight,48.3%,Med.,~visited
+86,438. Find All Anagrams in a String,51.9%,Med.,~visited
+87,2379. Minimum Recolors to Get K Consecutive Black Blocks,68.5%,Easy,~visited
+88,963. Minimum Area Rectangle II,55.4%,Med.,~visited
+89,380. Insert Delete GetRandom O(1),55.0%,Med.,~visited
+90,359. Logger Rate Limiter,76.4%,Easy,~visited
+91,45. Jump Game II,41.2%,Med.,~visited
+92,205. Isomorphic Strings,46.5%,Easy,~visited
+93,595. Big Countries,68.2%,Easy,~visited
+94,3208. Alternating Groups II,59.8%,Med.,~visited
+95,34. Find First and Last Position of Element in Sorted Array,46.3%,Med.,~visited
+96,875. Koko Eating Bananas,48.9%,Med.,~visited
+97,2013. Detect Squares,51.9%,Med.,~visited
+98,428. Serialize and Deserialize N-ary Tree,68.1%,Hard,~visited
+99,139. Word Break,48.0%,Med.,~visited
+100,715. Range Module,44.1%,Hard,~visited
+101,175. Combine Two Tables,77.7%,Easy,~visited
+102,61. Rotate List,39.5%,Med.,~visited
+103,419. Battleships in a Board,76.3%,Med.,~visited
+104,36. Valid Sudoku,61.8%,Med.,~visited
+105,704. Binary Search,59.3%,Easy,~visited
+106,3356. Zero Array Transformation II,43.8%,Med.,~visited
+107,8. String to Integer (atoi),18.9%,Med.,~visited
+108,233. Number of Digit One,35.7%,Hard,~visited
+109,148. Sort List,61.1%,Med.,~visited
+110,2226. Maximum Candies Allocated to K Children,50.2%,Med.,~visited
+111,59. Spiral Matrix II,73.1%,Med.,~visited
+112,125. Valid Palindrome,50.4%,Easy,~visited
+113,94. Binary Tree Inorder Traversal,78.2%,Easy,~visited
+114,2560. House Robber IV,65.2%,Med.,~visited
+115,43. Multiply Strings,42.0%,Med.,~visited
+116,268. Missing Number,69.6%,Easy,~visited
+117,1110. Delete Nodes And Return Forest,72.4%,Med.,~visited
+118,735. Asteroid Collision,45.2%,Med.,~visited
+119,2594. Minimum Time to Repair Cars,60.0%,Med.,~visited
+120,79. Word Search,44.8%,Med.,~visited
+121,695. Max Area of Island,73.0%,Med.,~visited
+122,408. Valid Word Abbreviation,36.7%,Easy,~visited
+123,28. Find the Index of the First Occurrence in a String,44.6%,Easy,~visited
+124,541. Reverse String II,51.9%,Easy,~visited
+125,1146. Snapshot Array,36.7%,Med.,~visited
+126,162. Find Peak Element,46.4%,Med.,~visited
+127,203. Remove Linked List Elements,51.4%,Easy,~visited
+128,3481. Apply Substitutions,78.3%,Med.,~visited
+129,305. Number of Islands II,40.0%,Hard,~visited
+130,485. Max Consecutive Ones,62.0%,Easy,~visited
+131,202. Happy Number,57.7%,Easy,~visited
+132,2401. Longest Nice Subarray,64.8%,Med.,~visited
+133,3355. Zero Array Transformation I,45.6%,Med.,~visited
+134,24. Swap Nodes in Pairs,66.7%,Med.,~visited
+135,876. Middle of the Linked List,80.2%,Easy,~visited
+136,49. Group Anagrams,70.5%,Med.,~visited
+137,1091. Shortest Path in Binary Matrix,49.3%,Med.,~visited
+138,3191. Minimum Operations to Make Binary Array Elements Equal to One I,80.5%,Med.,~visited
+139,503. Next Greater Element II,65.7%,Med.,~visited
+140,123. Best Time to Buy and Sell Stock III,50.5%,Hard,~visited
+141,542. 01 Matrix,50.9%,Med.,~visited
+142,417. Pacific Atlantic Water Flow,57.1%,Med.,~visited
+143,18. 4Sum,37.8%,Med.,~visited
+144,3108. Minimum Cost Walk in Weighted Graph,68.6%,Hard,~visited
+145,787. Cheapest Flights Within K Stops,40.1%,Med.,~visited
+146,931. Minimum Falling Path Sum,61.9%,Med.,~visited
+147,2115. Find All Possible Recipes from Given Supplies,56.4%,Med.,~visited
+148,141. Linked List Cycle,52.1%,Easy,~visited
+149,124. Binary Tree Maximum Path Sum,41.0%,Hard,~visited
+150,939. Minimum Area Rectangle,54.9%,Med.,~visited
+151,150. Evaluate Reverse Polish Notation,54.3%,Med.,~visited
+152,1631. Path With Minimum Effort,60.9%,Med.,~visited
+153,1581. Customer Who Visited but Did Not Make Any Transactions,67.5%,Easy,~visited
+154,101. Symmetric Tree,58.8%,Easy,~visited
+155,230. Kth Smallest Element in a BST,74.9%,Med.,~visited
+156,1661. Average Time of Process per Machine,68.9%,Easy,~visited
+157,399. Evaluate Division,62.9%,Med.,~visited
+158,722. Remove Comments,39.3%,Med.,~visited
+159,581. Shortest Unsorted Continuous Subarray,37.3%,Med.,~visited
+160,416. Partition Equal Subset Sum,47.3%,Med.,~visited
+161,3169. Count Days Without Meetings,47.8%,Med.,~visited
+162,2215. Find the Difference of Two Arrays,80.6%,Easy,~visited
+163,114. Flatten Binary Tree to Linked List,67.9%,Med.,~visited
+164,3494. Find the Minimum Amount of Time to Brew Potions,32.2%,Med.,~visited
+165,187. Repeated DNA Sequences,50.9%,Med.,~visited
+166,225. Implement Stack using Queues,66.7%,Easy,~visited
+167,2665. Counter II,81.0%,Easy,~visited
+168,3394. Check if Grid can be Cut into Sections,69.2%,Med.,~visited
+169,41. First Missing Positive,40.8%,Hard,~visited
+170,213. House Robber II,43.2%,Med.,~visited
+171,56. Merge Intervals,49.0%,Med.,~visited
+172,25. Reverse Nodes in k-Group,62.3%,Hard,~visited
+173,2033. Minimum Operations to Make a Uni-Value Grid,67.5%,Med.,~visited
+174,136. Single Number,75.5%,Easy,~visited
+175,326. Power of Three,47.7%,Easy,~visited
+176,2731. Movement of Robots,26.8%,Med.,~visited
+177,389. Find the Difference,59.6%,Easy,~visited
+178,104. Maximum Depth of Binary Tree,76.9%,Easy,~visited
+179,2780. Minimum Index of a Valid Split,75.9%,Med.,~visited
+180,394. Decode String,60.8%,Med.,~visited
+181,507. Perfect Number,44.2%,Easy,~visited
+182,1944. Number of Visible People in a Queue,70.7%,Hard,~visited
+183,443. String Compression,57.5%,Med.,~visited
+184,221. Maximal Square,48.4%,Med.,~visited
+185,1028. Recover a Tree From Preorder Traversal,83.3%,Hard,~visited
+186,3149. Find the Minimum Cost Array Permutation,22.5%,Hard,~visited
+187,234. Palindrome Linked List,55.3%,Easy,~visited
+188,1251. Average Selling Price,36.9%,Easy,~visited
+189,1299. Replace Elements with Greatest Element on Right Side,71.3%,Easy,~visited
+190,3303. Find the Occurrence of First Almost Equal Substring,13.4%,Hard,~visited
+191,658. Find K Closest Elements,48.4%,Med.,~visited
+192,975. Odd Even Jump,40.6%,Hard,~visited
+193,2503. Maximum Number of Points From Grid Queries,59.7%,Hard,~visited
+194,133. Clone Graph,61.5%,Med.,~visited
+195,269. Alien Dictionary,36.5%,Hard,~visited
+196,2818. Apply Operations to Maximize Score,54.7%,Hard,~visited
+197,190. Reverse Bits,62.4%,Easy,~visited
+198,382. Linked List Random Node,63.8%,Med.,~visited
+199,763. Partition Labels,81.4%,Med.,~visited
+200,3240. Minimum Number of Flips to Make Binary Grid Palindromic II,23.7%,Med.,~visited
+201,1296. Divide Array in Sets of K Consecutive Numbers,58.6%,Med.,~visited
+202,2572. Count the Number of Square-Free Subsets,24.6%,Med.,~visited
+203,181. Employees Earning More Than Their Managers,71.2%,Easy,~visited
+204,122. Best Time to Buy and Sell Stock II,69.0%,Med.,~visited
+205,2069. Walking Robot Simulation II,26.7%,Med.,~visited
+206,300. Longest Increasing Subsequence,57.3%,Med.,~visited
+207,240. Search a 2D Matrix II,54.6%,Med.,~visited
+208,2575. Find the Divisibility Array of a String,34.2%,Med.,~visited
+209,54. Spiral Matrix,53.2%,Med.,~visited
+210,2551. Put Marbles in Bags,72.7%,Hard,~visited
+211,60. Permutation Sequence,49.4%,Hard,~visited
+212,64. Minimum Path Sum,66.0%,Med.,~visited
+213,901. Online Stock Span,67.3%,Med.,~visited
+214,2573. Find the String with LCP,31.4%,Hard,~visited
+215,2140. Solving Questions With Brainpower,60.4%,Med.,~visited
+216,33. Search in Rotated Sorted Array,42.5%,Med.,~visited
+217,2873. Maximum Value of an Ordered Triplet I,58.3%,Easy,~visited
+218,3453. Separate Squares I,36.5%,Med.,~visited
+219,3489. Zero Array Transformation IV,28.8%,Med.,~visited
+220,852. Peak Index in a Mountain Array,67.7%,Med.,~visited
+221,314. Binary Tree Vertical Order Traversal,56.8%,Med.,~visited
+222,155. Min Stack,56.1%,Med.,~visited
+223,381. Insert Delete GetRandom O(1) - Duplicates allowed,35.8%,Hard,~visited

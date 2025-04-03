@@ -1,0 +1,102 @@
+Index,Problem,Percentage,Difficulty,Status
+1,2874. Maximum Value of an Ordered Triplet II,56.8%,Medium,~visited
+2,359. Logger Rate Limiter,76.4%,Easy,~visited
+3,1526. Minimum Number of Increments on Subarrays to Form a Target Array,72.0%,Hard,~visited
+4,715. Range Module,44.1%,Hard,~visited
+5,2458. Height of Binary Tree After Subtree Removal Queries,54.9%,Hard,~visited
+6,1825. Finding MK Average,38.0%,Hard,~visited
+7,1110. Delete Nodes And Return Forest,72.4%,Medium,~visited
+8,939. Minimum Area Rectangle,54.9%,Medium,~visited
+9,2863. Maximum Length of Semi-Decreasing Subarrays,70.1%,Medium,~visited
+10,3287. Find the Maximum Sequence Value of Array,18.2%,Hard,~visited
+11,1101. The Earliest Moment When Everyone Become Friends,65.6%,Medium,~visited
+12,2402. Meeting Rooms III,43.9%,Hard,~visited
+13,975. Odd Even Jump,40.6%,Hard,~visited
+14,2667. Create Hello World Function,82.0%,Easy,~visited
+15,2700. Differences Between Two Objects,75.2%,Medium,~visited
+16,2025. Maximum Number of Ways to Partition an Array,34.4%,Hard,~visited
+17,2101. Detonate the Maximum Bombs,49.0%,Medium,~visited
+18,1. Two Sum,55.3%,Easy,~visited
+19,2842. Count K-Subsequences of a String With Maximum Beauty,29.4%,Hard,~visited
+20,1136. Parallel Courses,61.7%,Medium,~visited
+21,963. Minimum Area Rectangle II,55.4%,Medium,~visited
+22,843. Guess the Word,37.9%,Hard,~visited
+23,2713. Maximum Strictly Increasing Cells in a Matrix,30.5%,Hard,~visited
+24,1820. Maximum Number of Accepted Invitations,51.6%,Medium,~visited
+25,2018. Check if Word Can Be Placed In Crossword,49.9%,Medium,~visited
+26,2013. Detect Squares,51.9%,Medium,~visited
+27,2633. Convert Object to JSON String,77.8%,Medium,~visited
+28,1768. Merge Strings Alternately,82.0%,Easy,~visited
+29,2235. Add Two Integers,88.1%,Easy,~visited
+30,2534. Time Taken to Cross the Door,49.0%,Hard,~visited
+31,759. Employee Free Time,72.5%,Hard,~visited
+32,253. Meeting Rooms II,52.0%,Medium,~visited
+33,88. Merge Sorted Array,52.4%,Easy,~visited
+34,2812. Find the Safest Path in a Grid,48.3%,Medium,~visited
+35,2437. Number of Valid Clock Times,47.3%,Easy,~visited
+36,3355. Zero Array Transformation I,45.6%,Medium,~visited
+37,2663. Lexicographically Smallest Beautiful String,38.8%,Hard,~visited
+38,900. RLE Iterator,59.8%,Medium,~visited
+39,2316. Count Unreachable Pairs of Nodes in an Undirected Graph,49.2%,Medium,~visited
+40,2265. Count Nodes Equal to Average of Subtree,86.3%,Medium,~visited
+41,1381. Design a Stack With Increment Operation,80.5%,Medium,~visited
+42,681. Next Closest Time,46.9%,Medium,~visited
+43,1509. Minimum Difference Between Largest and Smallest Value in Three Moves,59.2%,Medium,~visited
+44,351. Android Unlock Patterns,53.2%,Medium,~visited
+45,1757. Recyclable and Low Fat Products,89.3%,Easy,~visited
+46,833. Find And Replace in String,51.4%,Medium,~visited
+47,2088. Count Fertile Pyramids in a Land,65.2%,Hard,~visited
+48,2337. Move Pieces to Obtain a String,56.9%,Medium,~visited
+49,2184. Number of Ways to Build Sturdy Brick Wall,49.4%,Medium,~visited
+50,365. Water and Jug Problem,42.7%,Medium,~visited
+51,85. Maximal Rectangle,53.1%,Hard,~visited
+52,388. Longest Absolute File Path,48.2%,Medium,~visited
+53,4. Median of Two Sorted Arrays,43.2%,Hard,~visited
+54,655. Print Binary Tree,65.3%,Medium,~visited
+55,2. Add Two Numbers,45.7%,Medium,~visited
+56,308. Range Sum Query 2D - Mutable,44.7%,Medium,~visited
+57,200. Number of Islands,61.8%,Medium,~visited
+58,354. Russian Doll Envelopes,37.2%,Hard,~visited
+59,2007. Find Original Array From Doubled Array,40.5%,Medium,~visited
+60,418. Sentence Screen Fitting,36.3%,Medium,~visited
+61,962. Maximum Width Ramp,55.6%,Medium,~visited
+62,1834. Single-Threaded CPU,46.1%,Medium,~visited
+63,366. Find Leaves of Binary Tree,81.0%,Medium,~visited
+64,1254. Number of Closed Islands,66.7%,Medium,~visited
+65,5. Longest Palindromic Substring,35.4%,Medium,~visited
+66,818. Race Car,44.0%,Hard,~visited
+67,2284. Sender With Largest Word Count,58.0%,Medium,~visited
+68,776. Split BST,82.5%,Medium,~visited
+69,2973. Find Number of Coins to Place in Tree Nodes,35.8%,Hard,~visited
+70,3426. Manhattan Distances of All Arrangements of Pieces,35.7%,Hard,~visited
+71,68. Text Justification,47.4%,Hard,~visited
+72,42. Trapping Rain Water,64.5%,Hard,~visited
+73,2116. Check if a Parentheses String Can Be Valid,44.7%,Medium,~visited
+74,295. Find Median from Data Stream,53.1%,Hard,~visited
+75,777. Swap Adjacent in LR String,37.4%,Medium,~visited
+76,679. 24 Game,49.8%,Hard,~visited
+77,1146. Snapshot Array,36.7%,Medium,~visited
+78,959. Regions Cut By Slashes,77.7%,Medium,~visited
+79,394. Decode String,60.8%,Medium,~visited
+80,2290. Minimum Obstacle Removal to Reach Corner,70.0%,Hard,~visited
+81,146. LRU Cache,44.7%,Medium,~visited
+82,56. Merge Intervals,49.0%,Medium,~visited
+83,934. Shortest Bridge,58.4%,Medium,~visited
+84,2332. The Latest Time to Catch a Bus,28.0%,Medium,~visited
+85,128. Longest Consecutive Sequence,47.1%,Medium,~visited
+86,1218. Longest Arithmetic Subsequence of Given Difference,54.5%,Medium,~visited
+87,14. Longest Common Prefix,45.1%,Easy,~visited
+88,221. Maximal Square,48.4%,Medium,~visited
+89,885. Spiral Matrix III,84.5%,Medium,~visited
+90,70. Climbing Stairs,53.4%,Easy,~visited
+91,1106. Parsing A Boolean Expression,70.0%,Hard,~visited
+92,1057. Campus Bikes,58.9%,Medium,~visited
+93,346. Moving Average from Data Stream,79.7%,Easy,~visited
+94,2779. Maximum Beauty of an Array After Applying Operation,58.0%,Medium,~visited
+95,1980. Find Unique Binary String,79.4%,Medium,~visited
+96,3356. Zero Array Transformation II,43.8%,Medium,~visited
+97,13. Roman to Integer,64.4%,Easy,~visited
+98,417. Pacific Atlantic Water Flow,57.1%,Medium,~visited
+99,2877. Create a DataFrame from List,81.5%,Easy,~visited
+100,1987. Number of Unique Good Subsequences,52.0%,Hard,~visited
+101,3419. Minimize the Maximum Edge Weight of Graph,43.2%,Medium,~visited
