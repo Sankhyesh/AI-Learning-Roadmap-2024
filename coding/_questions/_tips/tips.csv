@@ -1,0 +1,15 @@
+Index,Problem,Percentage,Difficulty,Count,Status
+1,# **Coding Problem Solving Guide**,This guide outlines strategies for selecting algorithms and data structures based on problem characteristics. Use it as a quick reference for coding interviews or problem-solving practice.,---,14,visited
+2,## **If the input array is sorted:**,- **Binary Search**: Find a target value efficiently in a sorted array.,- **Two Pointers**: Solve problems like finding pairs that sum to a target.,14,visited
+3,---,## **If asked for all permutations/subsets:**,- **Backtracking**: Systematically generate all possible permutations or subsets.,14,visited
+4,---,## **If given a tree:**,- **Depth-First Search (DFS)**: Explore the tree by going as deep as possible along each branch.,14,visited
+5,- **Breadth-First Search (BFS)**: Explore the tree level by level.,---,## **If given a graph:**,14,visited
+6,- **Depth-First Search (DFS)**: Traverse the graph by exploring as far as possible along each path.,- **Breadth-First Search (BFS)**: Traverse the graph by exploring all neighbors level by level.,---,14,visited
+7,## **If given a linked list:**,- **Two Pointers**: Use techniques like fast and slow pointers to detect cycles or intersections.,---,14,visited
+8,## **If recursion is banned:**,- **Stack**: Use a stack to simulate recursive calls iteratively.,---,14,visited
+9,## **If must solve in-place:**,- **Swap Corresponding Values**: Modify the input by swapping elements to avoid extra space.,- **Store One or More Different Values in the Same Pointer**: Use techniques like bit manipulation to save space.,14,visited
+10,---,## **If asked for maximum/minimum subarray/subset/options:**,- **Dynamic Programming**: Solve by breaking the problem into overlapping subproblems.,14,visited
+11,- **Sliding Window**: Use a moving window to compute results efficiently.,---,## **If asked for top/least K items:**,14,visited
+12,- **Heap**: Maintain a priority queue to track the top or least K elements.,- **QuickSelect**: Find the k-th smallest or largest element in linear average time.,---,14,visited
+13,## **If asked for common strings:**,- **Map**: Use a hash map to track string frequencies or presence.,- **Trie**: Store and retrieve strings with shared prefixes efficiently.,14,visited
+14,---,## **Else (general cases):**,- **Map/Set for O(1) time & O(n) space**: Use hash maps or sets for fast lookups with linear space.,14,visited

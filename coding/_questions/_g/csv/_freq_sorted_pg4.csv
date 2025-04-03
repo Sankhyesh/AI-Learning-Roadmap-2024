@@ -1,0 +1,101 @@
+Index,Problem,Percentage,Difficulty,Status
+1,3303. Find the Occurrence of First Almost Equal Substring,13.4%,Hard,~visited
+2,49. Group Anagrams,70.5%,Medium,~visited
+3,23. Merge k Sorted Lists,56.1%,Hard,~visited
+4,540. Single Element in a Sorted Array,59.2%,Medium,~visited
+5,685. Redundant Connection II,34.9%,Hard,~visited
+6,604. Design Compressed String Iterator,40.1%,Easy,~visited
+7,1674. Minimum Moves to Make Array Complementary,41.4%,Medium,~visited
+8,250. Count Univalue Subtrees,57.0%,Medium,~visited
+9,198. House Robber,52.1%,Medium,~visited
+10,1376. Time Needed to Inform All Employees,60.2%,Medium,~visited
+11,162. Find Peak Element,46.4%,Medium,~visited
+12,283. Move Zeroes,62.6%,Easy,~visited
+13,389. Find the Difference,59.6%,Easy,~visited
+14,405. Convert a Number to Hexadecimal,50.5%,Easy,~visited
+15,852. Peak Index in a Mountain Array,67.7%,Medium,~visited
+16,1480. Running Sum of 1d Array,87.0%,Easy,~visited
+17,400. Nth Digit,35.4%,Medium,~visited
+18,"50. Pow(x, n)",36.6%,Medium,~visited
+19,1497. Check If Array Pairs Are Divisible by k,46.2%,Medium,~visited
+20,514. Freedom Trail,58.8%,Hard,~visited
+21,935. Knight Dialer,61.0%,Medium,~visited
+22,1813. Sentence Similarity III,48.7%,Medium,~visited
+23,2429. Minimize XOR,62.4%,Medium,~visited
+24,189. Rotate Array,42.6%,Medium,~visited
+25,384. Shuffle an Array,58.9%,Medium,~visited
+26,19. Remove Nth Node From End of List,48.3%,Medium,~visited
+27,726. Number of Atoms,65.0%,Hard,~visited
+28,1386. Cinema Seat Allocation,42.5%,Medium,~visited
+29,3043. Find the Length of the Longest Common Prefix,56.3%,Medium,~visited
+30,658. Find K Closest Elements,48.4%,Medium,~visited
+31,1963. Minimum Number of Swaps to Make the String Balanced,77.9%,Medium,~visited
+32,692. Top K Frequent Words,59.0%,Medium,~visited
+33,1190. Reverse Substrings Between Each Pair of Parentheses,71.7%,Medium,~visited
+34,2493. Divide Nodes Into the Maximum Number of Groups,67.5%,Hard,~visited
+35,316. Remove Duplicate Letters,51.0%,Medium,~visited
+36,16. 3Sum Closest,46.7%,Medium,~visited
+37,395. Longest Substring with At Least K Repeating Characters,45.3%,Medium,~visited
+38,846. Hand of Straights,56.9%,Medium,~visited
+39,1410. HTML Entity Parser,50.2%,Medium,~visited
+40,46. Permutations,80.3%,Medium,~visited
+41,1108. Defanging an IP Address,89.6%,Easy,~visited
+42,581. Shortest Unsorted Continuous Subarray,37.3%,Medium,~visited
+43,60. Permutation Sequence,49.4%,Hard,~visited
+44,3309. Maximum Possible Number by Binary Concatenation,64.9%,Medium,~visited
+45,416. Partition Equal Subset Sum,47.3%,Medium,~visited
+46,1492. The kth Factor of n,69.4%,Medium,~visited
+47,542. 01 Matrix,50.9%,Medium,~visited
+48,1759. Count Number of Homogenous Substrings,57.5%,Medium,~visited
+49,258. Add Digits,67.7%,Easy,~visited
+50,588. Design In-Memory File System,48.1%,Hard,~visited
+51,1569. Number of Ways to Reorder Array to Get Same BST,53.5%,Hard,~visited
+52,2419. Longest Subarray With Maximum Bitwise AND,61.8%,Medium,~visited
+53,409. Longest Palindrome,55.5%,Easy,~visited
+54,393. UTF-8 Validation,45.4%,Medium,~visited
+55,931. Minimum Falling Path Sum,61.9%,Medium,~visited
+56,206. Reverse Linked List,78.8%,Easy,~visited
+57,1661. Average Time of Process per Machine,68.9%,Easy,~visited
+58,280. Wiggle Sort,68.1%,Medium,~visited
+59,554. Brick Wall,55.8%,Medium,~visited
+60,1072. Flip Columns For Maximum Number of Equal Rows,78.5%,Medium,~visited
+61,453. Minimum Moves to Equal Array Elements,57.6%,Medium,~visited
+62,864. Shortest Path to Get All Keys,53.6%,Hard,~visited
+63,1727. Largest Submatrix With Rearrangements,75.2%,Medium,~visited
+64,127. Word Ladder,42.1%,Hard,~visited
+65,806. Number of Lines To Write String,70.3%,Easy,~visited
+66,204. Count Primes,34.5%,Medium,~visited
+67,18. 4Sum,37.8%,Medium,~visited
+68,2965. Find Missing and Repeated Values,83.7%,Easy,~visited
+69,419. Battleships in a Board,76.3%,Medium,~visited
+70,454. 4Sum II,57.5%,Medium,~visited
+71,1405. Longest Happy String,65.5%,Medium,~visited
+72,901. Online Stock Span,67.3%,Medium,~visited
+73,157. Read N Characters Given Read4,42.1%,Easy,~visited
+74,2577. Minimum Time to Visit a Cell In a Grid,57.0%,Hard,~visited
+75,131. Palindrome Partitioning,71.6%,Medium,~visited
+76,987. Vertical Order Traversal of a Binary Tree,50.6%,Hard,~visited
+77,1975. Maximum Matrix Sum,65.9%,Medium,~visited
+78,135. Candy,44.5%,Hard,~visited
+79,2191. Sort the Jumbled Numbers,60.0%,Medium,~visited
+80,1247. Minimum Swaps to Make Strings Equal,64.5%,Medium,~visited
+81,1712. Ways to Split Array Into Three Subarrays,33.3%,Medium,~visited
+82,2709. Greatest Common Divisor Traversal,41.8%,Hard,~visited
+83,2270. Number of Ways to Split Array,56.1%,Medium,~visited
+84,66. Plus One,47.2%,Easy,~visited
+85,861. Score After Flipping Matrix,80.2%,Medium,~visited
+86,1525. Number of Good Ways to Split a String,68.3%,Medium,~visited
+87,322. Coin Change,46.0%,Medium,~visited
+88,323. Number of Connected Components in an Undirected Graph,63.9%,Medium,~visited
+89,532. K-diff Pairs in an Array,44.4%,Medium,~visited
+90,664. Strange Printer,60.8%,Hard,~visited
+91,739. Daily Temperatures,67.1%,Medium,~visited
+92,33. Search in Rotated Sorted Array,42.5%,Medium,~visited
+93,78. Subsets,80.4%,Medium,~visited
+94,3202. Find the Maximum Length of Valid Subsequence II,39.3%,Medium,~visited
+95,1673. Find the Most Competitive Subsequence,51.5%,Medium,~visited
+96,772. Basic Calculator III,52.1%,Hard,~visited
+97,332. Reconstruct Itinerary,43.5%,Hard,~visited
+98,247. Strobogrammatic Number II,53.0%,Medium,~visited
+99,35. Search Insert Position,48.5%,Easy,~visited
+100,2573. Find the String with LCP,31.4%,Hard,~visited
