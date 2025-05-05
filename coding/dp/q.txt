@@ -1,0 +1,294 @@
+3355. Zero Array Transformation I
+45.7%
+Med.
+3356. Zero Array Transformation II
+43.8%
+Med.
+3169. Count Days Without Meetings
+47.8%
+Med.
+3453. Separate Squares I
+36.6%
+Med.
+3318. Find X-Sum of All K-Long Subarrays I
+63.3%
+Easy
+3404. Count Special Subsequences
+28.4%
+Med.
+3394. Check if Grid can be Cut into Sections
+69.2%
+Med.
+3351. Sum of Good Subsequences
+29.4%
+Hard
+3481. Apply Substitutions
+77.0%
+Med.
+3235. Check if the Rectangle Corner Is Reachable
+26.6%
+Hard
+3346. Maximum Frequency of an Element After Performing Operations I
+20.6%
+Med.
+3151. Special Array I
+81.8%
+Easy
+3196. Maximize Total Cost of Alternating Subarrays
+28.5%
+Med.
+3217. Delete Nodes From Linked List Present in Array
+68.0%
+Med.
+3362. Zero Array Transformation III
+25.9%
+Med.
+3420. Count Non-Decreasing Subarrays After K Operations
+21.8%
+Hard
+3287. Find the Maximum Sequence Value of Array
+18.2%
+Hard
+3349. Adjacent Increasing Subarrays Detection I
+39.7%
+Easy
+3347. Maximum Frequency of an Element After Performing Operations II
+37.2%
+Hard
+3439. Reschedule Meetings for Maximum Free Time I
+31.4%
+Med.
+3472. Longest Palindromic Subsequence After at Most K Operations
+35.8%
+Med.
+3153. Sum of Digit Differences of All Pairs
+42.3%
+Med.
+3201. Find the Maximum Length of Valid Subsequence I
+37.5%
+Med.
+3202. Find the Maximum Length of Valid Subsequence II
+39.3%
+Med.
+3327. Check if DFS Strings Are Palindromes
+20.6%
+Hard
+3350. Adjacent Increasing Subarrays Detection II
+40.7%
+Med.
+3397. Maximum Number of Distinct Elements After Operations
+31.2%
+Med.
+3440. Reschedule Meetings for Maximum Free Time II
+40.2%
+Med.
+3494. Find the Minimum Amount of Time to Brew Potions
+32.8%
+Med.
+3174. Clear Digits
+82.6%
+Easy
+3208. Alternating Groups II
+59.8%
+Med.
+3191. Minimum Operations to Make Binary Array Elements Equal to One I
+80.5%
+Med.
+3380. Maximum Area Rectangle With Point Constraints I
+51.0%
+Med.
+3163. String Compression III
+68.0%
+Med.
+3240. Minimum Number of Flips to Make Binary Grid Palindromic II
+23.9%
+Med.
+3371. Identify the Largest Outlier in an Array
+34.7%
+Med.
+3419. Minimize the Maximum Edge Weight of Graph
+43.2%
+Med.
+3149. Find the Minimum Cost Array Permutation
+22.8%
+Hard
+3160. Find the Number of Distinct Colors Among the Balls
+54.2%
+Med.
+3408. Design Task Manager
+34.1%
+Med.
+3410. Maximize Subarray Sum After Removing All Occurrences of One Element
+20.3%
+Hard
+3152. Special Array II
+45.7%
+Med.
+3243. Shortest Distance After Road Addition Queries I
+62.1%
+Med.
+3303. Find the Occurrence of First Almost Equal Substring
+13.5%
+Hard
+3413. Maximum Coins From K Consecutive Bags
+23.5%
+Med.
+3203. Find Minimum Diameter After Merging Two Trees
+57.6%
+Hard
+3211. Generate Binary Strings Without Adjacent Zeros
+86.9%
+Med.
+3228. Maximum Number of Operations to Move Ones to the End
+53.0%
+Med.
+3254. Find the Power of K-Size Subarrays I
+62.5%
+Med.
+3282. Reach End of Array With Max Score
+32.4%
+Med.
+3341. Find Minimum Time to Reach Last Room I
+35.6%
+Med.
+3337. Total Characters in String After Transformations II
+32.6%
+Hard
+3396. Minimum Number of Operations to Make Elements in Array Distinct
+71.5%
+Easy
+3426. Manhattan Distances of All Arrangements of Pieces
+35.8%
+Hard
+3165. Maximum Sum of Subsequence With Non-adjacent Elements
+15.9%
+Hard
+3206. Alternating Groups I
+67.4%
+Easy
+3234. Count the Number of Substrings With Dominant Ones
+16.6%
+Med.
+3224. Minimum Array Changes to Make Differences Equal
+23.1%
+Med.
+3319. K-th Largest Perfect Subtree Size in Binary Tree
+60.8%
+Med.
+3260. Find the Largest Palindrome Divisible by K
+15.2%
+Hard
+3286. Find a Safe Walk Through a Grid
+29.9%
+Med.
+3304. Find the K-th Character in String Game I
+72.7%
+Easy
+3326. Minimum Division Operations to Make Array Non Decreasing
+28.4%
+Med.
+3387. Maximize Amount After Two Days of Conversions
+59.8%
+Med.
+3389. Minimum Operations to Make Character Frequencies Equal
+24.2%
+Hard
+3398. Smallest Substring With Identical Characters I
+18.9%
+Hard
+3409. Longest Subsequence With Decreasing Adjacent Difference
+14.1%
+Med.
+3459. Length of Longest V-Shaped Diagonal Segment
+39.9%
+Hard
+3434. Maximum Frequency After Subarray Operation
+23.5%
+Med.
+3454. Separate Squares II
+19.4%
+Hard
+3468. Find the Number of Copy Arrays
+45.5%
+Med.
+3489. Zero Array Transformation IV
+28.8%
+Med.
+3146. Permutation Difference between Two Strings
+87.0%
+Easy
+3185. Count Pairs That Form a Complete Day II
+42.9%
+Med.
+3184. Count Pairs That Form a Complete Day I
+77.4%
+Easy
+3158. Find the XOR of Numbers Which Appear Twice
+79.5%
+Easy
+3186. Maximum Total Damage With Spell Casting
+27.4%
+Med.
+3162. Find the Number of Good Pairs I
+85.5%
+Easy
+3178. Find the Child Who Has the Ball After K Seconds
+61.5%
+Easy
+3229. Minimum Operations to Make Array Equal to Target
+38.5%
+Hard
+3193. Count the Number of Inversions
+32.5%
+Hard
+3190. Find Minimum Operations to Make All Elements Divisible by Three
+88.7%
+Easy
+3316. Find Maximum Removals From Source String
+38.7%
+Med.
+3218. Minimum Cost for Cutting Cake I
+57.4%
+Med.
+3275. K-th Nearest Obstacle Queries
+47.9%
+Med.
+3325. Count Substrings With K-Frequency Characters I
+54.3%
+Med.
+3233. Find the Count of Numbers Which Are Not Special
+26.8%
+Med.
+3248. Snake in Matrix
+81.4%
+Easy
+3271. Hash Divided String
+82.9%
+Med.
+3258. Count Substrings That Satisfy K-Constraint I
+77.6%
+Easy
+3277. Maximum XOR Score Subarray Queries
+41.7%
+Hard
+3266. Final Array State After K Multiplication Operations II
+11.6%
+Hard
+3283. Maximum Number of Moves to Kill All Pawns
+31.9%
+Hard
+3280. Convert Date to Binary
+88.8%
+Easy
+3270. Find the Key of the Numbers
+75.9%
+Easy
+3309. Maximum Possible Number by Binary Concatenation
+64.9%
+Med.
+3285. Find Indices of Stable Mountains
+85.8%
+Easy
+3312. Sorted GCD Pair Queries
+19.9%
+Hard
