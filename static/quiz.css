@@ -177,3 +177,36 @@ body {
         color: var(--text-primary);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.check-button {
+    display: block;
+    width: auto;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.check-button:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.check-button.correct {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.check-button.wrong {
+    background: var(--wrong);
+    color: white;
+    border-color: var(--wrong);
+}
