@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anki Cards App - Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .example {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .example h2 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .example p {
+            margin-bottom: 15px;
+        }
+        .example a {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .example a:hover {
+            background-color: #2980b9;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anki Cards App - Examples</h1>
+    
+    <div class="example">
+        <h2>1. Default Cards</h2>
+        <p>Load the app with the default sample cards:</p>
+        <a href="index.html" target="_blank">Open Default Cards</a>
+        <p>Or use this URL: <code>index.html</code></p>
+    </div>
+    
+    <div class="example">
+        <h2>2. Load Cards from URL Parameter</h2>
+        <p>You can pass a JSON array of cards as a URL parameter:</p>
+        <code>index.html?cards=[{"front":"Question 1","back":"Answer 1"},{"front":"Question 2","back":"Answer 2"}]</code>
+        <p>Example with a simple set of cards:</p>
+        <a href="#" id="exampleLink1">Open Example Cards</a>
+    </div>
+    
+    <div class="example">
+        <h2>3. Generate Links Programmatically</h2>
+        <p>Create a link in your own HTML/JS application:</p>
+        <pre><code>const cards = [
+  {
+    front: "What is LangChain?",
+    back: "An open-source framework for LLM applications",
+    type: "basic",
+    tags: ["LangChain", "LLM"]
+  },
+  // more cards...
+];
+
+const url = `index.html?cards=${encodeURIComponent(JSON.stringify(cards))}`;
+// Use this URL in a link or window.location.href</code></pre>
+    </div>
+    
+    <div class="example">
+        <h2>4. Load Cards from External JSON</h2>
+        <p>You can also load cards from an external JSON file using JavaScript:</p>
+        <pre><code>// In your HTML file
+&lt;button onclick="loadExternalCards('path/to/your/cards.json')">
+  Load External Cards
+&lt;/button>
+
+&lt;script>
+async function loadExternalCards(url) {
+  try {
+    const response = await fetch(url);
+    const cards = await response.json();
+    const appUrl = `index.html?cards=${encodeURIComponent(JSON.stringify(cards))}`;
+    window.location.href = appUrl;
+  } catch (error) {
+    console.error('Error loading external cards:', error);
+    alert('Failed to load external cards');
+  }
+}
+&lt;/script></code></pre>
+    </div>
+    
+    <script>
+        // Example 2: Generate a link with sample cards
+        const exampleCards = [
+            {
+                front: "What is LangChain?",
+                back: "An open-source framework for developing applications powered by Large Language Models (LLMs).",
+                type: "basic",
+                tags: ["LangChain", "LLM", "Framework"]
+            },
+            {
+                front: "What is the primary function of LangChain?",
+                back: "To simplify the creation of LLM-based applications.",
+                type: "basic",
+                tags: ["LangChain", "LLM", "Framework"]
+            },
+            {
+                front: "In the PDF chat app example, {{c1::Semantic Search}} is preferred over keyword search.",
+                back: "Semantic Search",
+                type: "cloze",
+                tags: ["SemanticSearch", "PDFChatApp"],
+                cloze_back_extra: "Semantic Search is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar."
+            }
+        ];
+        
+        document.getElementById('exampleLink1').href = 
+            `index.html?cards=${encodeURIComponent(JSON.stringify(exampleCards))}`;
+    </script>
+</body>
+</html>
