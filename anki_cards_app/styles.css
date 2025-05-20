@@ -1,0 +1,194 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+button, select {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+select {
+    background-color: white;
+    color: #333;
+    border: 1px solid #ddd;
+    min-width: 150px;
+}
+
+/* Flashcard Styles */
+.flashcard-container {
+    perspective: 1000px;
+    margin-bottom: 30px;
+}
+
+.flashcard {
+    width: 100%;
+    min-height: 300px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card-front {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+}
+
+.card-back {
+    background-color: #f8f9fa;
+    transform: rotateY(180deg);
+    border: 1px solid #d0d0d0;
+}
+
+.card-content {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.hint {
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.card-actions button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+
+#again { background-color: #e74c3c; }
+#good { background-color: #3498db; }
+#easy { background-color: #2ecc71; }
+
+#again:hover { background-color: #c0392b; }
+#good:hover { background-color: #2980b9; }
+#easy:hover { background-color: #27ae60; }
+
+/* Navigation */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.navigation button {
+    padding: 10px 20px;
+    font-size: 1em;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.stats div {
+    text-align: center;
+    font-weight: bold;
+}
+
+.stats span {
+    display: block;
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .card-front, .card-back {
+        padding: 20px 15px;
+    }
+    
+    .card-content {
+        font-size: 1.2em;
+    }
+    
+    .card-actions {
+        flex-direction: column;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+}

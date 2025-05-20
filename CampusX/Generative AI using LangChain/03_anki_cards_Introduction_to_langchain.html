@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Flashcards - Introduction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 8px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .flashcard {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .answer {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .tag {
+            background-color: #e1f0fa;
+            color: #2c6b9e;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .cloze {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #flashcard-container {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .progress {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>LangChain - Introduction Flashcards</h1>
+        <p>Study and review key concepts about LangChain</p>
+    </div>
+    
+    <div class="container">
+        <div class="controls">
+            <button id="prev-btn">← Previous</button>
+            <button id="flip-btn">Show Answer</button>
+            <button id="next-btn">Next →</button>
+        </div>
+        
+        <div class="progress">
+            <span id="card-counter">1</span> / <span id="total-cards">30</span>
+        </div>
+        
+        <div class="card" id="flashcard-container">
+            <div id="question-container" class="flashcard">
+                <div class="question" id="question">Loading flashcards...</div>
+                <div class="answer hidden" id="answer"></div>
+                <div class="tags" id="tags"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>How to use these flashcards:</h2>
+            <ul>
+                <li>Click <strong>Show Answer</strong> to reveal the answer to the current question</li>
+                <li>Use the <strong>Previous</strong> and <strong>Next</strong> buttons to navigate between cards</li>
+                <li>Keyboard shortcuts: <strong>Space</strong> to flip, <strong>→</strong> for next, <strong>←</strong> for previous</li>
+                <li>Tags at the bottom of each card show related topics</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Flashcard data
+        const flashcards = [
+            {
+                "front": "What is LangChain?",
+                "back": "An open-source framework designed for developing applications powered by Large Language Models (LLMs).",
+                "type": "basic",
+                "tags": ["LangChain", "LLM", "Framework", "CoreConcept"],
+                "id": "uuid-v4-placeholder-1"
+            },
+            {
+                "front": "What is the primary function of LangChain?",
+                "back": "To simplify the creation of LLM-based applications.",
+                "type": "basic",
+                "tags": ["LangChain", "LLM", "Framework", "CoreConcept"],
+                "id": "uuid-v4-placeholder-2"
+            },
+            {
+                "front": "In the PDF chat app example, {{c1::Semantic Search}} is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar.",
+                "back": "Semantic Search",
+                "type": "cloze",
+                "tags": ["LangChain", "LLM", "SystemDesign", "SemanticSearch", "PDFChatApp"],
+                "cloze_back_extra": "In the PDF chat app example, Semantic Search is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar, leading to more contextually relevant results.",
+                "id": "uuid-v4-placeholder-3"
+            },
+            {
+                "front": "In the system design of an LLM-powered application, what are the two main capabilities of its \"Brain\" component?",
+                "back": "1. Natural Language Understanding (NLU). 2. Context-Aware Text Generation.",
+                "type": "basic",
+                "tags": ["LangChain", "LLM", "SystemDesign", "NLU", "TextGeneration"],
+                "mnemonic": "The Brain **UNC**overs text: **U**nderstanding **N**atural language, **C**ontextual Generation.",
+                "id": "uuid-v4-placeholder-4"
+            },
+            {
+                "front": "Semantic search works by converting text into {{c1::embeddings}} (vector representations that capture the semantic meaning of the text).",
+                "back": "embeddings",
+                "type": "cloze",
+                "tags": ["LangChain", "LLM", "SemanticSearch", "Embeddings", "NLP"],
+                "examples": "Techniques like Word2Vec, Doc2Vec, or BERT embeddings can be used.",
+                "cloze_back_extra": "Semantic search works by converting text into embeddings (vector representations that capture the semantic meaning of the text).",
+                "id": "uuid-v4-placeholder-5"
+            },
+            {
+                "front": "In semantic search, after converting the user's query into a vector, what is the immediate next step?",
+                "back": "The system calculates the similarity (e.g., cosine similarity or Euclidean distance) between the query vector and all document vectors.",
+                "type": "basic",
+                "tags": ["LangChain", "LLM", "SemanticSearch", "Embeddings", "VectorSimilarity"],
+                "id": "uuid-v4-placeholder-6"
+            },
+            {
+                "front": "In the detailed system design of a PDF chat application, a user uploads a PDF which is typically stored in cloud storage like {{c1::AWS S3}}.",
+                "back": "AWS S3",
+                "type": "cloze",
+                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "CloudStorage", "AWS_S3"],
+                "cloze_back_extra": "In the detailed system design of a PDF chat application, a user uploads a PDF which is typically stored in cloud storage like AWS S3.",
+                "id": "uuid-v4-placeholder-7"
+            },
+            {
+                "front": "What is the role of a \"Text Splitter\" in the system design of an LLM-powered application like a PDF chat app?",
+                "back": "To divide the loaded document into smaller, manageable chunks (e.g., by page, chapter, or paragraph).",
+                "type": "basic",
+                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "TextSplitter", "DataProcessing"],
+                "examples": "For a 1000-page PDF, splitting by page might result in 1000 chunks.",
+                "id": "uuid-v4-placeholder-8"
+            },
+            {
+                "front": "In the PDF chat app design, each text chunk is passed through an {{c1::embedding model}} to generate a vector embedding for it.",
+                "back": "embedding model",
+                "type": "cloze",
+                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "EmbeddingModel", "Embeddings"],
+                "cloze_back_extra": "In the PDF chat app design, each text chunk is passed through an embedding model to generate a vector embedding for it.",
+                "id": "uuid-v4-placeholder-9"
+            },
+            {
+                "front": "Where are the generated vector embeddings of text chunks stored in a PDF chat application's system design for efficient querying?",
+                "back": "In a specialized vector database.",
+                "type": "basic",
+                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "VectorDatabase", "Embeddings"],
+                "id": "uuid-v4-placeholder-10"
+            },
+            {
+                "front": "In a PDF chat app, what information is combined and sent to the LLM (the \"Brain\") to generate an answer?",
+                "back": "The original user query and the retrieved text chunks (relevant context).",
+                "type": "basic",
+                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "LLM", "ContextRetrieval"],
+                "id": "uuid-v4-placeholder-11"
+            },
+            {
+                "front": "What historical challenge in building LLM-powered applications was largely solved by Transformers, BERT, and GPT models?",
+                "back": "Building the \"Brain\" component with robust Natural Language Understanding (NLU) and text generation capabilities.",
+                "type": "basic",
+                "tags": ["LLM", "Challenges", "NLU", "TextGeneration", "Transformers", "AIHistory"],
+                "id": "uuid-v4-placeholder-12"
+            },
+            {
+                "front": "A solution to the high computational cost of self-hosting LLMs is the use of {{c1::LLM APIs}} provided by companies like OpenAI.",
+                "back": "LLM APIs",
+                "type": "cloze",
+                "tags": ["LLM", "Challenges", "Solutions", "LLM_APIs", "CloudComputing"],
+                "examples": "These APIs allow developers to access LLM capabilities over the internet, often on a pay-as-you-go basis.",
+                "cloze_back_extra": "A solution to the high computational cost and engineering effort of self-hosting LLMs is the use of LLM APIs provided by companies like OpenAI.",
+                "id": "uuid-v4-placeholder-13"
+            },
+            {
+                "front": "What primary challenge related to system complexity and component integration in LLM applications does LangChain aim to solve?",
+                "back": "The challenge of orchestrating the entire system and managing interactions between components, reducing boilerplate code.",
+                "type": "basic",
+                "tags": ["LangChain", "LLM", "Challenges", "Orchestration", "SystemIntegration"],
+                "id": "uuid-v4-placeholder-14"
+            },
+            {
+                "front": "What is a core concept in LangChain, giving the framework its name, that allows developers to sequence calls to LLMs or other utilities?",
+                "back": "Chains.",
+                "type": "basic",
+                "tags": ["LangChain", "CoreConcept", "Chains", "Workflow"],
+                "examples": "The output of one component in a chain automatically becomes the input for the next.",
+                "mnemonic": "Lang**Chain** links steps together.",
+                "id": "uuid-v4-placeholder-15"
+            },
+            {
+                "front": "LangChain's {{c1::Chains}} allow developers to sequence calls, where the output of one component automatically becomes the input for the next.",
+                "back": "Chains",
+                "type": "cloze",
+                "tags": ["LangChain", "CoreConcept", "Chains", "Workflow"],
+                "cloze_back_extra": "LangChain's Chains allow developers to sequence calls to LLMs or other utilities, where the output of one component automatically becomes the input for the next.",
+                "id": "uuid-v4-placeholder-16"
+            },
+            {
+                "front": "What does \"model-agnostic development\" mean in the context of LangChain?",
+                "back": "It allows for easy switching between different LLM providers (e.g., OpenAI, Google) or models with minimal code changes.",
+                "type": "basic",
+                "tags": ["LangChain", "Benefits", "ModelAgnostic", "LLM", "Flexibility"],
+                "id": "uuid-v4-placeholder-17"
+            },
+            {
+                "front": "Name three types of components provided within LangChain's ecosystem for building LLM applications.",
+                "back": "Any three of: Document Loaders, Text Splitters, Embedding Models, Vector Stores. (Others include: LLM wrappers, Chains, Agents, Memory tools)",
+                "type": "basic",
+                "tags": ["LangChain", "Ecosystem", "Components", "DevelopmentTools"],
+                "mnemonic": "LangChain's ecosystem helps **D**evelopers **T**ackle **E**normous **V**olumes (of data/tasks) -> **D**ocument Loaders, **T**ext Splitters, **E**mbedding Models, **V**ector Stores.",
+                "id": "uuid-v4-placeholder-18"
+            },
+            {
+                "front": "LangChain includes mechanisms for managing {{c1::conversational memory}}, crucial for chatbots to recall previous interactions.",
+                "back": "conversational memory",
+                "type": "cloze",
+                "tags": ["LangChain", "Features", "ConversationalMemory", "Chatbots", "StateHandling"],
+                "examples": "If a user discusses 'linear regression' then asks about 'interview questions on _this_ algorithm,' memory helps link 'this' to linear regression.",
+                "cloze_back_extra": "LangChain includes mechanisms for managing conversational memory, which is crucial for chatbots to remember previous parts of a conversation.",
+                "id": "uuid-v4-placeholder-19"
+            },
+            {
+                "front": "In LangChain use cases, what are \"AI Agents\" described as?",
+                "back": "\"Chatbots on steroids\"; systems that can converse and also perform actions or use tools.",
+                "type": "basic",
+                "tags": ["LangChain", "UseCases", "AI_Agents", "Automation"],
+                "examples": "An AI travel agent that books flights based on natural language requests.",
+                "id": "uuid-v4-placeholder-20"
+            },
+            {
+                "front": "Why is LangChain useful for building summarization tools for private company data?",
+                "back": "It enables companies to create internal \"ChatGPT-like\" tools for their specific documents, avoiding upload to public services.",
+                "type": "basic",
+                "tags": ["LangChain", "UseCases", "Summarization", "PrivateData", "EnterpriseAI"],
+                "id": "uuid-v4-placeholder-21"
+            },
+            {
+                "front": "Name one alternative framework to LangChain for building LLM applications.",
+                "back": "LlamaIndex or Haystack.",
+                "type": "basic",
+                "tags": ["LangChain", "Alternatives", "LLM_Frameworks", "LlamaIndex", "Haystack"],
+                "id": "uuid-v4-placeholder-22"
+            },
+            {
+                "front": "What key advantage does semantic search offer over keyword search for document querying?",
+                "back": "Semantic search understands the *meaning* and *context* of a query, yielding more relevant results, unlike keyword search's exact word matching.",
+                "type": "basic",
+                "tags": ["SemanticSearch", "KeywordSearch", "NLP", "InformationRetrieval"],
+                "id": "uuid-v4-placeholder-23"
+            },
+            {
+                "front": "In semantic search, what are \"embeddings\"?",
+                "back": "Vector representations (sets of numbers) that capture the semantic meaning of text.",
+                "type": "basic",
+                "tags": ["SemanticSearch", "Embeddings", "NLP", "VectorRepresentations"],
+                "id": "uuid-v4-placeholder-24"
+            },
+            {
+                "front": "A {{c1::vector database}} is used in LLM applications to efficiently store and query text {{c2::embeddings}}.",
+                "back": "c1: vector database, c2: embeddings",
+                "type": "cloze",
+                "tags": ["VectorDatabase", "Embeddings", "LLM", "SystemDesign", "DataStorage"],
+                "cloze_back_extra": "A vector database is used in LLM applications to efficiently store and query text embeddings.",
+                "id": "uuid-v4-placeholder-25"
+            },
+            {
+                "front": "Which major challenge in building LLM applications did LLM APIs primarily address?",
+                "back": "The computational cost and engineering complexity of self-hosting large language models.",
+                "type": "basic",
+                "tags": ["LLM", "LLM_APIs", "Challenges", "Solutions", "Scalability"],
+                "id": "uuid-v4-placeholder-26"
+            },
+            {
+                "front": "LangChain's \"plug and play\" nature means it allows developers to {{c1::seamlessly integrate diverse components}} (like data loaders, embedding models, LLMs) with less boilerplate code.",
+                "back": "seamlessly integrate diverse components",
+                "type": "cloze",
+                "tags": ["LangChain", "Orchestration", "SystemIntegration", "DevelopmentEfficiency"],
+                "cloze_back_extra": "LangChain's \"plug and play\" nature refers to its ability to allow developers to seamlessly integrate various components like document loaders, embedding models, and LLMs with reduced boilerplate code.",
+                "id": "uuid-v4-placeholder-27"
+            },
+            {
+                "front": "Why is handling conversational memory important for chatbots?",
+                "back": "It enables chatbots to remember earlier parts of the conversation, leading to more coherent and context-aware interactions.",
+                "type": "basic",
+                "tags": ["LangChain", "Chatbots", "ConversationalMemory", "UserExperience"],
+                "examples": "If a user asks about 'Topic A' and then 'What are its drawbacks?', the chatbot needs memory to link 'its' to 'Topic A'.",
+                "id": "uuid-v4-placeholder-28"
+            },
+            {
+                "front": "How does LangChain aid in reducing boilerplate code for LLM applications?",
+                "back": "By offering pre-built functionalities and abstractions for common tasks and integrations (e.g., connecting to vector databases, LLM APIs, text splitting).",
+                "type": "basic",
+                "tags": ["LangChain", "DevelopmentEfficiency", "BoilerplateCode", "Orchestration"],
+                "id": "uuid-v4-placeholder-29"
+            },
+            {
+                "front": "What is the main function of \"Chains\" in the LangChain framework?",
+                "back": "To sequence calls to LLMs or other utilities, enabling the output of one step to serve as the input for the subsequent step, thereby constructing complex application workflows.",
+                "type": "basic",
+                "tags": ["LangChain", "Chains", "CoreConcept", "WorkflowAutomation"],
+                "id": "uuid-v4-placeholder-30"
+            }
+        ];
+
+        // DOM elements
+        const questionEl = document.getElementById('question');
+        const answerEl = document.getElementById('answer');
+        const tagsEl = document.getElementById('tags');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const flipBtn = document.getElementById('flip-btn');
+        const cardCounter = document.getElementById('card-counter');
+        const totalCardsEl = document.getElementById('total-cards');
+
+        // State
+        let currentCardIndex = 0;
+        let isFlipped = false;
+
+        // Initialize
+        function init() {
+            // Set total cards count
+            totalCardsEl.textContent = flashcards.length;
+            
+            // Display first card
+            showCard(currentCardIndex);
+            
+            // Add event listeners
+            prevBtn.addEventListener('click', showPrevCard);
+            nextBtn.addEventListener('click', showNextCard);
+            flipBtn.addEventListener('click', toggleFlip);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        // Show card at index
+        function showCard(index) {
+            if (index < 0 || index >= flashcards.length) return;
+            
+            const card = flashcards[index];
+            currentCardIndex = index;
+            isFlipped = false;
+            
+            // Update question (handle cloze deletions)
+            let questionText = card.front;
+            if (card.type === 'cloze') {
+                // Simple cloze handling - remove {{c1::...}} and show blanks
+                questionText = questionText.replace(/\{\{c\d+::(.*?)(?:::(.*?))?\}\}/g, '[...]');
+            }
+            questionEl.innerHTML = questionText;
+            
+            // Update answer (use cloze_back_extra if available)
+            let answerText = card.cloze_back_extra || card.back;
+            answerEl.innerHTML = answerText;
+            
+            // Update tags
+            updateTags(card.tags);
+            
+            // Update card counter
+            cardCounter.textContent = index + 1;
+            
+            // Hide answer initially
+            answerEl.classList.add('hidden');
+            flipBtn.textContent = 'Show Answer';
+        }
+
+        // Update tags display
+        function updateTags(tagList) {
+            tagsEl.innerHTML = '';
+            if (!tagList || !tagList.length) return;
+            
+            tagList.forEach(tag => {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'tag';
+                tagEl.textContent = tag;
+                tagsEl.appendChild(tagEl);
+            });
+        }
+
+        // Toggle card flip
+        function toggleFlip() {
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                answerEl.classList.remove('hidden');
+                flipBtn.textContent = 'Hide Answer';
+            } else {
+                answerEl.classList.add('hidden');
+                flipBtn.textContent = 'Show Answer';
+            }
+        }
+
+        // Show next card
+        function showNextCard() {
+            if (currentCardIndex < flashcards.length - 1) {
+                showCard(currentCardIndex + 1);
+            } else {
+                // Loop back to first card
+                showCard(0);
+            }
+        }
+
+        // Show previous card
+        function showPrevCard() {
+            if (currentCardIndex > 0) {
+                showCard(currentCardIndex - 1);
+            } else {
+                // Loop to last card
+                showCard(flashcards.length - 1);
+            }
+        }
+
+
+        // Handle keyboard navigation
+        function handleKeyDown(e) {
+            switch(e.key) {
+                case 'ArrowRight':
+                    showNextCard();
+                    break;
+                case 'ArrowLeft':
+                    showPrevCard();
+                    break;
+                case ' ':
+                case 'Enter':
+                    e.preventDefault();
+                    toggleFlip();
+                    break;
+            }
+        }
+
+        // Initialize the app when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

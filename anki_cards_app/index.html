@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Flashcards</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>AI Learning Flashcards</h1>
+            <div class="controls">
+                <button id="shuffle">🔀 Shuffle</button>
+                <div class="progress">
+                    <span id="card-count">0</span>/<span id="total-cards">0</span>
+                </div>
+                <select id="tag-filter">
+                    <option value="">All Tags</option>
+                </select>
+            </div>
+        </header>
+        
+        <div class="flashcard-container">
+            <div class="flashcard" id="card">
+                <div class="card-front">
+                    <div class="card-content" id="front-content"></div>
+                    <div class="hint">Click to flip</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-content" id="back-content"></div>
+                    <div class="card-actions">
+                        <button id="again">😕 Again</button>
+                        <button id="good">👍 Good</button>
+                        <button id="easy">😊 Easy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button id="prev">⏮ Previous</button>
+                <button id="next">Next ⏭</button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div>Cards: <span id="stats-total">0</span></div>
+            <div>Due: <span id="stats-due">0</span></div>
+            <div>New: <span id="stats-new">0</span></div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+    <script>
+        // Check for URL parameters and load cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cardsParam = urlParams.get('cards');
+            
+            if (cardsParam) {
+                try {
+                    // If cards are provided in the URL, use them
+                    const cardsData = JSON.parse(decodeURIComponent(cardsParam));
+                    window.cardsData = Array.isArray(cardsData) ? cardsData : [];
+                } catch (e) {
+                    console.error('Error parsing cards from URL:', e);
+                    // Fall back to sample cards if there's an error
+                    loadSampleCards();
+                }
+            } else {
+                // If no cards in URL, try to load sample cards
+                loadSampleCards();
+            }
+            
+            // Initialize the app after loading cards
+            if (window.app) {
+                window.app.init();
+            }
+        });
+        
+        function loadSampleCards() {
+            // Load sample cards from the JSON file
+            fetch('sample-cards.json')
+                .then(response => response.json())
+                .then(data => {
+                    window.cardsData = data;
+                })
+                .catch(error => {
+                    console.error('Error loading sample cards:', error);
+                    window.cardsData = [];
+                });
+        }
+    </script>
+</body>
+</html>
