@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Flashcards - 3D Introduction</title>
+    <link rel="stylesheet" href="../../anki_cards_app/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="threejs-canvas-container">
+            <!-- Three.js canvas will be appended here by the script -->
+        </div>
+    </div>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- TWEEN.js for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
+
+    <!-- Core functionality -->
+    <script src="../../anki_cards_app/card-core.js"></script>
+    <!-- LangChain specific implementation -->
+    <script src="../../anki_cards_app/langchain-cards.js"></script>
+
+    <script>
+        // Flashcard data
+        const flashcards = [
+  {
+    "front": "What is the primary purpose of LangChain?",
+    "back": "To enable the building of applications leveraging Large Language Models (LLMs).",
+    "type": "basic",
+    "tags": ["langchain", "langchain::core_concept"],
+    "mnemonic": null,
+    "examples": "Building conversational chatbots or AI knowledge assistants.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-1"
+  },
+  {
+    "front": "LangChain provides {{c1::orchestration}} to simplify building complex LLM applications, which involve numerous components and interactions.",
+    "back": "LangChain provides orchestration to simplify building complex LLM applications, which involve numerous components and interactions.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::core_concept", "orchestration"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": "LangChain provides orchestration to simplify building complex LLM applications, which involve numerous components and interactions.",
+    "id": "card-uuid-2"
+  },
+  {
+    "front": "What key advantage does LangChain's model-agnostic nature offer developers?",
+    "back": "It allows users to switch LLM providers (e.g., from OpenAI's GPT to Google's Gemini) with very few code modifications.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::core_concept", "model_agnostic"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-3"
+  },
+  {
+    "front": "In LangChain, which component serves as the core interface for interaction with various AI models?",
+    "back": "The Models component.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::models", "core_interface"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-4"
+  },
+  {
+    "front": "What problem related to different LLM providers' APIs does LangChain's Models component primarily address?",
+    "back": "Implementation discrepancies, where varied API calls and response structures required significant code rewriting when switching or using multiple LLMs.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::models", "api_challenges", "standardization"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-5"
+  },
+  {
+    "front": "The LangChain **Models** component {{c1::standardizes}} interactions with different AI models.",
+    "back": "The LangChain **Models** component standardizes interactions with different AI models.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::models", "api_standardization"],
+    "mnemonic": null,
+    "examples": "Allows minimal code changes (e.g., 1-2 lines) to switch between OpenAI and Claude models.",
+    "cloze_back_extra": "The LangChain **Models** component standardizes interactions with different AI models.",
+    "id": "card-uuid-6"
+  },
+  {
+    "front": "What are the input and output types for **Language Models (LLMs)** as supported by LangChain's Models component?",
+    "back": "Input: Text, Output: Text.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::models", "language_models"],
+    "mnemonic": null,
+    "examples": "Used for applications like chatbots and AI agents.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-7"
+  },
+  {
+    "front": "What are the input and output types for **Embedding Models** as supported by LangChain's Models component, and their primary use case?",
+    "back": "Input: Text, Output: Vector (embedding). Primary use case: Semantic search.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::models", "embedding_models", "semantic_search"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-8"
+  },
+  {
+    "front": "In the context of LLMs, what are **Prompts**?",
+    "back": "Inputs provided to an LLM.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::prompts", "definition"],
+    "mnemonic": null,
+    "examples": "A question asked to ChatGPT like 'What is the capital of France?'",
+    "cloze_back_extra": null,
+    "id": "card-uuid-9"
+  },
+  {
+    "front": "The field of study focused on crafting effective LLM inputs, due to the high sensitivity of LLM outputs to them, is known as {{c1::Prompt Engineering}}.",
+    "back": "The field of study focused on crafting effective LLM inputs, due to the high sensitivity of LLM outputs to them, is known as Prompt Engineering.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::prompts", "prompt_engineering"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": "The field of study focused on crafting effective LLM inputs, due to the high sensitivity of LLM outputs to them, is known as Prompt Engineering.",
+    "id": "card-uuid-10"
+  },
+  {
+    "front": "How does LangChain facilitate **Dynamic and Reusable Prompts**?",
+    "back": "By allowing the creation of templates with placeholders (e.g., `Summarize this {topic} in this {tone}`) that can be filled at runtime.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::prompts", "dynamic_prompts", "reusable_prompts"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-11"
+  },
+  {
+    "front": "What is the purpose of using **Few-Shot Prompts** with LLMs in LangChain?",
+    "back": "To provide the LLM with several examples of input-output pairs before the actual query, helping it understand the desired response format or type.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::prompts", "few_shot_prompts"],
+    "mnemonic": null,
+    "examples": "Showing an LLM examples of customer support tickets and their classifications before asking it to classify a new ticket.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-12"
+  },
+  {
+    "front": "In LangChain, what are **Chains** primarily used to build?",
+    "back": "Pipelines or sequences of operations.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::chains", "definition", "pipelines"],
+    "mnemonic": "Think of links in a chain, each performing an operation in sequence.",
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-13"
+  },
+  {
+    "front": "A defining feature of LangChain **Chains** is that the {{c1::output}} of one component automatically becomes the {{c2::input}} for the subsequent component.",
+    "back": "A defining feature of LangChain **Chains** is that the output of one component automatically becomes the input for the subsequent component.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::chains", "data_flow"],
+    "mnemonic": null,
+    "examples": "The translated text from an LLM1 (translation step) automatically feeds into LLM2 (summarization step).",
+    "cloze_back_extra": "A defining feature of LangChain **Chains** is that the output of one component automatically becomes the input for the subsequent component.",
+    "id": "card-uuid-14"
+  },
+  {
+    "front": "What characterizes a **Sequential Chain** in LangChain?",
+    "back": "Operations are performed one after another in a sequence.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::chains", "chain_types", "sequential_chains"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-15"
+  },
+  {
+    "front": "What is the primary purpose of the **Indexes** component in LangChain?",
+    "back": "To connect LLM applications to external knowledge sources (e.g., PDFs, websites, databases).",
+    "type": "basic",
+    "tags": ["langchain", "langchain::indexes", "external_knowledge"],
+    "mnemonic": null,
+    "examples": "Allowing an LLM to answer questions about a company's private policy documents.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-16"
+  },
+  {
+    "front": "LangChain's Indexes component helps address LLM limitations regarding access to information not present in their {{c1::training data}}.",
+    "back": "LangChain's Indexes component helps address LLM limitations regarding access to information not present in their training data.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::indexes", "knowledge_gaps", "private_data"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": "LangChain's Indexes component helps address LLM limitations regarding access to information not present in their training data.",
+    "id": "card-uuid-17"
+  },
+  {
+    "front": "What does the acronym **RAG** stand for in the context of LangChain's Indexes and LLMs?",
+    "back": "Retrieval Augmented Generation.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::indexes", "rag"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-18"
+  },
+  {
+    "front": "Which sub-component of LangChain's **Indexes** is responsible for loading data from sources like PDFs or websites?",
+    "back": "Document Loaders.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::indexes", "index_subcomponents", "document_loaders"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-19"
+  },
+  {
+    "front": "What is the role of **Text Splitters** within LangChain's Indexes component?",
+    "back": "To break down large documents into smaller, manageable chunks, which is crucial for effective semantic search.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::indexes", "index_subcomponents", "text_splitters", "chunking"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-20"
+  },
+  {
+    "front": "In LangChain's Indexes, what do **Vector Stores** (or Vector Databases) primarily store?",
+    "back": "Embeddings (numerical vector representations) of text chunks.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::indexes", "index_subcomponents", "vector_stores", "embeddings"],
+    "mnemonic": null,
+    "examples": "These embeddings capture the semantic meaning of the text chunks.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-21"
+  },
+  {
+    "front": "What is the main function of **Retrievers** in LangChain's Indexes when a user query is received?",
+    "back": "To generate an embedding for the query, perform semantic search in the vector store for relevant chunks, and provide these (along with the query) to an LLM.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::indexes", "index_subcomponents", "retrievers", "semantic_search"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-22"
+  },
+  {
+    "front": "What inherent characteristic of LLM API calls does LangChain's **Memory** component address?",
+    "back": "Their stateless nature (each interaction is independent, with no recollection of previous interactions).",
+    "type": "basic",
+    "tags": ["langchain", "langchain::memory", "stateless_apis", "conversation_context"],
+    "mnemonic": null,
+    "examples": "Without memory, an LLM couldn't link 'he' to 'Narendra Modi' in a follow-up question.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-23"
+  },
+  {
+    "front": "LangChain's {{c1::ConversationBufferMemory}} stores the entire chat history, which can be costly for long conversations.",
+    "back": "LangChain's ConversationBufferMemory stores the entire chat history, which can be costly for long conversations.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::memory", "memory_types", "conversation_buffer_memory"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": "LangChain's ConversationBufferMemory stores the entire chat history, which can be costly for long conversations.",
+    "id": "card-uuid-24"
+  },
+  {
+    "front": "How does **ConversationBufferWindowMemory** in LangChain differ from ConversationBufferMemory?",
+    "back": "It stores only the last 'N' interactions, keeping the context manageable, instead of the entire chat history.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::memory", "memory_types", "conversation_buffer_window_memory"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-25"
+  },
+  {
+    "front": "What is the primary advantage of using **Summarizer-Based Memory** in LangChain?",
+    "back": "It reduces token costs by generating and sending a summary of the chat history instead of the full or windowed history.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::memory", "memory_types", "summarizer_based_memory"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-26"
+  },
+  {
+    "front": "How are **AI Agents** in LangChain distinct from traditional chatbots regarding their capabilities?",
+    "back": "AI Agents can understand, reply, and critically, take actions by interacting with their environment or tools.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::agents", "definition", "agent_capabilities"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-27"
+  },
+  {
+    "front": "What are the two key capabilities that enable LangChain **AI Agents** to perform actions beyond simple conversation?",
+    "back": "Reasoning capability and access to tools.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::agents", "agent_capabilities", "reasoning", "tools"],
+    "mnemonic": "Agents are R.A.T.s: Reasoning And Tools.",
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "card-uuid-28"
+  },
+  {
+    "front": "The ability of a LangChain **AI Agent** to break down complex user requests into smaller, manageable steps and plan a sequence of actions is known as its {{c1::reasoning capability}}.",
+    "back": "The ability of a LangChain **AI Agent** to break down complex user requests into smaller, manageable steps and plan a sequence of actions is known as its reasoning capability.",
+    "type": "cloze",
+    "tags": ["langchain", "langchain::agents", "agent_capabilities", "reasoning"],
+    "mnemonic": null,
+    "examples": "Often facilitated by techniques like Chain of Thought (CoT) prompting.",
+    "cloze_back_extra": "The ability of a LangChain **AI Agent** to break down complex user requests into smaller, manageable steps and plan a sequence of actions is known as its reasoning capability.",
+    "id": "card-uuid-29"
+  },
+  {
+    "front": "What does it mean for a LangChain **AI Agent** to have 'access to tools'?",
+    "back": "It can use external utilities (e.g., calculator, weather API, search engine) to perform tasks and gather information.",
+    "type": "basic",
+    "tags": ["langchain", "langchain::agents", "agent_capabilities", "tools"],
+    "mnemonic": null,
+    "examples": "An agent using a weather API to find today's temperature for Delhi.",
+    "cloze_back_extra": null,
+    "id": "card-uuid-30"
+  }
+];
+
+        // Initialize the card system
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardSystem = new LangChainCards('threejs-canvas-container', {
+                isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
+            });
+            cardSystem.loadDeck(flashcards);
+        });
+    </script>
+</body>
+
+</html>
