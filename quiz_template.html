@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quiz Template</title>
+        <link rel="stylesheet" href="static/quiz.css">
+</head>
+
+<body>
+        <div class="quiz">
+                <h2 id="quizTitle">Quiz Title</h2>
+                <div id="quizContent">
+                        <!-- Questions will be dynamically inserted here -->
+                </div>
+                <button id="submitQuiz">Submit Quiz</button>
+                <div id="quizScore" hidden>Your Score: 0 out of 0</div>
+        </div>
+
+        <!-- Quiz data will be inserted here -->
+        <script class="quiz-json" type="application/json">
+        {
+            "quizTitle": "Quiz Title",
+            "questions": [
+                {
+                    "id": "q1",
+                    "type": "mcq",
+                    "text": "Question text here",
+                    "options": [
+                        {
+                            "value": "a",
+                            "text": "Option A"
+                        },
+                        {
+                            "value": "b",
+                            "text": "Option B"
+                        }
+                    ],
+                    "answer": "a",
+                    "hint": "Optional hint text",
+                    "feedback": "Optional feedback message"
+                }
+            ]
+        }
+    </script>
+        <script src="static/quiz.js"></script>
+</body>
+
+</html>

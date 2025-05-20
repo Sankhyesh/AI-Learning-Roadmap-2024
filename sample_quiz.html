@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sample Quiz</title>
+        <link rel="stylesheet" href="static/quiz.css">
+</head>
+
+<body>
+        <div class="quiz">
+                <h2 id="quizTitle">Sample Quiz</h2>
+                <div id="quizContent">
+                        <!-- Questions will be dynamically inserted here -->
+                </div>
+                <button id="submitQuiz">Submit Quiz</button>
+                <div id="quizScore" hidden>Your Score: 0 out of 0</div>
+        </div>
+
+        <!-- Quiz data -->
+        <script class="quiz-json" type="application/json">
+        {
+            "quizTitle": "Sample Quiz",
+            "questions": [
+                {
+                    "id": "q1",
+                    "type": "mcq",
+                    "text": "What is the capital of France?",
+                    "options": [
+                        {
+                            "value": "a",
+                            "text": "London"
+                        },
+                        {
+                            "value": "b",
+                            "text": "Paris"
+                        },
+                        {
+                            "value": "c",
+                            "text": "Berlin"
+                        },
+                        {
+                            "value": "d",
+                            "text": "Madrid"
+                        }
+                    ],
+                    "answer": "b",
+                    "hint": "Think about the Eiffel Tower",
+                    "feedback": "Paris is indeed the capital of France!"
+                },
+                {
+                    "id": "q2",
+                    "type": "tf",
+                    "text": "The Earth is flat.",
+                    "options": [
+                        {
+                            "value": "true",
+                            "text": "True"
+                        },
+                        {
+                            "value": "false",
+                            "text": "False"
+                        }
+                    ],
+                    "answer": "false",
+                    "hint": "Consider satellite images and space travel",
+                    "feedback": "The Earth is actually spherical!"
+                },
+                {
+                    "id": "q3",
+                    "type": "gap",
+                    "text": "The chemical symbol for gold is ___.",
+                    "answer": "Au",
+                    "hint": "It comes from the Latin word 'aurum'",
+                    "feedback": "Au is the chemical symbol for gold, derived from the Latin word 'aurum'."
+                },
+                {
+                    "id": "q4",
+                    "type": "short",
+                    "text": "Explain why the sky appears blue during the day.",
+                    "placeholder": "Type your explanation here...",
+                    "keywords": ["scattering", "light", "atmosphere", "wavelength", "blue"],
+                    "hint": "Think about light scattering in the atmosphere",
+                    "feedback": "The sky appears blue due to a phenomenon called Rayleigh scattering, where shorter wavelengths of light (blue) are scattered more strongly by the atmosphere than longer wavelengths."
+                }
+            ]
+        }
+    </script>
+        <script src="static/quiz.js"></script>
+</body>
+
+</html>

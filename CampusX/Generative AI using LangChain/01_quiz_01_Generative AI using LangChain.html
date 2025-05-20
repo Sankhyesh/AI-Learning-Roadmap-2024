@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Playlist Quiz</title>
+    <link rel="stylesheet" href="../../static/quiz.css">
+</head>
+
+<body>
+    <div class="quiz">
+        <h2 id="quizTitle">LangChain Playlist Quiz</h2>
+        <div id="quizContent">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+        <button id="submitQuiz">Submit Quiz</button>
+        <div id="quizScore" hidden>Your Score: 0 out of 0</div>
+    </div>
+
+    <!-- Quiz data -->
+    <script class="quiz-json" type="application/json">
+    {
+        "quizTitle": "LangChain Playlist Quiz",
+        "questions": [
+            {
+                "id": "q2",
+                "type": "gap",
+                "text": "LangChain is described as an ________ framework designed to help developers build applications powered by Large Language Models (LLMs).",
+                "answer": "open-source",
+                "hint": "Hint: This characteristic is a significant factor in its widespread adoption and active development, making it accessible to a broad community."
+            },
+            {
+                "id": "q3",
+                "type": "mcq",
+                "text": "Which of the following is NOT listed as a core feature of LangChain?",
+                "options": [
+                    { "value": "A", "text": "A) Broad LLM support (OpenAI, Anthropic, Google models, etc.)" },
+                    { "value": "B", "text": "B) Simplified development using abstractions like Chains." },
+                    { "value": "C", "text": "C) Proprietary and paid subscription model." },
+                    { "value": "D", "text": "D) Rich integrations with external tools and services." }
+                ],
+                "answer": "C",
+                "hint": "Hint: LangChain's accessibility and community-driven nature are among its key strengths mentioned."
+            },
+            {
+                "id": "q6",
+                "type": "tf",
+                "text": "The LangChain framework is free and open-source. (True/False)",
+                "options": [
+                    { "value": "true", "text": "True" },
+                    { "value": "false", "text": "False" }
+                ],
+                "answer": "true",
+                "hint": "Hint: This is a significant factor in its widespread adoption."
+            }
+        ]
+    }
+    </script>
+    <script src="../../static/quiz.js"></script>
+</body>
+
+</html>
