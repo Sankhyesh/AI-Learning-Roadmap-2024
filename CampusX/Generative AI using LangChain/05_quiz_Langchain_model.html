@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Playlist Quiz</title>
+    <link rel="stylesheet" href="../../static/quiz.css">
+</head>
+
+<body>
+    <div class="quiz">
+        <h2 id="quizTitle">LangChain Playlist Quiz</h2>
+        <div id="quizContent">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+        <button id="submitQuiz">Submit Quiz</button>
+        <div id="quizScore" hidden>Your Score: 0 out of 0</div>
+    </div>
+
+    <!-- Quiz data -->
+    <script class="quiz-json" type="application/json">
+{
+  "quizTitle": "LangChain Models: Concepts and Application",
+  "settings": {
+    "showHints": true,
+    "mnemonics": false
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "What is the primary purpose of the Model component in the LangChain framework?",
+      "options": [
+        {"value": "A", "text": "To generate Python code for AI model training."},
+        {"value": "B", "text": "To offer a common interface for interacting with diverse AI models."},
+        {"value": "C", "text": "To store and manage datasets for AI models."},
+        {"value": "D", "text": "To visualize the architecture of AI models."}
+      ],
+      "placeholder": null,
+      "hint": "Think about how LangChain simplifies working with different model providers.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q2",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "Language Models in LangChain process textual input and generate ______ output.",
+      "options": null,
+      "placeholder": "Enter output type",
+      "hint": "What form does the output of a model like GPT-4 take?",
+      "feedbackMessage": "Language Models generate textual output."
+    },
+    {
+      "id": "q3",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "Embedding Models are primarily used for generating human-readable text summaries from numerical data.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider what embeddings represent and their application in tasks like semantic search.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q4",
+      "type": "short",
+      "bloomLevel": "Understand",
+      "text": "Explain in one sentence what 'embeddings' capture from a given text.",
+      "options": null,
+      "placeholder": "Your explanation...",
+      "hint": "Focus on the meaning or essence of the text.",
+      "feedbackMessage": "Embeddings capture the contextual meaning or semantic information of the text in a numerical (vector) format."
+    },
+    {
+      "id": "q5",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "Which of these is a key characteristic of traditional LLMs (in the LangChain context described) compared to Chat Models?",
+      "options": [
+        {"value": "A", "text": "They primarily process sequences of messages."},
+        {"value": "B", "text": "They inherently support conversation history."},
+        {"value": "C", "text": "They typically take a single string as input and return a single string."},
+        {"value": "D", "text": "They are specialized for role awareness."}
+      ],
+      "placeholder": null,
+      "hint": "Think about the input/output format of older, general-purpose language models.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q6",
+      "type": "gap",
+      "bloomLevel": "Understand",
+      "text": "According to the material, ______ Models are the preferred and more modern approach for building conversational AI applications within LangChain.",
+      "options": null,
+      "placeholder": "Enter model type",
+      "hint": "Which model type is better suited for back-and-forth dialogue?",
+      "feedbackMessage": "Chat Models are the preferred approach."
+    },
+    {
+      "id": "q7",
+      "type": "short",
+      "bloomLevel": "Apply",
+      "text": "Describe a practical benefit of using '.env' files for managing API keys in a LangChain project.",
+      "options": null,
+      "placeholder": "Your description...",
+      "hint": "Consider security and code sharing.",
+      "feedbackMessage": "A practical benefit is enhanced security, as sensitive API keys are kept separate from the codebase and not accidentally committed to version control, making it safer to share or publish the code."
+    },
+    {
+      "id": "q8",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "What is the common LangChain function highlighted for interacting with both LLMs and Chat Models to get a response?",
+      "options": [
+        {"value": "A", "text": "process_request()"},
+        {"value": "B", "text": "get_response()"},
+        {"value": "C", "text": "execute_model()"},
+        {"value": "D", "text": "invoke()"}
+      ],
+      "placeholder": null,
+      "hint": "This method is used to call the model with an input.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q9",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "A lower 'temperature' parameter in a language model generally leads to more creative and random outputs.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider how temperature affects predictability.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q10",
+      "type": "short",
+      "bloomLevel": "Analyse",
+      "text": "Explain one advantage and one disadvantage of using closed-source models (e.g., OpenAI's GPT) compared to open-source models.",
+      "options": null,
+      "placeholder": "Advantage: ... Disadvantage: ...",
+      "hint": "Think about factors like capability, cost, data privacy, and control.",
+      "feedbackMessage": "Advantage: Often highly capable and well-refined out-of-the-box. Disadvantage: Costs associated with API usage, or potential data privacy concerns as data is sent to third-party servers."
+    },
+    {
+      "id": "q11",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "______ is identified in the material as the primary repository for open-source AI models.",
+      "options": null,
+      "placeholder": "Enter repository name",
+      "hint": "This platform hosts a vast collection of models and datasets.",
+      "feedbackMessage": "Hugging Face is the primary repository."
+    },
+    {
+      "id": "q12",
+      "type": "mcq",
+      "bloomLevel": "Understand",
+      "text": "Which method is used with `OpenAIEmbeddings` to get numerical representations for a list of multiple documents?",
+      "options": [
+        {"value": "A", "text": "embed_query()"},
+        {"value": "B", "text": "process_texts()"},
+        {"value": "C", "text": "embed_documents()"},
+        {"value": "D", "text": "vectorize_list()"}
+      ],
+      "placeholder": null,
+      "hint": "The method name suggests its purpose for handling multiple texts.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q13",
+      "type": "short",
+      "bloomLevel": "Understand",
+      "text": "What is the core idea behind the Document Similarity Search application explained in the material?",
+      "options": null,
+      "placeholder": "Describe the main goal...",
+      "hint": "It's about finding relevant content based on meaning.",
+      "feedbackMessage": "The core idea is to find which document in a collection is semantically closest (most similar in meaning) to a user's query by comparing their embeddings."
+    },
+    {
+      "id": "q14",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "In the document similarity application, ______ similarity is calculated between the query embedding and document embeddings.",
+      "options": null,
+      "placeholder": "Enter similarity type",
+      "hint": "It's a common measure for vector similarity based on the angle between them.",
+      "feedbackMessage": "Cosine similarity is calculated."
+    },
+    {
+      "id": "q15",
+      "type": "tf",
+      "bloomLevel": "Analyse",
+      "text": "The document similarity search process, as described, is completely independent of and offers no foundational concepts for Retrieval Augmented Generation (RAG).",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider how RAG systems retrieve information before generation.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q16",
+      "type": "short",
+      "bloomLevel": "Apply",
+      "text": "If you were building a system to categorize customer feedback emails, how could embedding models be applied to group similar feedback together?",
+      "options": null,
+      "placeholder": "Briefly outline the approach...",
+      "hint": "Think about generating embeddings for each email and then clustering them.",
+      "feedbackMessage": "You could generate an embedding for each customer feedback email. Then, use a clustering algorithm (like K-Means) on these embeddings. Emails with similar semantic content would have embeddings closer in the vector space, thus grouping them into the same clusters, effectively categorizing similar feedback."
+    },
+    {
+      "id": "q17",
+      "type": "mcq",
+      "bloomLevel": "Analyse",
+      "text": "What is a primary reason one might choose an open-source model to run locally despite the potential for complex setup, according to the material?",
+      "options": [
+        {"value": "A", "text": "Guaranteed superior performance over closed-source models."},
+        {"value": "B", "text": "No need for any specific hardware."},
+        {"value": "C", "text": "Enhanced data privacy as data does not leave the local system."},
+        {"value": "D", "text": "Access to 24/7 customer support from the model creators."}
+      ],
+      "placeholder": null,
+      "hint": "Consider one of the main advantages listed for open-source models regarding data handling.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q18",
+      "type": "gap",
+      "bloomLevel": "Understand",
+      "text": "Chat Models support features like conversation history and ______, which involves assigning a persona to the AI.",
+      "options": null,
+      "placeholder": "Enter feature name",
+      "hint": "This feature allows the AI to adopt a specific character or expertise.",
+      "feedbackMessage": "Chat Models support conversation history and role awareness."
+    },
+    {
+      "id": "q19",
+      "type": "tf",
+      "bloomLevel": "Remember",
+      "text": "The `max_tokens` parameter primarily controls the complexity of the AI model's internal architecture.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Think about what `max_tokens` limits in the model's output.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q20",
+      "type": "short",
+      "bloomLevel": "Analyse",
+      "text": "How does LangChain's Model component address the problem of different AI model providers having varying APIs?",
+      "options": null,
+      "placeholder": "Explain the solution...",
+      "hint": "It provides a standardized way to interact.",
+      "feedbackMessage": "LangChain's Model component addresses this by providing a common, standardized interface (an abstraction layer) that allows developers to interact with various AI models using a consistent set of methods, regardless of the specific underlying API of each provider."
+    },
+    {
+      "id": "q21",
+      "type": "mcq",
+      "bloomLevel": "Understand",
+      "text": "For what primary purpose are Embedding Models used in the context of RAG (Retrieval Augmented Generation) applications?",
+      "options": [
+        {"value": "A", "text": "To generate the final answer to the user's query directly."},
+        {"value": "B", "text": "To understand the semantic content of documents for effective retrieval."},
+        {"value": "C", "text": "To fine-tune the language model on new data."},
+        {"value": "D", "text": "To manage the conversation flow and history."}
+      ],
+      "placeholder": null,
+      "hint": "Think about the 'Retrieval' part of RAG.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q22",
+      "type": "short",
+      "bloomLevel": "Evaluate",
+      "text": "Critique the reliance on API-based closed-source models for a startup that handles highly sensitive user data. What are the key concerns?",
+      "options": null,
+      "placeholder": "List and explain concerns...",
+      "hint": "Consider data privacy, security, and dependency.",
+      "feedbackMessage": "Key concerns include: 1. Data Privacy: Sending sensitive user data to third-party servers for processing can violate privacy agreements or regulations. 2. Security Risks: The data is exposed to potential interception or breaches during transit or while on the third-party's infrastructure. 3. Vendor Lock-in/Dependency: The startup becomes reliant on the API provider, subject to their pricing changes, terms of service, or potential service disruptions."
+    },
+    {
+      "id": "q23",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "When using `HuggingFacePipeline` for local models, the first execution might be slower due to the model being ______ to the local machine.",
+      "options": null,
+      "placeholder": "Enter action performed",
+      "hint": "What needs to happen before a local model can be used for the first time?",
+      "feedbackMessage": "When using `HuggingFacePipeline` for local models, the first execution might be slower due to the model being downloaded to the local machine."
+    },
+    {
+      "id": "q24",
+      "type": "mcq",
+      "bloomLevel": "Apply",
+      "text": "If you want your Chat Model to provide factual and deterministic answers for a coding assistance task, what would be an appropriate setting for the `temperature` parameter?",
+      "options": [
+        {"value": "A", "text": "A high value (e.g., 1.0 or above)"},
+        {"value": "B", "text": "A low value (e.g., 0.0 to 0.3)"},
+        {"value": "C", "text": "Temperature is not relevant for coding tasks."},
+        {"value": "D", "text": "A negative value."}
+      ],
+      "placeholder": null,
+      "hint": "Low temperature leads to less randomness.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q25",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "Open-source models, when run locally, completely eliminate the need for any computational hardware resources.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider what is needed to execute these models, even locally.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q26",
+      "type": "short",
+      "bloomLevel": "Create",
+      "text": "Imagine you are designing a new feature for LangChain's Model component. Propose one new type of model (distinct from Language or Embedding models) that could be integrated and describe its potential use case.",
+      "options": null,
+      "placeholder": "Model Type: ... Use Case: ...",
+      "hint": "Think about other AI tasks beyond text generation or vectorization, e.g., structured data, audio, or image processing interfaces.",
+      "feedbackMessage": "Model Type: StructuredDataPredictionModel. Use Case: This model type would take structured data (e.g., from a CSV or database row) as input and predict a target variable or classify the input. For example, predicting customer churn based on their usage patterns, or classifying a loan application as high/low risk based on financial details. LangChain could provide a common interface for various tabular data prediction models (e.g., from scikit-learn, XGBoost, or cloud AI platforms)."
+    },
+    {
+      "id": "q27",
+      "type": "mcq",
+      "bloomLevel": "Analyse",
+      "text": "What is the primary benefit of using a vector database in conjunction with embedding models for applications like semantic search, as hinted in the material?",
+      "options": [
+        {"value": "A", "text": "To generate more creative text outputs."},
+        {"value": "B", "text": "To automatically fine-tune the embedding models."},
+        {"value": "C", "text": "For efficient storage and retrieval of document embeddings, avoiding re-computation."},
+        {"value": "D", "text": "To convert text embeddings back into human-readable text."}
+      ],
+      "placeholder": null,
+      "hint": "Think about performance and persistence of embeddings.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q28",
+      "type": "short",
+      "bloomLevel": "Evaluate",
+      "text": "The material states open-source models might have 'potentially less refined out-of-the-box performance'. Why might this be the case, and how could a developer mitigate this?",
+      "options": null,
+      "placeholder": "Reason: ... Mitigation: ...",
+      "hint": "Consider the resources behind model training and the options available with open-source models.",
+      "feedbackMessage": "Reason: Closed-source models often have vast amounts of proprietary data and extensive human feedback (RLHF) for refinement, which open-source projects might lack to the same degree. Mitigation: A developer can mitigate this by fine-tuning the open-source model on their specific domain data, which allows the model to adapt and improve its performance for the target task."
+    },
+    {
+      "id": "q29",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "Role awareness in Chat Models means the model can only play the role of a helpful assistant and no other personas.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider the flexibility of assigning roles to the AI.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q30",
+      "type": "short",
+      "bloomLevel": "Create",
+      "text": "Based on the document similarity search example, design a brief pseudocode or step-by-step logical flow for a function that takes a user query and a list of documents, and returns the single most similar document's text.",
+      "options": null,
+      "placeholder": "Your pseudocode/steps...",
+      "hint": "Include steps for embedding, similarity calculation, and finding the maximum.",
+      "feedbackMessage": "1. FUNCTION findMostSimilarDocument(query, documentList):\n2.   Initialize EmbeddingModel\n3.   queryEmbedding = EmbeddingModel.embed_query(query)\n4.   documentEmbeddings = EmbeddingModel.embed_documents(documentList)\n5.   maxSimilarity = -1\n6.   mostSimilarDocText = NULL\n7.   FOR EACH docEmbedding, index in documentEmbeddings:\n8.     similarityScore = calculateCosineSimilarity(queryEmbedding, docEmbedding)\n9.     IF similarityScore > maxSimilarity:\n10. maxSimilarity = similarityScore\n11. mostSimilarDocText = documentList[index]\n12.  RETURN mostSimilarDocText"
+    }
+  ],
+  "answers": {
+    "q1": "B",
+    "q2": "textual",
+    "q3": "False",
+    "q4_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "Embeddings capture the contextual meaning or semantic information of the text."
+    },
+    "q5": "C",
+    "q6": "Chat",
+    "q7_evaluation": {
+      "type": "keywords",
+      "keywords": ["security", "sensitive", "API keys", "separate codebase", "version control"]
+    },
+    "q8": "D",
+    "q9": "False",
+    "q10_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "Advantage of closed-source: Often highly capable and well-refined. Disadvantage: Costs or data privacy concerns. (Answers may vary but should reflect these themes)"
+    },
+    "q11": "Hugging Face",
+    "q12": "C",
+    "q13_evaluation": {
+      "type": "keywords",
+      "keywords": ["semantic search", "closest meaning", "user query", "document collection", "embeddings"]
+    },
+    "q14": "Cosine",
+    "q15": "False",
+    "q16_evaluation": {
+      "type": "keywords",
+      "keywords": ["embedding per email", "clustering algorithm", "K-Means", "vector space", "group similar feedback"]
+    },
+    "q17": "C",
+    "q18": "role awareness",
+    "q19": "False",
+    "q20_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "LangChain's Model component provides a common, standardized interface (abstraction layer) allowing developers to use consistent methods for various AI models, regardless of differing provider APIs."
+    },
+    "q21": "B",
+    "q22_evaluation": {
+      "type": "keywords",
+      "keywords": ["data privacy", "third-party servers", "security risks", "interception", "breaches", "vendor lock-in", "dependency", "sensitive data"]
+    },
+    "q23": "downloaded",
+    "q24": "B",
+    "q25": "False",
+    "q26_evaluation": {
+      "type": "self-assess",
+      "modelAnswer": "A good answer would propose a distinct AI model type (e.g., ImageClassifierModel, AudioTranscriptionModel, AnomalyDetectionModel) and a clear, relevant use case for its integration into LangChain via a common interface. Example: Model Type: SpeechToTextModel. Use Case: To transcribe spoken audio from various sources (files, real-time microphone input) into text, providing a standardized way to integrate different speech recognition services or local models for applications like voice-controlled assistants or meeting transcription."
+    },
+    "q27": "C",
+    "q28_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "Reason: Closed-source models often benefit from larger proprietary datasets and extensive human feedback (RLHF) for refinement. Mitigation: Developers can fine-tune open-source models on their specific domain data to improve performance for their target tasks."
+    },
+    "q29": "False",
+    "q30_evaluation": {
+      "type": "self-assess",
+      "modelAnswer": "The pseudocode should logically cover: 1. Initializing an embedding model. 2. Generating an embedding for the input query. 3. Generating embeddings for all documents in the list. 4. Iterating through document embeddings, calculating cosine similarity with the query embedding. 5. Keeping track of the document with the highest similarity score found so far. 6. Returning the text of the most similar document."
+    }
+  }
+}
+    </script>
+    <script src="../../static/quiz.js"></script>
+</body>
+
+</html>
