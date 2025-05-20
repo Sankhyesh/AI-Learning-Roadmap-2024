@@ -1,0 +1,27 @@
+{
+    "quizTitle": "Your Quiz Title",
+    "questions": [
+        {
+            "id": "q1",
+            "type": "mcq",
+            "text": "Your multiple choice question here?",
+            "options": [
+                {"text": "Option 1", "value": "A"},
+                {"text": "Option 2", "value": "B"},
+                {"text": "Option 3", "value": "C"},
+                {"text": "Option 4", "value": "D"}
+            ],
+            "hint": "Your hint here"
+        }
+    ],
+    "answers": {
+        "q1": "B",
+        "q2": "open-source",
+        "q3": "C",
+        "q4_keywords": ["keyword1", "keyword2", "keyword3"],
+        "q5": "B",
+        "q6": "False",
+        "q7": "",
+        "q8": "C"
+    }
+} 
