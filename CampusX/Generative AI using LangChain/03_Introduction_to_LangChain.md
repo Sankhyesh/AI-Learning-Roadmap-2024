@@ -1,4 +1,3 @@
- 
 ### Core Concepts of LangChain and Its Necessity
 
 - The information presented introduces **LangChain** as an **open-source framework** designed for **developing applications powered by Large Language Models (LLMs)**. Its primary function is to simplify the creation of LLM-based applications.
@@ -13,12 +12,13 @@
   - A user uploads a PDF, which is stored in a database.
   - When the user asks a query (e.g., "What are the assumptions of linear regression?"), the system must first find the relevant sections within the PDF.
   - **Semantic Search vs. Keyword Search:**
+
     - **Keyword search** (matching exact words like "assumptions," "linear regression") is inefficient as it might return many irrelevant pages where these words appear out of context.
     - **Semantic Search** is preferred. It aims to understand the _meaning_ of the query and find text that is semantically similar, leading to more contextually relevant results (e.g., finding pages that discuss the concept of "assumptions of linear regression" even if the exact phrasing differs).
-  ![alt text](image.png)
-  
-  - The relevant pages (e.g., page 372, page 461) identified through semantic search and the user's original query are combined to form a 
-  **system query**.
+      ![alt text](images/image.png)
+
+  - The relevant pages (e.g., page 372, page 461) identified through semantic search and the user's original query are combined to form a
+    **system query**.
   - This system query is then sent to the application's "Brain." The **Brain** component has two main capabilities:
     1.  **Natural Language Understanding (NLU):** To comprehend the user's query.
     2.  **Context-Aware Text Generation:** To generate an answer based on the provided relevant pages and the query.
@@ -34,7 +34,7 @@
   - The document vector most similar to the query vector is considered the most relevant, and its corresponding text is used to answer the query.
 
 - **Detailed System Design of the PDF Chat Application:**
-![alt text](image-1.png)
+  ![alt text](images/image-1.png)
   1.  **PDF Upload:** User uploads a PDF, which is stored in cloud storage (e.g., **AWS S3**).
   2.  **Document Loader:** A component loads the PDF into the system.
   3.  **Text Splitter:** The document is divided into smaller **chunks** (e.g., by page, chapter, or paragraph). For a 1000-page PDF, this could mean 1000 chunks if splitting by page.

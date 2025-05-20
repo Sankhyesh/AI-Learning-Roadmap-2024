@@ -2,3 +2,4 @@
 *.exe
 *.pyc
 /coding/Sliding_window/.ipynb_checkpoints
+/.venv

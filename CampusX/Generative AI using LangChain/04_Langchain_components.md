@@ -1,9 +1,9 @@
- **LLM-powered applications**. It emphasizes understanding the framework's organization and the thought process behind its development, setting a foundation for more detailed, code-based explorations in the future.
+**LLM-powered applications**. It emphasizes understanding the framework's organization and the thought process behind its development, setting a foundation for more detailed, code-based explorations in the future.
 
 Before diving into the components, a recap of prior information highlights:
 
 - **LangChain's Core Purpose:** To enable the building of applications leveraging Large Language Models (LLMs).
-- **The Need for LangChain:** Developing complex LLM applications from scratch (e.g., a system to interact with PDFs) involves numerous components and interactions. LangChain provides **orchestration**, building efficient **pipelines** (called **Chains**) with minimal code. A key advantage is its **model-agnostic nature**, allowing users to switch LLM providers (e.g., from OpenAI's GPT to Google's Gemini) with very few code modifications.![alt text](image-2.png)
+- **The Need for LangChain:** Developing complex LLM applications from scratch (e.g., a system to interact with PDFs) involves numerous components and interactions. LangChain provides **orchestration**, building efficient **pipelines** (called **Chains**) with minimal code. A key advantage is its **model-agnostic nature**, allowing users to switch LLM providers (e.g., from OpenAI's GPT to Google's Gemini) with very few code modifications.![alt text](images/image-2.png)
 - **Common Applications:** Building **conversational chatbots**, **AI knowledge assistants**, and **AI Agents**.
 
 The material then outlines the **six core components of LangChain**:
@@ -23,17 +23,19 @@ The material then outlines the **six core components of LangChain**:
 
 2.  **Prompts:**
 
-    - **Definition:** **Prompts** are the inputs provided to an LLM.
-    - **Importance:** The output of an LLM is highly sensitive to the prompt. Even slight changes in wording can lead to vastly different results. This has given rise to the field of **Prompt Engineering**.
-    - **LangChain's Contribution:** LangChain recognizes the critical role of prompts and provides robust tools to create, manage, and reuse them effectively. It allows for the construction of **dynamic and powerful prompts**.
-    - **Examples of Prompting Techniques in LangChain:**
-      - **Dynamic and Reusable Prompts:** Creating templates with **placeholders** (e.g., `Summarize this {topic} in this {tone}`) that can be filled at runtime. This allows one prompt structure to be used for many different inputs.
-      - **Role-Based Prompts:** Defining a persona for the LLM through a system-level prompt (e.g., "You are an experienced {profession}") and then combining it with a user's query (e.g., "Tell me about {topic}"). This guides the LLM to respond from a specific perspective.
-      - **Few-Shot Prompts:** Providing the LLM with several examples of input-output pairs before asking the actual query. This helps the LLM understand the desired format or type of response (e.g., classifying customer support tickets by showing examples of tickets and their categories).
-    - **Key Takeaway:** The **Prompts** component equips developers with the tools to craft sophisticated inputs, significantly influencing the quality and relevance of LLM outputs.
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
+        - **Definition:** **Prompts** are the inputs provided to an LLM.
+        - **Importance:** The output of an LLM is highly sensitive to the prompt. Even slight changes in wording can lead to vastly different results. This has given rise to the field of **Prompt Engineering**.
+        - **LangChain's Contribution:** LangChain recognizes the critical role of prompts and provides robust tools to create, manage, and reuse them effectively. It allows for the construction of **dynamic and powerful prompts**.
+        - **Examples of Prompting Techniques in LangChain:**
+          - **Dynamic and Reusable Prompts:** Creating templates with **placeholders** (e.g., `Summarize this {topic} in this {tone}`) that can be filled at runtime. This allows one prompt structure to be used for many different inputs.
+          - **Role-Based Prompts:** Defining a persona for the LLM through a system-level prompt (e.g., "You are an experienced {profession}") and then combining it with a user's query (e.g., "Tell me about {topic}"). This guides the LLM to respond from a specific perspective.
+          - **Few-Shot Prompts:** Providing the LLM with several examples of input-output pairs before asking the actual query. This helps the LLM understand the desired format or type of response (e.g., classifying customer support tickets by showing examples of tickets and their categories).
+        - **Key Takeaway:** The **Prompts** component equips developers with the tools to craft sophisticated inputs, significantly influencing the quality and relevance of LLM outputs.
+
+    ![alt text](images/image-3.png)
+    ![alt text](images/image-4.png)
+    ![alt text](images/image-5.png)
+
 3.  **Chains:**
 
     - **Definition:** **Chains** are fundamental to LangChain (evident in its name) and are used to build **pipelines** or sequences of operations.
@@ -64,7 +66,7 @@ The material then outlines the **six core components of LangChain**:
 5.  **Memory:**
 
     - **Problem Addressed:** LLM API calls are inherently **stateless**. This means each interaction with an LLM via its API is independent and has no recollection of previous interactions. For example, if you ask an LLM "Who is Narendra Modi?" and then follow up with "How old is he?", a stateless LLM won't know who "he" refers to. This is a significant issue for building conversational applications like chatbots where context is crucial.
-    ![alt text](image-6.png)
+      ![alt text](images/image-6.png)
     - **LangChain's Contribution:** The **Memory** component provides a way to add statefulness or "memory" to LLM interactions, allowing conversations to maintain context.
     - **Types of Memory in LangChain:**
       - **ConversationBufferMemory:** Stores the entire chat history of the current conversation. This complete history is then sent with each new API call, giving the LLM full context. A potential downside is that as the conversation grows, the amount of text sent (and processed) increases, which can become costly.
