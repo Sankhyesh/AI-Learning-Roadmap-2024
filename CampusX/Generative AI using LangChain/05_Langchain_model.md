@@ -42,6 +42,8 @@
         - **Hugging Face Inference API**: Using models hosted on Hugging Face via their API (e.g., using `ChatHuggingFace` with `HuggingFaceEndpoint`). This still involves an API call but provides access to many open-source models.
         - **Local Download and Execution**: Downloading models (e.g., TinyLlama, sentence-transformers like 'all-MiniLM-L6-v2') and running them on the user's own machine (e.g., using `ChatHuggingFace` with `HuggingFacePipeline` for language models, or `HuggingFaceEmbeddings` for embedding models). The material notes the potential for slow performance on machines without adequate hardware.
 
+        Code example - [Local Model Execution](code/chat_models/chat_models_hf_api.py)
+
 - The **Embedding Models** section details:
 
   - **OpenAI Embeddings**: Using the `OpenAIEmbeddings` class, with methods like **`embed_query`** (for a single piece of text) and **`embed_documents`** (for a list of texts). The ability to specify the model (e.g., `text-embedding-3-large`) and desired output **dimensions** is mentioned, along with their relative cost-effectiveness.

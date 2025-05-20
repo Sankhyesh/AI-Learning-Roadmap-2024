@@ -3,3 +3,4 @@
 *.pyc
 /coding/Sliding_window/.ipynb_checkpoints
 /.venv
+/CampusX/Generative AI using LangChain/CODE/.env
