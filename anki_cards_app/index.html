@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Learning Flashcards</title>
+    <title>AI Learning Flashcards - 3D Version</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="app-container">
         <header>
-            <h1>AI Learning Flashcards</h1>
+            <h1>AI Learning Flashcards - 3D</h1>
             <div class="controls">
                 <button id="shuffle">🔀 Shuffle</button>
                 <div class="progress">
@@ -21,26 +21,22 @@
             </div>
         </header>
         
-        <div class="flashcard-container">
-            <div class="flashcard" id="card">
-                <div class="card-front">
-                    <div class="card-content" id="front-content"></div>
-                    <div class="hint">Click to flip</div>
-                </div>
-                <div class="card-back">
-                    <div class="card-content" id="back-content"></div>
-                    <div class="card-actions">
-                        <button id="again">😕 Again</button>
-                        <button id="good">👍 Good</button>
-                        <button id="easy">😊 Easy</button>
-                    </div>
-                </div>
-            </div>
-            
+        <div class="threejs-container" id="threejs-container">
+            <!-- Three.js canvas will be inserted here -->
+        </div>
+        
+        <div class="card-controls">
+            <button id="flip-card">🔄 Flip Card</button>
             <div class="navigation">
                 <button id="prev">⏮ Previous</button>
                 <button id="next">Next ⏭</button>
             </div>
+        </div>
+        
+        <div class="card-actions" id="card-actions">
+            <button id="again">😕 Again</button>
+            <button id="good">👍 Good</button>
+            <button id="easy">😊 Easy</button>
         </div>
         
         <div class="stats">
@@ -48,7 +44,16 @@
             <div>Due: <span id="stats-due">0</span></div>
             <div>New: <span id="stats-new">0</span></div>
         </div>
+        
+        <div class="hint">
+            <p>Keyboard Shortcuts: <strong>Space</strong> to flip, <strong>→</strong> for next, <strong>←</strong> for previous</p>
+        </div>
     </div>
+    
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- TWEEN.js for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
     
     <script src="app.js"></script>
     <script>
@@ -59,27 +64,22 @@
             
             if (cardsParam) {
                 try {
-                    // If cards are provided in the URL, use them
                     const cardsData = JSON.parse(decodeURIComponent(cardsParam));
                     window.cardsData = Array.isArray(cardsData) ? cardsData : [];
                 } catch (e) {
                     console.error('Error parsing cards from URL:', e);
-                    // Fall back to sample cards if there's an error
                     loadSampleCards();
                 }
             } else {
-                // If no cards in URL, try to load sample cards
                 loadSampleCards();
             }
             
-            // Initialize the app after loading cards
             if (window.app) {
                 window.app.init();
             }
         });
         
         function loadSampleCards() {
-            // Load sample cards from the JSON file
             fetch('sample-cards.json')
                 .then(response => response.json())
                 .then(data => {

@@ -3,511 +3,790 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LangChain Flashcards - Introduction</title>
+    <title>LangChain Flashcards - 3D Introduction</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f7fa;
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: #2c3e50;
+            margin: 0 auto 30px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
             color: white;
-            border-radius: 8px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* Stats */
+        .stats {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .card h2 {
-            margin-top: 0;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .flashcard {
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
+            justify-content: space-around;
+            background: white;
             padding: 15px;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
-        .question {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .answer {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        .tags {
-            display: flex;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
         }
-        .tag {
-            background-color: #e1f0fa;
-            color: #2c6b9e;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
+
+        .stat-item {
+            text-align: center;
+            padding: 0 15px;
         }
-        .cloze {
-            background-color: #fff3cd;
-            padding: 2px 5px;
-            border-radius: 3px;
+
+        .stat-value {
+            font-size: 1.8em;
             font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
         }
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
         }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
+
+        /* Card Container */
+        #threejs-canvas-container {
+            width: 100%;
+            height: 500px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            background: #f8f9fa;
+            position: relative;
         }
-        button:hover {
-            background-color: #2980b9;
-        }
-        #flashcard-container {
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .hidden {
-            display: none;
-        }
+
+        /* Controls */
         .controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button i {
+            font-size: 0.9em;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #prev-btn, #next-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #flip-btn {
+            background-color: #9b59b6;
+            color: white;
+        }
+
+        #flip-btn:hover:not(:disabled) {
+            background-color: #8e44ad;
+        }
+
+        /* Card Actions */
+        .card-actions {
+            display: none;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card-actions button {
+            min-width: 100px;
+        }
+
+        #again { background-color: var(--danger-color); }
+        #again:hover:not(:disabled) { background-color: #c0392b; }
+        #good { background-color: var(--secondary-color); }
+        #good:hover:not(:disabled) { background-color: #27ae60; }
+        #easy { background-color: var(--primary-color); }
+        #easy:hover:not(:disabled) { background-color: #2980b9; }
+
+        /* Progress */
         .progress {
             text-align: center;
-            margin: 10px 0;
-            font-weight: bold;
+            font-size: 1.1em;
+            margin: 15px 0;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        /* Card Info */
+        .card-info {
+            background-color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 30px;
+        }
+
+        .card-info h2 {
+            margin-top: 0;
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-info ul {
+            padding-left: 20px;
+        }
+
+        .card-info li {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .controls {
+                gap: 8px;
+            }
+
+            button {
+                padding: 10px 16px;
+                font-size: 15px;
+            }
+
+            #threejs-canvas-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stat-item {
+                width: 50%;
+                margin-bottom: 15px;
+            }
+
+            .stat-value {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>LangChain - Introduction Flashcards</h1>
-        <p>Study and review key concepts about LangChain</p>
+        <h1>LangChain - 3D Flashcards</h1>
+        <p>Study and review key concepts about LangChain in 3D!</p>
     </div>
     
     <div class="container">
-        <div class="controls">
-            <button id="prev-btn">← Previous</button>
-            <button id="flip-btn">Show Answer</button>
-            <button id="next-btn">Next →</button>
-        </div>
-        
-        <div class="progress">
-            <span id="card-counter">1</span> / <span id="total-cards">30</span>
-        </div>
-        
-        <div class="card" id="flashcard-container">
-            <div id="question-container" class="flashcard">
-                <div class="question" id="question">Loading flashcards...</div>
-                <div class="answer hidden" id="answer"></div>
-                <div class="tags" id="tags"></div>
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="total-cards">0</div>
+                <div class="stat-label">Total Cards</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="due-cards">0</div>
+                <div class="stat-label">Due</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="new-cards">0</div>
+                <div class="stat-label">New</div>
             </div>
         </div>
-        
-        <div class="card">
+
+        <!-- Card Container -->
+        <div id="threejs-canvas-container">
+            <!-- Three.js canvas will be appended here by the script -->
+        </div>
+
+        <!-- Progress -->
+        <div class="progress">
+            <span id="card-counter">1</span> / <span id="total-cards-display">30</span>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+            <button id="flip-btn"><i class="fas fa-sync-alt"></i> Show Answer</button>
+            <button id="shuffle-btn"><i class="fas fa-random"></i> Shuffle</button>
+            <select id="tag-filter">
+                <option value="">All Tags</option>
+            </select>
+            <button id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <!-- Card Actions (shown when card is flipped) -->
+        <div class="card-actions" id="card-actions">
+            <button id="again-btn"><i class="fas fa-redo"></i> Again</button>
+            <button id="good-btn"><i class="fas fa-check"></i> Good</button>
+            <button id="easy-btn"><i class="fas fa-star"></i> Easy</button>
+        </div>
+
+        <div class="card-info">
             <h2>How to use these flashcards:</h2>
             <ul>
-                <li>Click <strong>Show Answer</strong> to reveal the answer to the current question</li>
-                <li>Use the <strong>Previous</strong> and <strong>Next</strong> buttons to navigate between cards</li>
-                <li>Keyboard shortcuts: <strong>Space</strong> to flip, <strong>→</strong> for next, <strong>←</strong> for previous</li>
-                <li>Tags at the bottom of each card show related topics</li>
+                <li>Click <strong>Show Answer</strong> to flip the card and reveal the answer.</li>
+                <li>Use the <strong>Previous</strong> and <strong>Next</strong> buttons to navigate between cards.</li>
+                <li>Keyboard shortcuts: <strong>Space</strong> to flip, <strong>→</strong> for next, <strong>←</strong> for previous.</li>
+                <li>Rate each card after answering to help with spaced repetition learning.</li>
+                <li>Use the tag filter to focus on specific topics.</li>
             </ul>
         </div>
     </div>
 
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- TWEEN.js for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
+
     <script>
-        // Flashcard data
+        // Flashcard data (same as provided)
         const flashcards = [
-            {
-                "front": "What is LangChain?",
-                "back": "An open-source framework designed for developing applications powered by Large Language Models (LLMs).",
-                "type": "basic",
-                "tags": ["LangChain", "LLM", "Framework", "CoreConcept"],
-                "id": "uuid-v4-placeholder-1"
-            },
-            {
-                "front": "What is the primary function of LangChain?",
-                "back": "To simplify the creation of LLM-based applications.",
-                "type": "basic",
-                "tags": ["LangChain", "LLM", "Framework", "CoreConcept"],
-                "id": "uuid-v4-placeholder-2"
-            },
-            {
-                "front": "In the PDF chat app example, {{c1::Semantic Search}} is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar.",
-                "back": "Semantic Search",
-                "type": "cloze",
-                "tags": ["LangChain", "LLM", "SystemDesign", "SemanticSearch", "PDFChatApp"],
-                "cloze_back_extra": "In the PDF chat app example, Semantic Search is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar, leading to more contextually relevant results.",
-                "id": "uuid-v4-placeholder-3"
-            },
-            {
-                "front": "In the system design of an LLM-powered application, what are the two main capabilities of its \"Brain\" component?",
-                "back": "1. Natural Language Understanding (NLU). 2. Context-Aware Text Generation.",
-                "type": "basic",
-                "tags": ["LangChain", "LLM", "SystemDesign", "NLU", "TextGeneration"],
-                "mnemonic": "The Brain **UNC**overs text: **U**nderstanding **N**atural language, **C**ontextual Generation.",
-                "id": "uuid-v4-placeholder-4"
-            },
-            {
-                "front": "Semantic search works by converting text into {{c1::embeddings}} (vector representations that capture the semantic meaning of the text).",
-                "back": "embeddings",
-                "type": "cloze",
-                "tags": ["LangChain", "LLM", "SemanticSearch", "Embeddings", "NLP"],
-                "examples": "Techniques like Word2Vec, Doc2Vec, or BERT embeddings can be used.",
-                "cloze_back_extra": "Semantic search works by converting text into embeddings (vector representations that capture the semantic meaning of the text).",
-                "id": "uuid-v4-placeholder-5"
-            },
-            {
-                "front": "In semantic search, after converting the user's query into a vector, what is the immediate next step?",
-                "back": "The system calculates the similarity (e.g., cosine similarity or Euclidean distance) between the query vector and all document vectors.",
-                "type": "basic",
-                "tags": ["LangChain", "LLM", "SemanticSearch", "Embeddings", "VectorSimilarity"],
-                "id": "uuid-v4-placeholder-6"
-            },
-            {
-                "front": "In the detailed system design of a PDF chat application, a user uploads a PDF which is typically stored in cloud storage like {{c1::AWS S3}}.",
-                "back": "AWS S3",
-                "type": "cloze",
-                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "CloudStorage", "AWS_S3"],
-                "cloze_back_extra": "In the detailed system design of a PDF chat application, a user uploads a PDF which is typically stored in cloud storage like AWS S3.",
-                "id": "uuid-v4-placeholder-7"
-            },
-            {
-                "front": "What is the role of a \"Text Splitter\" in the system design of an LLM-powered application like a PDF chat app?",
-                "back": "To divide the loaded document into smaller, manageable chunks (e.g., by page, chapter, or paragraph).",
-                "type": "basic",
-                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "TextSplitter", "DataProcessing"],
-                "examples": "For a 1000-page PDF, splitting by page might result in 1000 chunks.",
-                "id": "uuid-v4-placeholder-8"
-            },
-            {
-                "front": "In the PDF chat app design, each text chunk is passed through an {{c1::embedding model}} to generate a vector embedding for it.",
-                "back": "embedding model",
-                "type": "cloze",
-                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "EmbeddingModel", "Embeddings"],
-                "cloze_back_extra": "In the PDF chat app design, each text chunk is passed through an embedding model to generate a vector embedding for it.",
-                "id": "uuid-v4-placeholder-9"
-            },
-            {
-                "front": "Where are the generated vector embeddings of text chunks stored in a PDF chat application's system design for efficient querying?",
-                "back": "In a specialized vector database.",
-                "type": "basic",
-                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "VectorDatabase", "Embeddings"],
-                "id": "uuid-v4-placeholder-10"
-            },
-            {
-                "front": "In a PDF chat app, what information is combined and sent to the LLM (the \"Brain\") to generate an answer?",
-                "back": "The original user query and the retrieved text chunks (relevant context).",
-                "type": "basic",
-                "tags": ["LangChain", "SystemDesign", "PDFChatApp", "LLM", "ContextRetrieval"],
-                "id": "uuid-v4-placeholder-11"
-            },
-            {
-                "front": "What historical challenge in building LLM-powered applications was largely solved by Transformers, BERT, and GPT models?",
-                "back": "Building the \"Brain\" component with robust Natural Language Understanding (NLU) and text generation capabilities.",
-                "type": "basic",
-                "tags": ["LLM", "Challenges", "NLU", "TextGeneration", "Transformers", "AIHistory"],
-                "id": "uuid-v4-placeholder-12"
-            },
-            {
-                "front": "A solution to the high computational cost of self-hosting LLMs is the use of {{c1::LLM APIs}} provided by companies like OpenAI.",
-                "back": "LLM APIs",
-                "type": "cloze",
-                "tags": ["LLM", "Challenges", "Solutions", "LLM_APIs", "CloudComputing"],
-                "examples": "These APIs allow developers to access LLM capabilities over the internet, often on a pay-as-you-go basis.",
-                "cloze_back_extra": "A solution to the high computational cost and engineering effort of self-hosting LLMs is the use of LLM APIs provided by companies like OpenAI.",
-                "id": "uuid-v4-placeholder-13"
-            },
-            {
-                "front": "What primary challenge related to system complexity and component integration in LLM applications does LangChain aim to solve?",
-                "back": "The challenge of orchestrating the entire system and managing interactions between components, reducing boilerplate code.",
-                "type": "basic",
-                "tags": ["LangChain", "LLM", "Challenges", "Orchestration", "SystemIntegration"],
-                "id": "uuid-v4-placeholder-14"
-            },
-            {
-                "front": "What is a core concept in LangChain, giving the framework its name, that allows developers to sequence calls to LLMs or other utilities?",
-                "back": "Chains.",
-                "type": "basic",
-                "tags": ["LangChain", "CoreConcept", "Chains", "Workflow"],
-                "examples": "The output of one component in a chain automatically becomes the input for the next.",
-                "mnemonic": "Lang**Chain** links steps together.",
-                "id": "uuid-v4-placeholder-15"
-            },
-            {
-                "front": "LangChain's {{c1::Chains}} allow developers to sequence calls, where the output of one component automatically becomes the input for the next.",
-                "back": "Chains",
-                "type": "cloze",
-                "tags": ["LangChain", "CoreConcept", "Chains", "Workflow"],
-                "cloze_back_extra": "LangChain's Chains allow developers to sequence calls to LLMs or other utilities, where the output of one component automatically becomes the input for the next.",
-                "id": "uuid-v4-placeholder-16"
-            },
-            {
-                "front": "What does \"model-agnostic development\" mean in the context of LangChain?",
-                "back": "It allows for easy switching between different LLM providers (e.g., OpenAI, Google) or models with minimal code changes.",
-                "type": "basic",
-                "tags": ["LangChain", "Benefits", "ModelAgnostic", "LLM", "Flexibility"],
-                "id": "uuid-v4-placeholder-17"
-            },
-            {
-                "front": "Name three types of components provided within LangChain's ecosystem for building LLM applications.",
-                "back": "Any three of: Document Loaders, Text Splitters, Embedding Models, Vector Stores. (Others include: LLM wrappers, Chains, Agents, Memory tools)",
-                "type": "basic",
-                "tags": ["LangChain", "Ecosystem", "Components", "DevelopmentTools"],
-                "mnemonic": "LangChain's ecosystem helps **D**evelopers **T**ackle **E**normous **V**olumes (of data/tasks) -> **D**ocument Loaders, **T**ext Splitters, **E**mbedding Models, **V**ector Stores.",
-                "id": "uuid-v4-placeholder-18"
-            },
-            {
-                "front": "LangChain includes mechanisms for managing {{c1::conversational memory}}, crucial for chatbots to recall previous interactions.",
-                "back": "conversational memory",
-                "type": "cloze",
-                "tags": ["LangChain", "Features", "ConversationalMemory", "Chatbots", "StateHandling"],
-                "examples": "If a user discusses 'linear regression' then asks about 'interview questions on _this_ algorithm,' memory helps link 'this' to linear regression.",
-                "cloze_back_extra": "LangChain includes mechanisms for managing conversational memory, which is crucial for chatbots to remember previous parts of a conversation.",
-                "id": "uuid-v4-placeholder-19"
-            },
-            {
-                "front": "In LangChain use cases, what are \"AI Agents\" described as?",
-                "back": "\"Chatbots on steroids\"; systems that can converse and also perform actions or use tools.",
-                "type": "basic",
-                "tags": ["LangChain", "UseCases", "AI_Agents", "Automation"],
-                "examples": "An AI travel agent that books flights based on natural language requests.",
-                "id": "uuid-v4-placeholder-20"
-            },
-            {
-                "front": "Why is LangChain useful for building summarization tools for private company data?",
-                "back": "It enables companies to create internal \"ChatGPT-like\" tools for their specific documents, avoiding upload to public services.",
-                "type": "basic",
-                "tags": ["LangChain", "UseCases", "Summarization", "PrivateData", "EnterpriseAI"],
-                "id": "uuid-v4-placeholder-21"
-            },
-            {
-                "front": "Name one alternative framework to LangChain for building LLM applications.",
-                "back": "LlamaIndex or Haystack.",
-                "type": "basic",
-                "tags": ["LangChain", "Alternatives", "LLM_Frameworks", "LlamaIndex", "Haystack"],
-                "id": "uuid-v4-placeholder-22"
-            },
-            {
-                "front": "What key advantage does semantic search offer over keyword search for document querying?",
-                "back": "Semantic search understands the *meaning* and *context* of a query, yielding more relevant results, unlike keyword search's exact word matching.",
-                "type": "basic",
-                "tags": ["SemanticSearch", "KeywordSearch", "NLP", "InformationRetrieval"],
-                "id": "uuid-v4-placeholder-23"
-            },
-            {
-                "front": "In semantic search, what are \"embeddings\"?",
-                "back": "Vector representations (sets of numbers) that capture the semantic meaning of text.",
-                "type": "basic",
-                "tags": ["SemanticSearch", "Embeddings", "NLP", "VectorRepresentations"],
-                "id": "uuid-v4-placeholder-24"
-            },
-            {
-                "front": "A {{c1::vector database}} is used in LLM applications to efficiently store and query text {{c2::embeddings}}.",
-                "back": "c1: vector database, c2: embeddings",
-                "type": "cloze",
-                "tags": ["VectorDatabase", "Embeddings", "LLM", "SystemDesign", "DataStorage"],
-                "cloze_back_extra": "A vector database is used in LLM applications to efficiently store and query text embeddings.",
-                "id": "uuid-v4-placeholder-25"
-            },
-            {
-                "front": "Which major challenge in building LLM applications did LLM APIs primarily address?",
-                "back": "The computational cost and engineering complexity of self-hosting large language models.",
-                "type": "basic",
-                "tags": ["LLM", "LLM_APIs", "Challenges", "Solutions", "Scalability"],
-                "id": "uuid-v4-placeholder-26"
-            },
-            {
-                "front": "LangChain's \"plug and play\" nature means it allows developers to {{c1::seamlessly integrate diverse components}} (like data loaders, embedding models, LLMs) with less boilerplate code.",
-                "back": "seamlessly integrate diverse components",
-                "type": "cloze",
-                "tags": ["LangChain", "Orchestration", "SystemIntegration", "DevelopmentEfficiency"],
-                "cloze_back_extra": "LangChain's \"plug and play\" nature refers to its ability to allow developers to seamlessly integrate various components like document loaders, embedding models, and LLMs with reduced boilerplate code.",
-                "id": "uuid-v4-placeholder-27"
-            },
-            {
-                "front": "Why is handling conversational memory important for chatbots?",
-                "back": "It enables chatbots to remember earlier parts of the conversation, leading to more coherent and context-aware interactions.",
-                "type": "basic",
-                "tags": ["LangChain", "Chatbots", "ConversationalMemory", "UserExperience"],
-                "examples": "If a user asks about 'Topic A' and then 'What are its drawbacks?', the chatbot needs memory to link 'its' to 'Topic A'.",
-                "id": "uuid-v4-placeholder-28"
-            },
-            {
-                "front": "How does LangChain aid in reducing boilerplate code for LLM applications?",
-                "back": "By offering pre-built functionalities and abstractions for common tasks and integrations (e.g., connecting to vector databases, LLM APIs, text splitting).",
-                "type": "basic",
-                "tags": ["LangChain", "DevelopmentEfficiency", "BoilerplateCode", "Orchestration"],
-                "id": "uuid-v4-placeholder-29"
-            },
-            {
-                "front": "What is the main function of \"Chains\" in the LangChain framework?",
-                "back": "To sequence calls to LLMs or other utilities, enabling the output of one step to serve as the input for the subsequent step, thereby constructing complex application workflows.",
-                "type": "basic",
-                "tags": ["LangChain", "Chains", "CoreConcept", "WorkflowAutomation"],
-                "id": "uuid-v4-placeholder-30"
-            }
+            { "front": "What is LangChain?", "back": "An open-source framework designed for developing applications powered by Large Language Models (LLMs).", "type": "basic", "tags": ["LangChain", "LLM", "Framework", "CoreConcept"], "id": "uuid-v4-placeholder-1" },
+            { "front": "What is the primary function of LangChain?", "back": "To simplify the creation of LLM-based applications.", "type": "basic", "tags": ["LangChain", "LLM", "Framework", "CoreConcept"], "id": "uuid-v4-placeholder-2" },
+            { "front": "In the PDF chat app example, {{c1::Semantic Search}} is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar.", "back": "Semantic Search", "type": "cloze", "tags": ["LangChain", "LLM", "SystemDesign", "SemanticSearch", "PDFChatApp"], "cloze_back_extra": "In the PDF chat app example, Semantic Search is preferred over keyword search because it aims to understand the _meaning_ of the query and find text that is semantically similar, leading to more contextually relevant results.", "id": "uuid-v4-placeholder-3" },
+            { "front": "In the system design of an LLM-powered application, what are the two main capabilities of its \"Brain\" component?", "back": "1. Natural Language Understanding (NLU). 2. Context-Aware Text Generation.", "type": "basic", "tags": ["LangChain", "LLM", "SystemDesign", "NLU", "TextGeneration"], "mnemonic": "The Brain **UNC**overs text: **U**nderstanding **N**atural language, **C**ontextual Generation.", "id": "uuid-v4-placeholder-4" },
+            { "front": "Semantic search works by converting text into {{c1::embeddings}} (vector representations that capture the semantic meaning of the text).", "back": "embeddings", "type": "cloze", "tags": ["LangChain", "LLM", "SemanticSearch", "Embeddings", "NLP"], "examples": "Techniques like Word2Vec, Doc2Vec, or BERT embeddings can be used.", "cloze_back_extra": "Semantic search works by converting text into embeddings (vector representations that capture the semantic meaning of the text).", "id": "uuid-v4-placeholder-5" },
+            { "front": "In semantic search, after converting the user's query into a vector, what is the immediate next step?", "back": "The system calculates the similarity (e.g., cosine similarity or Euclidean distance) between the query vector and all document vectors.", "type": "basic", "tags": ["LangChain", "LLM", "SemanticSearch", "Embeddings", "VectorSimilarity"], "id": "uuid-v4-placeholder-6" },
+            { "front": "In the detailed system design of a PDF chat application, a user uploads a PDF which is typically stored in cloud storage like {{c1::AWS S3}}.", "back": "AWS S3", "type": "cloze", "tags": ["LangChain", "SystemDesign", "PDFChatApp", "CloudStorage", "AWS_S3"], "cloze_back_extra": "In the detailed system design of a PDF chat application, a user uploads a PDF which is typically stored in cloud storage like AWS S3.", "id": "uuid-v4-placeholder-7" },
+            { "front": "What is the role of a \"Text Splitter\" in the system design of an LLM-powered application like a PDF chat app?", "back": "To divide the loaded document into smaller, manageable chunks (e.g., by page, chapter, or paragraph).", "type": "basic", "tags": ["LangChain", "SystemDesign", "PDFChatApp", "TextSplitter", "DataProcessing"], "examples": "For a 1000-page PDF, splitting by page might result in 1000 chunks.", "id": "uuid-v4-placeholder-8" },
+            { "front": "In the PDF chat app design, each text chunk is passed through an {{c1::embedding model}} to generate a vector embedding for it.", "back": "embedding model", "type": "cloze", "tags": ["LangChain", "SystemDesign", "PDFChatApp", "EmbeddingModel", "Embeddings"], "cloze_back_extra": "In the PDF chat app design, each text chunk is passed through an embedding model to generate a vector embedding for it.", "id": "uuid-v4-placeholder-9" },
+            { "front": "Where are the generated vector embeddings of text chunks stored in a PDF chat application's system design for efficient querying?", "back": "In a specialized vector database.", "type": "basic", "tags": ["LangChain", "SystemDesign", "PDFChatApp", "VectorDatabase", "Embeddings"], "id": "uuid-v4-placeholder-10" },
+            { "front": "In a PDF chat app, what information is combined and sent to the LLM (the \"Brain\") to generate an answer?", "back": "The original user query and the retrieved text chunks (relevant context).", "type": "basic", "tags": ["LangChain", "SystemDesign", "PDFChatApp", "LLM", "ContextRetrieval"], "id": "uuid-v4-placeholder-11" },
+            { "front": "What historical challenge in building LLM-powered applications was largely solved by Transformers, BERT, and GPT models?", "back": "Building the \"Brain\" component with robust Natural Language Understanding (NLU) and text generation capabilities.", "type": "basic", "tags": ["LLM", "Challenges", "NLU", "TextGeneration", "Transformers", "AIHistory"], "id": "uuid-v4-placeholder-12" },
+            { "front": "A solution to the high computational cost of self-hosting LLMs is the use of {{c1::LLM APIs}} provided by companies like OpenAI.", "back": "LLM APIs", "type": "cloze", "tags": ["LLM", "Challenges", "Solutions", "LLM_APIs", "CloudComputing"], "examples": "These APIs allow developers to access LLM capabilities over the internet, often on a pay-as-you-go basis.", "cloze_back_extra": "A solution to the high computational cost and engineering effort of self-hosting LLMs is the use of LLM APIs provided by companies like OpenAI.", "id": "uuid-v4-placeholder-13" },
+            { "front": "What primary challenge related to system complexity and component integration in LLM applications does LangChain aim to solve?", "back": "The challenge of orchestrating the entire system and managing interactions between components, reducing boilerplate code.", "type": "basic", "tags": ["LangChain", "LLM", "Challenges", "Orchestration", "SystemIntegration"], "id": "uuid-v4-placeholder-14" },
+            { "front": "What is a core concept in LangChain, giving the framework its name, that allows developers to sequence calls to LLMs or other utilities?", "back": "Chains.", "type": "basic", "tags": ["LangChain", "CoreConcept", "Chains", "Workflow"], "examples": "The output of one component in a chain automatically becomes the input for the next.", "mnemonic": "Lang**Chain** links steps together.", "id": "uuid-v4-placeholder-15" },
+            { "front": "LangChain's {{c1::Chains}} allow developers to sequence calls, where the output of one component automatically becomes the input for the next.", "back": "Chains", "type": "cloze", "tags": ["LangChain", "CoreConcept", "Chains", "Workflow"], "cloze_back_extra": "LangChain's Chains allow developers to sequence calls to LLMs or other utilities, where the output of one component automatically becomes the input for the next.", "id": "uuid-v4-placeholder-16" },
+            { "front": "What does \"model-agnostic development\" mean in the context of LangChain?", "back": "It allows for easy switching between different LLM providers (e.g., OpenAI, Google) or models with minimal code changes.", "type": "basic", "tags": ["LangChain", "Benefits", "ModelAgnostic", "LLM", "Flexibility"], "id": "uuid-v4-placeholder-17" },
+            { "front": "Name three types of components provided within LangChain's ecosystem for building LLM applications.", "back": "Any three of: Document Loaders, Text Splitters, Embedding Models, Vector Stores. (Others include: LLM wrappers, Chains, Agents, Memory tools)", "type": "basic", "tags": ["LangChain", "Ecosystem", "Components", "DevelopmentTools"], "mnemonic": "LangChain's ecosystem helps **D**evelopers **T**ackle **E**normous **V**olumes (of data/tasks) -> **D**ocument Loaders, **T**ext Splitters, **E**mbedding Models, **V**ector Stores.", "id": "uuid-v4-placeholder-18" },
+            { "front": "LangChain includes mechanisms for managing {{c1::conversational memory}}, crucial for chatbots to recall previous interactions.", "back": "conversational memory", "type": "cloze", "tags": ["LangChain", "Features", "ConversationalMemory", "Chatbots", "StateHandling"], "examples": "If a user discusses 'linear regression' then asks about 'interview questions on _this_ algorithm,' memory helps link 'this' to linear regression.", "cloze_back_extra": "LangChain includes mechanisms for managing conversational memory, which is crucial for chatbots to remember previous parts of a conversation.", "id": "uuid-v4-placeholder-19" },
+            { "front": "In LangChain use cases, what are \"AI Agents\" described as?", "back": "\"Chatbots on steroids\"; systems that can converse and also perform actions or use tools.", "type": "basic", "tags": ["LangChain", "UseCases", "AI_Agents", "Automation"], "examples": "An AI travel agent that books flights based on natural language requests.", "id": "uuid-v4-placeholder-20" },
+            { "front": "Why is LangChain useful for building summarization tools for private company data?", "back": "It enables companies to create internal \"ChatGPT-like\" tools for their specific documents, avoiding upload to public services.", "type": "basic", "tags": ["LangChain", "UseCases", "Summarization", "PrivateData", "EnterpriseAI"], "id": "uuid-v4-placeholder-21" },
+            { "front": "Name one alternative framework to LangChain for building LLM applications.", "back": "LlamaIndex or Haystack.", "type": "basic", "tags": ["LangChain", "Alternatives", "LLM_Frameworks", "LlamaIndex", "Haystack"], "id": "uuid-v4-placeholder-22" },
+            { "front": "What key advantage does semantic search offer over keyword search for document querying?", "back": "Semantic search understands the *meaning* and *context* of a query, yielding more relevant results, unlike keyword search's exact word matching.", "type": "basic", "tags": ["SemanticSearch", "KeywordSearch", "NLP", "InformationRetrieval"], "id": "uuid-v4-placeholder-23" },
+            { "front": "In semantic search, what are \"embeddings\"?", "back": "Vector representations (sets of numbers) that capture the semantic meaning of text.", "type": "basic", "tags": ["SemanticSearch", "Embeddings", "NLP", "VectorRepresentations"], "id": "uuid-v4-placeholder-24" },
+            { "front": "A {{c1::vector database}} is used in LLM applications to efficiently store and query text {{c2::embeddings}}.", "back": "c1: vector database, c2: embeddings", "type": "cloze", "tags": ["VectorDatabase", "Embeddings", "LLM", "SystemDesign", "DataStorage"], "cloze_back_extra": "A vector database is used in LLM applications to efficiently store and query text embeddings.", "id": "uuid-v4-placeholder-25" },
+            { "front": "Which major challenge in building LLM applications did LLM APIs primarily address?", "back": "The computational cost and engineering complexity of self-hosting large language models.", "type": "basic", "tags": ["LLM", "LLM_APIs", "Challenges", "Solutions", "Scalability"], "id": "uuid-v4-placeholder-26" },
+            { "front": "LangChain's \"plug and play\" nature means it allows developers to {{c1::seamlessly integrate diverse components}} (like data loaders, embedding models, LLMs) with less boilerplate code.", "back": "seamlessly integrate diverse components", "type": "cloze", "tags": ["LangChain", "Orchestration", "SystemIntegration", "DevelopmentEfficiency"], "cloze_back_extra": "LangChain's \"plug and play\" nature refers to its ability to allow developers to seamlessly integrate various components like document loaders, embedding models, and LLMs with reduced boilerplate code.", "id": "uuid-v4-placeholder-27" },
+            { "front": "Why is handling conversational memory important for chatbots?", "back": "It enables chatbots to remember earlier parts of the conversation, leading to more coherent and context-aware interactions.", "type": "basic", "tags": ["LangChain", "Chatbots", "ConversationalMemory", "UserExperience"], "examples": "If a user asks about 'Topic A' and then 'What are its drawbacks?', the chatbot needs memory to link 'its' to 'Topic A'.", "id": "uuid-v4-placeholder-28" },
+            { "front": "How does LangChain aid in reducing boilerplate code for LLM applications?", "back": "By offering pre-built functionalities and abstractions for common tasks and integrations (e.g., connecting to vector databases, LLM APIs, text splitting).", "type": "basic", "tags": ["LangChain", "DevelopmentEfficiency", "BoilerplateCode", "Orchestration"], "id": "uuid-v4-placeholder-29" },
+            { "front": "What is the main function of \"Chains\" in the LangChain framework?", "back": "To sequence calls to LLMs or other utilities, enabling the output of one step to serve as the input for the subsequent step, thereby constructing complex application workflows.", "type": "basic", "tags": ["LangChain", "Chains", "CoreConcept", "WorkflowAutomation"], "id": "uuid-v4-placeholder-30" }
         ];
 
-        // DOM elements
-        const questionEl = document.getElementById('question');
-        const answerEl = document.getElementById('answer');
-        const tagsEl = document.getElementById('tags');
+        // --- DOM Elements ---
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
         const flipBtn = document.getElementById('flip-btn');
-        const cardCounter = document.getElementById('card-counter');
-        const totalCardsEl = document.getElementById('total-cards');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        const againBtn = document.getElementById('again-btn');
+        const goodBtn = document.getElementById('good-btn');
+        const easyBtn = document.getElementById('easy-btn');
+        const tagFilter = document.getElementById('tag-filter');
 
-        // State
+        const cardCounterEl = document.getElementById('card-counter');
+        const totalCardsDisplayEl = document.getElementById('total-cards-display'); // For 'x / Y' display
+        
+        // Stats elements
+        const totalCardsStatEl = document.getElementById('total-cards'); // For the main stat block
+        const dueCardsStatEl = document.getElementById('due-cards');
+        const newCardsStatEl = document.getElementById('new-cards');
+        
+        const canvasContainer = document.getElementById('threejs-canvas-container');
+        const cardActions = document.getElementById('card-actions');
+
+        // --- Three.js Variables ---
+        let scene, camera, renderer, cardMesh, threeControls; // Renamed OrbitControls to threeControls
+        const CARD_WIDTH = 8; // Matched to Anki app settings
+        const CARD_HEIGHT = 5; // Matched to Anki app settings
+        const CARD_DEPTH = 0.15; // Matched to Anki app settings
+        const TEXTURE_WIDTH = 1536; // Matched to Anki app settings
+        const TEXTURE_HEIGHT = Math.round(TEXTURE_WIDTH * (CARD_HEIGHT / CARD_WIDTH));
+        let isAnimating = false;
+
+        // --- App State ---
+        let masterDeck = []; // Original full deck of cards
+        let filteredDeck = [];
         let currentCardIndex = 0;
         let isFlipped = false;
 
-        // Initialize
-        function init() {
-            // Set total cards count
-            totalCardsEl.textContent = flashcards.length;
-            
-            // Display first card
-            showCard(currentCardIndex);
-            
-            // Add event listeners
-            prevBtn.addEventListener('click', showPrevCard);
-            nextBtn.addEventListener('click', showNextCard);
-            flipBtn.addEventListener('click', toggleFlip);
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', handleKeyDown);
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        function initApp() {
+            masterDeck = [...flashcards]; // Copy flashcards to masterDeck
+            populateTagFilter();
+            shuffleAndFilterCards(); // Initial shuffle and filter
+            initThreeJS();
+            setupEventListeners();
+            updateUI(); // Initial UI update
         }
 
-        // Show card at index
-        function showCard(index) {
-            if (index < 0 || index >= flashcards.length) return;
-            
-            const card = flashcards[index];
-            currentCardIndex = index;
-            isFlipped = false;
-            
-            // Update question (handle cloze deletions)
-            let questionText = card.front;
-            if (card.type === 'cloze') {
-                // Simple cloze handling - remove {{c1::...}} and show blanks
-                questionText = questionText.replace(/\{\{c\d+::(.*?)(?:::(.*?))?\}\}/g, '[...]');
-            }
-            questionEl.innerHTML = questionText;
-            
-            // Update answer (use cloze_back_extra if available)
-            let answerText = card.cloze_back_extra || card.back;
-            answerEl.innerHTML = answerText;
-            
-            // Update tags
-            updateTags(card.tags);
-            
-            // Update card counter
-            cardCounter.textContent = index + 1;
-            
-            // Hide answer initially
-            answerEl.classList.add('hidden');
-            flipBtn.textContent = 'Show Answer';
-        }
-
-        // Update tags display
-        function updateTags(tagList) {
-            tagsEl.innerHTML = '';
-            if (!tagList || !tagList.length) return;
-            
-            tagList.forEach(tag => {
-                const tagEl = document.createElement('span');
-                tagEl.className = 'tag';
-                tagEl.textContent = tag;
-                tagsEl.appendChild(tagEl);
+        function populateTagFilter() {
+            const allTags = new Set();
+            masterDeck.forEach(card => {
+                if (card.tags && Array.isArray(card.tags)) {
+                    card.tags.forEach(tag => allTags.add(tag));
+                }
+            });
+            tagFilter.innerHTML = '<option value="">All Tags</option>'; // Clear existing except default
+            Array.from(allTags).sort().forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagFilter.appendChild(option);
             });
         }
 
-        // Toggle card flip
-        function toggleFlip() {
-            isFlipped = !isFlipped;
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f2f5); // Light grey background from styles
+
+            const aspect = canvasContainer.clientWidth / canvasContainer.clientHeight;
+            camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
+            camera.position.set(0, 1, 12); // Adjusted for better view of larger card
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            canvasContainer.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
+            directionalLight.position.set(5, 10, 7.5);
+            scene.add(directionalLight);
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+            directionalLight2.position.set(-5, -5, -7.5);
+            scene.add(directionalLight2);
+
+            createCardMesh();
+            
+            // OrbitControls (optional, uncomment if needed for debugging)
+            /*
+            if (typeof THREE.OrbitControls !== 'undefined') {
+                threeControls = new THREE.OrbitControls(camera, renderer.domElement);
+                threeControls.enableZoom = true;
+                threeControls.enablePan = false;
+                threeControls.minDistance = 5;
+                threeControls.maxDistance = 25;
+                threeControls.target.set(0,0,0);
+            } else {
+                console.warn("THREE.OrbitControls not found. Ensure it's loaded if you want to use it.");
+            }
+            */
+
+            animateScene();
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function createCardMesh() {
+            const cardGeometry = new THREE.BoxGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_DEPTH);
+            const sideMaterial = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.8, metalness: 0.1 });
+            const frontMaterial = new THREE.MeshStandardMaterial({ map: createTextTexture({main: "Loading..."}, true, true), roughness: 0.7, metalness: 0.05 });
+            const backMaterial = new THREE.MeshStandardMaterial({ map: createTextTexture({main: "Loading..."}, false, true), roughness: 0.7, metalness: 0.05 });
+
+            const materials = [
+                sideMaterial, // right (px)
+                sideMaterial, // left (nx)
+                sideMaterial, // top (py)
+                sideMaterial, // bottom (ny)
+                frontMaterial, // front (pz)
+                backMaterial  // back (nz)
+            ];
+            cardMesh = new THREE.Mesh(cardGeometry, materials);
+            scene.add(cardMesh);
+        }
+
+        function animateScene() {
+            requestAnimationFrame(animateScene);
+            TWEEN.update();
+            // if (threeControls) threeControls.update(); 
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            if (!renderer || !camera || !canvasContainer) return;
+            const newWidth = canvasContainer.clientWidth;
+            const newHeight = canvasContainer.clientHeight;
+            if (newWidth === 0 || newHeight === 0) return; // Avoid issues if container is hidden or size 0
+
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(newWidth, newHeight);
+        }
+
+        // --- Text Texture Generation ---
+        function createTextTexture(textData, isFront, isPlaceholder = false) {
+            const canvas = document.createElement('canvas');
+            canvas.width = TEXTURE_WIDTH;
+            canvas.height = TEXTURE_HEIGHT;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = isFront ? '#ffffff' : '#fdfdfd'; // Slightly off-white for back
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Border
+            ctx.strokeStyle = isFront ? 'rgba(52, 152, 219, 0.8)' : 'rgba(46, 204, 113, 0.8)'; // var(--primary-color) : var(--secondary-color) with alpha
+            ctx.lineWidth = TEXTURE_WIDTH * 0.015; // Thicker border relative to texture size
+            ctx.strokeRect(ctx.lineWidth / 2, ctx.lineWidth / 2, canvas.width - ctx.lineWidth, canvas.height - ctx.lineWidth);
+
+            if (isPlaceholder) {
+                ctx.fillStyle = '#aaaaaa';
+                ctx.font = `bold ${TEXTURE_HEIGHT / 10}px 'Segoe UI', Arial, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(textData.main, canvas.width / 2, canvas.height / 2);
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.needsUpdate = true;
+                return texture;
+            }
+
+            const padding = TEXTURE_WIDTH * 0.05;
+            const maxTextWidth = canvas.width - 2 * padding;
+            let currentY = padding * 1.2;
+
+            // Title (Question/Answer)
+            ctx.fillStyle = isFront ? 'rgb(52, 152, 219)' : 'rgb(46, 204, 113)';
+            const titleFontSize = TEXTURE_HEIGHT / 14; // Slightly smaller for more content room
+            ctx.font = `bold ${titleFontSize}px 'Segoe UI', Arial, sans-serif`;
+            ctx.textAlign = 'left';
+            ctx.fillText(isFront ? 'Question:' : 'Answer:', padding, currentY);
+            currentY += titleFontSize * 1.6;
+
+            // Main Text
+            ctx.fillStyle = 'rgb(44, 62, 80)'; // var(--text-color)
+            const mainFontSize = TEXTURE_HEIGHT / 18;
+            ctx.font = `${mainFontSize}px 'Segoe UI', Arial, sans-serif`;
+            const lines = wrapText(ctx, textData.main, maxTextWidth);
+            lines.forEach(line => {
+                if (currentY < canvas.height - padding * 2.5) { // Reserve space for tags
+                    ctx.fillText(line, padding, currentY);
+                    currentY += mainFontSize * 1.35;
+                }
+            });
+
+            // Tags (only on back side)
+            if (!isFront && textData.tags && textData.tags.length > 0) {
+                currentY = canvas.height - padding * 1.5; // Position tags at the bottom
+                const tagFontSize = TEXTURE_HEIGHT / 25;
+                 currentY -= (tagFontSize * 1.3); // Adjust Y based on potential one line of tags
+
+                ctx.fillStyle = '#7f8c8d';
+                ctx.font = `italic ${tagFontSize}px 'Segoe UI', Arial, sans-serif`;
+                const tagString = "Tags: " + textData.tags.join(', ');
+                const tagLines = wrapText(ctx, tagString, maxTextWidth);
+                // Display tags from bottom up, limited lines
+                for (let i = tagLines.length - 1; i >= Math.max(0, tagLines.length - 2); i--) { // Max 2 lines for tags
+                    if (currentY > canvas.height - padding * 2.5) { // Ensure it doesn't overlap too much with main content
+                        // only draw if there is space
+                    } else {
+                         ctx.fillText(tagLines[i], padding, currentY);
+                         currentY -= tagFontSize * 1.2;
+                    }
+                }
+            }
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            texture.needsUpdate = true;
+            return texture;
+        }
+
+        function wrapText(context, text, maxWidth) {
+            if (!text) return [''];
+            text = String(text); // Ensure text is a string
+            const words = text.split(' ');
+            let lines = [];
+            let currentLine = words[0] || '';
+
+            for (let i = 1; i < words.length; i++) {
+                const word = words[i];
+                const testLine = currentLine + ' ' + word;
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && currentLine !== '') { // Check currentLine not empty before pushing
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            if (currentLine !== '') lines.push(currentLine); // Push last line if not empty
+            return lines.length > 0 ? lines : ['']; // Ensure at least one empty line string if no content
+        }
+
+        // --- Card Logic & UI Updates ---
+        function updateCardDisplay() {
+            if (!cardMesh) return;
+            if (!filteredDeck || filteredDeck.length === 0) {
+                displayNoCardsMessage();
+                updateUI();
+                return;
+            }
+            if (currentCardIndex >= filteredDeck.length) currentCardIndex = 0;
+            if (currentCardIndex < 0) currentCardIndex = filteredDeck.length - 1;
+
+            const cardData = filteredDeck[currentCardIndex];
+            let questionText = cardData.front;
+            if (cardData.type === 'cloze') {
+                questionText = questionText.replace(/\{\{c\d+::(.*?)(?:::(.*?))?\}\}/g, '[...]');
+            }
+            const answerText = cardData.cloze_back_extra || cardData.back;
+
+            // Dispose old textures to free GPU memory
+            if (cardMesh.material[4].map) cardMesh.material[4].map.dispose();
+            if (cardMesh.material[5].map) cardMesh.material[5].map.dispose();
+
+            cardMesh.material[4].map = createTextTexture({ main: questionText }, true);
+            cardMesh.material[5].map = createTextTexture({ main: answerText, tags: cardData.tags }, false);
+            cardMesh.material[4].needsUpdate = true;
+            cardMesh.material[5].needsUpdate = true;
+
             if (isFlipped) {
-                answerEl.classList.remove('hidden');
-                flipBtn.textContent = 'Hide Answer';
+                cardMesh.rotation.y = Math.PI;
             } else {
-                answerEl.classList.add('hidden');
-                flipBtn.textContent = 'Show Answer';
+                cardMesh.rotation.y = 0;
+            }
+            updateUI();
+        }
+
+        function displayNoCardsMessage() {
+            if (cardMesh && cardMesh.material[4] && cardMesh.material[5]){
+                if (cardMesh.material[4].map) cardMesh.material[4].map.dispose();
+                if (cardMesh.material[5].map) cardMesh.material[5].map.dispose();
+                cardMesh.material[4].map = createTextTexture({main: "No cards for this filter."}, true, true);
+                cardMesh.material[5].map = createTextTexture({main: "Change filter or add cards."}, false, true);
+                cardMesh.material[4].needsUpdate = true;
+                cardMesh.material[5].needsUpdate = true;
+            }
+        }
+        
+        function updateUI() {
+            const hasCards = filteredDeck && filteredDeck.length > 0;
+            totalCardsStatEl.textContent = masterDeck.length;
+            // Simple stats for now (actual due/new would require learning state)
+            dueCardsStatEl.textContent = 'N/A'; 
+            newCardsStatEl.textContent = hasCards ? filteredDeck.length : '0';
+
+            if (hasCards) {
+                cardCounterEl.textContent = `${currentCardIndex + 1}`;
+                totalCardsDisplayEl.textContent = `${filteredDeck.length}`;
+            } else {
+                cardCounterEl.textContent = "0";
+                totalCardsDisplayEl.textContent = "0";
+            }
+
+            flipBtn.innerHTML = `<i class="fas fa-sync-alt"></i> ${isFlipped ? 'Show Question' : 'Show Answer'}`;
+            cardActions.style.display = isFlipped && hasCards ? 'flex' : 'none';
+
+            prevBtn.disabled = !hasCards || currentCardIndex === 0;
+            nextBtn.disabled = !hasCards || currentCardIndex === filteredDeck.length - 1;
+            flipBtn.disabled = !hasCards;
+            shuffleBtn.disabled = masterDeck.length < 2;
+            tagFilter.disabled = masterDeck.length === 0;
+
+            // Disable rating buttons if no cards or card not flipped
+            [againBtn, goodBtn, easyBtn].forEach(btn => btn.disabled = !hasCards || !isFlipped);
+        }
+
+        function toggleFlip() {
+            if (isAnimating || !filteredDeck || filteredDeck.length === 0) return;
+            isAnimating = true;
+
+            const targetRotationY = isFlipped ? 0 : Math.PI;
+            new TWEEN.Tween(cardMesh.rotation)
+                .to({ y: targetRotationY }, 500) // Slightly faster flip
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .onComplete(() => {
+                    isFlipped = !isFlipped;
+                    isAnimating = false;
+                    updateUI();
+                })
+                .start();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
         }
 
-        // Show next card
+        function shuffleAndFilterCards() {
+            const selectedTag = tagFilter.value;
+            let tempDeck = [...masterDeck];
+
+            if (selectedTag) {
+                tempDeck = tempDeck.filter(card => card.tags && card.tags.includes(selectedTag));
+            }
+            shuffleArray(tempDeck);
+            filteredDeck = tempDeck;
+            currentCardIndex = 0;
+            isFlipped = false; // Reset flip state
+            if (cardMesh) cardMesh.rotation.y = 0;
+            updateCardDisplay(); // This will call updateUI indirectly
+        }
+        
+        function handleCardRated(rating) {
+            console.log(`Card ID: ${filteredDeck[currentCardIndex]?.id || 'N/A'} rated: ${rating}`);
+            // For now, just go to the next card if possible, else show a message or reshuffle
+            if (currentCardIndex < filteredDeck.length - 1) {
+                showNextCard();
+            } else {
+                // If it's the last card in the filtered deck
+                alert("End of filtered deck reached! Reshuffling or change filter.");
+                shuffleAndFilterCards(); 
+            }
+        }
+
+        // --- Event Listeners ---
+        function setupEventListeners() {
+            prevBtn.addEventListener('click', showPrevCard);
+            nextBtn.addEventListener('click', showNextCard);
+            flipBtn.addEventListener('click', toggleFlip);
+            shuffleBtn.addEventListener('click', shuffleAndFilterCards);
+            tagFilter.addEventListener('change', shuffleAndFilterCards);
+
+            againBtn.addEventListener('click', () => handleCardRated('again'));
+            goodBtn.addEventListener('click', () => handleCardRated('good'));
+            easyBtn.addEventListener('click', () => handleCardRated('easy'));
+
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
         function showNextCard() {
-            if (currentCardIndex < flashcards.length - 1) {
-                showCard(currentCardIndex + 1);
-            } else {
-                // Loop back to first card
-                showCard(0);
+            if (currentCardIndex < filteredDeck.length - 1) {
+                currentCardIndex++;
+                isFlipped = false; // Show front of next card
+                if(cardMesh) cardMesh.position.set(0,0,0); // Reset position if any transition was planned
+                updateCardDisplay();
             }
         }
 
-        // Show previous card
         function showPrevCard() {
             if (currentCardIndex > 0) {
-                showCard(currentCardIndex - 1);
-            } else {
-                // Loop to last card
-                showCard(flashcards.length - 1);
+                currentCardIndex--;
+                isFlipped = false; // Show front of prev card
+                if(cardMesh) cardMesh.position.set(0,0,0);
+                updateCardDisplay();
             }
         }
 
-
-        // Handle keyboard navigation
         function handleKeyDown(e) {
-            switch(e.key) {
+            if (isAnimating) return; // Ignore key presses during animation
+            
+            const noCardsAvailable = !filteredDeck || filteredDeck.length === 0;
+
+            switch(e.code) {
                 case 'ArrowRight':
-                    showNextCard();
+                    if (!nextBtn.disabled && !noCardsAvailable) showNextCard();
                     break;
                 case 'ArrowLeft':
-                    showPrevCard();
+                    if (!prevBtn.disabled && !noCardsAvailable) showPrevCard();
                     break;
-                case ' ':
-                case 'Enter':
+                case 'Space':
                     e.preventDefault();
-                    toggleFlip();
+                    if (!flipBtn.disabled && !noCardsAvailable) toggleFlip();
+                    break;
+                case 'KeyS': // S for Shuffle
+                     if (!shuffleBtn.disabled) shuffleBtn.click();
+                     break;
+                // Rating via number keys when answer is shown
+                case 'Digit1': 
+                    if (isFlipped && !againBtn.disabled && !noCardsAvailable) { againBtn.click(); }
+                    break;
+                case 'Digit2': 
+                    if (isFlipped && !goodBtn.disabled && !noCardsAvailable) { goodBtn.click(); }
+                    break;
+                case 'Digit3': 
+                    if (isFlipped && !easyBtn.disabled && !noCardsAvailable) { easyBtn.click(); }
                     break;
             }
         }
 
-        // Initialize the app when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>

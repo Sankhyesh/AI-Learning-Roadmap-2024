@@ -1,15 +1,17 @@
-# AI Learning Flashcards
+# 3D AI Learning Flashcards
 
-A simple, interactive flashcard application for learning AI and machine learning concepts, inspired by Anki.
+An interactive 3D flashcard application for learning AI and machine learning concepts, with smooth animations and an engaging user interface. Built with Three.js for stunning 3D card effects.
 
 ## Features
 
-- **Interactive Flashcards**: Flip cards to reveal answers
+- **3D Flashcards**: Beautiful 3D cards with smooth flip animations
+- **Interactive UI**: Intuitive controls and visual feedback
 - **Tag Filtering**: Filter cards by topic/tag
-- **Shuffle**: Randomize the order of cards
+- **Shuffle**: Randomize the order of cards with a single click
 - **Responsive Design**: Works on desktop and mobile devices
-- **Keyboard Navigation**: Use arrow keys to navigate between cards
-- **Basic Spaced Repetition**: Rate cards as "Again", "Good", or "Easy"
+- **Keyboard Navigation**: Use arrow keys to navigate and space to flip cards
+- **Card Rating**: Rate cards as "Again", "Good", or "Easy" to track your learning progress
+- **Visual Feedback**: Smooth animations for card flips and transitions
 
 ## Getting Started
 
@@ -21,6 +23,7 @@ A simple, interactive flashcard application for learning AI and machine learning
 
 1. Edit the `sample-cards.json` file to add or modify flashcards
 2. Each card should follow this format:
+
    ```json
    {
      "front": "Question or term",
@@ -33,17 +36,27 @@ A simple, interactive flashcard application for learning AI and machine learning
 
 ## Keyboard Shortcuts
 
-- **Right Arrow** or **Space**: Next card
-- **Left Arrow**: Previous card
-- **Up/Down Arrows**: Flip the current card
+- **→ (Right Arrow)**: Next card
+- **← (Left Arrow)**: Previous card
+- **Space**: Flip the current card
+- **Enter**: Flip the current card (alternative to space)
+
+## Technical Details
+
+- Built with Three.js for 3D rendering
+- Uses Tween.js for smooth animations
+- Responsive design that works on all screen sizes
+- Clean, modern UI with intuitive controls
 
 ## Future Improvements
 
-- User authentication
-- Cloud sync for progress
+- User authentication and cloud sync
 - More advanced spaced repetition algorithm
 - Import/export functionality
 - Dark mode
+- 3D card customization options
+- Progress tracking and statistics
+- Support for images and rich media in cards
 
 ## License
 
