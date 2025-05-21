@@ -29,16 +29,19 @@
   - **Interaction Pattern**: The **`invoke` method** is highlighted as a common and important function in LangChain for interacting with these models, whether LLMs or Chat Models. For Chat Models, the output is often an `AIMessage` object, and the textual content is accessed via an attribute like `.content`.
   - **Model Parameters**: Key parameters like **`temperature`** (controlling creativity/randomness of output) and **`max_tokens`** (or `max_new_tokens`, limiting output length and cost) are explained.
   - **Closed-Source vs. Open-Source Models**:
+
     - **Closed-Source Models**:
       - **Description**: These are proprietary models provided by companies, typically accessed via paid APIs (e.g., OpenAI's GPT series, Anthropic's Claude, Google's Gemini).
       - **Pros**: Often highly capable, well-refined, and easier to get started with if API access is available.
       - **Cons**: Costs associated with API usage, data privacy concerns (data sent to third-party servers), and limited control/customization.
     - **Open-Source Models**:
+
       - **Description**: Freely available models that can be downloaded, modified, fine-tuned, and deployed without restrictions from a central provider. **Hugging Face** is identified as the primary repository for these models.
       - **Pros**: No direct API costs for inference if run locally, full control and customization (including fine-tuning), enhanced data privacy (data can stay on-premises).
       - **Cons**: Can require significant **hardware resources** (especially GPUs for larger models), more complex setup and maintenance, and potentially less refined out-of-the-box performance compared to top-tier closed-source models.
         ![alt text](images/image-7.png)
       - **Usage Methods**:
+
         - **Hugging Face Inference API**: Using models hosted on Hugging Face via their API (e.g., using `ChatHuggingFace` with `HuggingFaceEndpoint`). This still involves an API call but provides access to many open-source models.
         - **Local Download and Execution**: Downloading models (e.g., TinyLlama, sentence-transformers like 'all-MiniLM-L6-v2') and running them on the user's own machine (e.g., using `ChatHuggingFace` with `HuggingFacePipeline` for language models, or `HuggingFaceEmbeddings` for embedding models). The material notes the potential for slow performance on machines without adequate hardware.
 
@@ -51,7 +54,7 @@
 
 - A practical application, **Document Similarity Search**, is built to illustrate the utility of embedding models:
 
-  - **Core Idea**: To find which document in a collection is semantically closest to a user's query.
+  - **Core Idea**: To find which document in a collection is semantically closest to a user's query. [embeddings](CODE\embeddingModels\embedding_hf_local_notebook.ipynb)
   - **Methodology**:
     1.  Generate embeddings for all documents in the collection.
     2.  Generate an embedding for the user's query.
