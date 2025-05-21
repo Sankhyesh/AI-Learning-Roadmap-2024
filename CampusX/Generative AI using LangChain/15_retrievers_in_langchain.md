@@ -2,7 +2,8 @@
 
 - **Retrievers** are fundamental components in LangChain, especially crucial for building **Retrieval Augmented Generation (RAG)** based applications. They act as the fourth core component, following document loaders, text splitters, and vector stores, in the RAG pipeline.
 - **Definition**: A **retriever** is a component designed to **fetch relevant documents** from a data source in response to a user's query.
-  ![alt text](images/image-14.png) \* **Significance**: This is the core mechanism for providing context to Large Language Models (LLMs) in RAG systems, allowing them to generate answers based on specific, up-to-date, or proprietary information.
+  ![alt text](images/image-14.png) 
+  \* **Significance**: This is the core mechanism for providing context to Large Language Models (LLMs) in RAG systems, allowing them to generate answers based on specific, up-to-date, or proprietary information.
 - **Functionality**: Conceptually, a retriever operates like a function that takes a user's query as input and outputs a list of **LangChain Document objects**.
   - **Significance**: This standardized input/output allows retrievers to be seamlessly integrated into larger LangChain workflows. The process involves searching a data source (like a vector store or an API) to identify and return documents that are most pertinent to the query.
 - **Runnables**: A key characteristic of LangChain retrievers is that they are **Runnables**.
