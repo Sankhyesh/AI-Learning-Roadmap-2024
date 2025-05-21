@@ -9,12 +9,13 @@
   _ A better approach is to compare the **plot or story** of movies. This requires:
   _ Acquiring movie plot data.
   _ A system to compare the **semantic meaning** of these plots.
-  _ **Embeddings** are introduced as the solution to represent the semantic meaning of text (movie plots) as numerical vectors. A **neural network** processes the text and outputs a vector (e.g., 512 or 784 dimensions) that captures the meaning.
+  _ **Embeddings** are introduced as the solution to represent the semantic meaning of text (movie plots) as numerical vectors. A **neural network** processes the text and outputs a vector (e.g., 512 or 784 dimensions) that captures the meaning.![alt text](images/image-12.png)
   _ By converting all movie plots into **embedding vectors**, similarity can be determined by calculating the **angular distance** (e.g., using **cosine similarity**) between these vectors in a high-dimensional space. Vectors with smaller angular distances are more similar.
   _ **Challenges in Implementing an Embedding-Based Recommender System**:
   _ **Generating Embedding Vectors**: Processing a large number of movies to create embeddings.
   _ **Storage**: Storing these embedding vectors efficiently. Traditional relational databases (like MySQL, Oracle) are not suitable for storing embeddings in a way that allows for efficient similarity calculations.
   _ **Semantic Search**: Performing similarity searches (e.g., finding the top 5 similar movies to a given movie) across a vast number of vectors (e.g., 1 million) can be computationally expensive if done naively (comparing one by one). This necessitates an intelligent and fast search mechanism.
+  ![alt text](images/image-13.png)
   _ **Vector Stores** are presented as the solution to these three challenges: generating (or rather, facilitating the use of) embeddings, storing them, and enabling efficient semantic search.
 
 - **What is a Vector Store?**
