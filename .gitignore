@@ -4,3 +4,6 @@
 /coding/Sliding_window/.ipynb_checkpoints
 /.venv
 /CampusX/Generative AI using LangChain/CODE/.env
+/CampusX/Generative AI using LangChain/CODE/chat_models/huggingface_cache
+CampusX/Generative AI using LangChain/CODE/.env
+*/.env
