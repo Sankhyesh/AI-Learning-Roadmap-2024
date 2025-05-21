@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Playlist Quiz</title>
+    <link rel="stylesheet" href="../../static/quiz.css">
+</head>
+
+<body>
+    <div class="quiz">
+        <h2 id="quizTitle">LangChain Playlist Quiz</h2>
+        <div id="quizContent">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+        <button id="submitQuiz">Submit Quiz</button>
+        <div id="quizScore" hidden>Your Score: 0 out of 0</div>
+    </div>
+
+    <!-- Quiz data -->
+    <script class="quiz-json" type="application/json">
+{
+  "quizTitle": "Langchain Prompts and Components Quiz",
+  "settings": {
+    "showHints": true,
+    "mnemonics": false,
+    "theme": "dark"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "What output characteristic is associated with an LLM `temperature` parameter value near 0?",
+      "options": [
+        {"value": "A", "text": "Highly creative and varied output"},
+        {"value": "B", "text": "Deterministic output"},
+        {"value": "C", "text": "Moderately random output"},
+        {"value": "D", "text": "Output with more hallucinations"}
+      ],
+      "placeholder": null,
+      "hint": "Consider the predictability of the output when the temperature is low.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q2",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "Setting an LLM's temperature parameter near 2 is suitable for applications requiring novelty and varied responses.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Think about what a higher temperature value encourages in the LLM's generation process.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q3",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "In Langchain, ____ are defined as the instructions or messages sent to a Large Language Model (LLM).",
+      "options": null,
+      "placeholder": "Enter the term",
+      "hint": "This is the primary way to communicate with an LLM.",
+      "feedbackMessage": "The term refers to the input given to an LLM to guide its response."
+    },
+    {
+      "id": "q4",
+      "type": "short",
+      "bloomLevel": "Understand",
+      "text": "Explain why the field of 'Prompt Engineering' has emerged.",
+      "options": null,
+      "placeholder": "Your explanation...",
+      "hint": "Focus on the relationship between prompts and LLM output.",
+      "feedbackMessage": "Prompt Engineering is significant because even slight changes in prompt wording can drastically alter LLM responses, requiring specialized skills to craft effective prompts."
+    },
+    {
+      "id": "q5",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "Which type of prompt is described as fixed and pre-written, offering less flexibility?",
+      "options": [
+        {"value": "A", "text": "Dynamic Prompts"},
+        {"value": "B", "text": "Static Prompts"},
+        {"value": "C", "text": "Chat Prompts"},
+        {"value": "D", "text": "Multimodal Prompts"}
+      ],
+      "placeholder": null,
+      "hint": "This type of prompt does not change based on runtime inputs.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q6",
+      "type": "short",
+      "bloomLevel": "Analyse",
+      "text": "What are two potential downsides of using static prompts if users directly input them into an application?",
+      "options": null,
+      "placeholder": "List two downsides...",
+      "hint": "Consider consistency, error handling, and output quality.",
+      "feedbackMessage": "Potential downsides include inconsistent application behavior, errors from poorly formed queries, and a higher chance of undesirable or hallucinated LLM content."
+    },
+    {
+      "id": "q7",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "____ Prompts utilize templates with placeholders that are filled with specific values at runtime.",
+      "options": null,
+      "placeholder": "Enter the type of prompt",
+      "hint": "This type of prompt offers more control and consistency.",
+      "feedbackMessage": "These prompts adapt to specific inputs by filling in predefined variables."
+    },
+    {
+      "id": "q8",
+      "type": "mcq",
+      "bloomLevel": "Understand",
+      "text": "What is a primary benefit of using dynamic prompts for developers?",
+      "options": [
+        {"value": "A", "text": "They are simpler to write than static prompts."},
+        {"value": "B", "text": "They guarantee the LLM will never hallucinate."},
+        {"value": "C", "text": "They grant more control over prompt structure and ensure consistency."},
+        {"value": "D", "text": "They require less computational power."}
+      ],
+      "placeholder": null,
+      "hint": "Think about how dynamic prompts improve the reliability of LLM interactions in an application.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q9",
+      "type": "tf",
+      "bloomLevel": "Remember",
+      "text": "Langchain's `PromptTemplate` class is used for creating static prompts.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider the purpose of `PromptTemplate` in managing prompt variables.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q10",
+      "type": "short",
+      "bloomLevel": "Understand",
+      "text": "What are the two main components you define when creating a `PromptTemplate` in Langchain?",
+      "options": null,
+      "placeholder": "List the two components...",
+      "hint": "One is the structure of the prompt, and the other specifies the variables within that structure.",
+      "feedbackMessage": "You define a `template` string (containing placeholders) and the `input_variables` that correspond to these placeholders."
+    },
+    {
+      "id": "q11",
+      "type": "mcq",
+      "bloomLevel": "Understand",
+      "text": "Which advantage of `PromptTemplate` helps catch errors early by ensuring `input_variables` match the template string?",
+      "options": [
+        {"value": "A", "text": "Reusability"},
+        {"value": "B", "text": "Validation"},
+        {"value": "C", "text": "Ecosystem Integration"},
+        {"value": "D", "text": "Multimodality"}
+      ],
+      "placeholder": null,
+      "hint": "This feature is often enabled with a parameter like `validate_template=True`.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q12",
+      "type": "gap",
+      "bloomLevel": "Understand",
+      "text": "The ability to save a `PromptTemplate` (e.g., as a JSON file) and load it elsewhere promotes ____ and cleaner code.",
+      "options": null,
+      "placeholder": "Enter the benefit",
+      "hint": "This advantage relates to using the same prompt structure in multiple places or projects.",
+      "feedbackMessage": "This feature enhances the ability to reuse prompt structures efficiently."
+    },
+    {
+      "id": "q13",
+      "type": "short",
+      "bloomLevel": "Apply",
+      "text": "How does the 'Ecosystem Integration' advantage of `PromptTemplate` simplify workflows in Langchain?",
+      "options": null,
+      "placeholder": "Explain with an example...",
+      "hint": "Think about how `PromptTemplate` objects interact with other Langchain components like models or chains.",
+      "feedbackMessage": "A good explanation would mention that `PromptTemplate` objects can be easily piped to models (e.g., `chain = prompt_template | model`), streamlining the process of generating a prompt and passing it to an LLM."
+    },
+    {
+      "id": "q14",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "A common problem with simple chatbots is their inherent ability to remember past interactions within a conversation.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider whether basic LLM interactions are stateful by default.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q15",
+      "type": "short",
+      "bloomLevel": "Analyse",
+      "text": "What is the main limitation of maintaining chat history as a simple list of appended user and AI messages, without distinguishing the sender?",
+      "options": null,
+      "placeholder": "Explain the limitation...",
+      "hint": "How might this undifferentiated list affect the LLM's understanding of the conversation?",
+      "feedbackMessage": "The main limitation is that it doesn't distinguish who sent which message, which can confuse the LLM as the conversation grows, leading to less coherent responses."
+    },
+    {
+      "id": "q16",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "Which Langchain Message Type is used to set the overall behavior or role for the LLM at the start of a conversation?",
+      "options": [
+        {"value": "A", "text": "HumanMessage"},
+        {"value": "B", "text": "AIMessage"},
+        {"value": "C", "text": "SystemMessage"},
+        {"value": "D", "text": "GenericMessage"}
+      ],
+      "placeholder": null,
+      "hint": "This message type guides the LLM's persona throughout the interaction.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q17",
+      "type": "short",
+      "bloomLevel": "Apply",
+      "text": "Provide an example of a `SystemMessage` content that could be used for a chatbot designed to be a helpful assistant specializing in history.",
+      "options": null,
+      "placeholder": "Example SystemMessage content...",
+      "hint": "The message should define the chatbot's expertise and helpful nature.",
+      "feedbackMessage": "An example could be: 'You are a knowledgeable and friendly assistant specializing in world history. Provide accurate and engaging answers to historical queries.'"
+    },
+    {
+      "id": "q18",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "In Langchain's message types, a ____ represents a message originating from the human user.",
+      "options": null,
+      "placeholder": "Enter message type",
+      "hint": "This is distinct from messages generated by the AI or system instructions.",
+      "feedbackMessage": "This type clearly marks user inputs in a conversation history."
+    },
+    {
+      "id": "q19",
+      "type": "tf",
+      "bloomLevel": "Remember",
+      "text": "`AIMessage` in Langchain represents messages that are hardcoded by the application developer.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Think about who generates the content for an `AIMessage`.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q20",
+      "type": "short",
+      "bloomLevel": "Analyse",
+      "text": "Explain the significance of using distinct message types (`SystemMessage`, `HumanMessage`, `AIMessage`) in a chat history for an LLM.",
+      "options": null,
+      "placeholder": "Your explanation...",
+      "hint": "How do these types help the LLM understand the conversation better compared to a simple list of strings?",
+      "feedbackMessage": "Using distinct message types allows the LLM to understand the conversational flow and the roles of participants, leading to more coherent and contextually appropriate responses by clearly attributing statements to the system, user, or AI."
+    },
+    {
+      "id": "q21",
+      "type": "mcq",
+      "bloomLevel": "Understand",
+      "text": "An LLM's `invoke` function can be used with a single message string for what kind of queries?",
+      "options": [
+        {"value": "A", "text": "Only multi-turn conversations"},
+        {"value": "B", "text": "Only for system-level instructions"},
+        {"value": "C", "text": "Standalone, single-turn queries"},
+        {"value": "D", "text": "Only when using `MessagesPlaceholder`"}
+      ],
+      "placeholder": null,
+      "hint": "This method is suitable for simple, one-off interactions.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q22",
+      "type": "gap",
+      "bloomLevel": "Remember",
+      "text": "For creating dynamic content within lists of messages, such as in multi-turn chat scenarios, Langchain provides the ____ class.",
+      "options": null,
+      "placeholder": "Enter class name",
+      "hint": "This class is analogous to `PromptTemplate` but designed for chat interactions.",
+      "feedbackMessage": "This class enables flexible construction of conversational templates."
+    },
+    {
+      "id": "q23",
+      "type": "short",
+      "bloomLevel": "Apply",
+      "text": "Describe a scenario where using `ChatPromptTemplate` would be more appropriate than `PromptTemplate`.",
+      "options": null,
+      "placeholder": "Describe a scenario...",
+      "hint": "Think about the structure of the input you'd be providing to the LLM.",
+      "feedbackMessage": "A scenario involving a multi-turn dialogue, like a customer service chatbot that needs to remember and refer to previous user and AI messages using `SystemMessage`, `HumanMessage`, and `AIMessage` structures, would be more appropriate for `ChatPromptTemplate`."
+    },
+    {
+      "id": "q24",
+      "type": "tf",
+      "bloomLevel": "Understand",
+      "text": "The `ChatPromptTemplate.from_messages([...])` method often involves passing tuples like `(\"system\", \"You are a helpful {domain} expert\")` to define dynamic chat messages.",
+      "options": [
+        {"value": "True", "text": "True"},
+        {"value": "False", "text": "False"}
+      ],
+      "placeholder": null,
+      "hint": "Consider the syntax highlighted for defining messages within `ChatPromptTemplate`.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q25",
+      "type": "mcq",
+      "bloomLevel": "Remember",
+      "text": "What is the role of the `MessagesPlaceholder` class within a `ChatPromptTemplate`?",
+      "options": [
+        {"value": "A", "text": "To define a static system message."},
+        {"value": "B", "text": "To act as a placeholder where an entire list of messages (like chat history) can be inserted."},
+        {"value": "C", "text": "To validate the format of individual human messages."},
+        {"value": "D", "text": "To convert multimodal inputs into text."}
+      ],
+      "placeholder": null,
+      "hint": "This class is crucial for managing ongoing conversations by dynamically including past interactions.",
+      "feedbackMessage": null
+    },
+    {
+      "id": "q26",
+      "type": "short",
+      "bloomLevel": "Analyse",
+      "text": "Why is `MessagesPlaceholder` particularly useful for managing context in ongoing conversations like a customer support chatbot?",
+      "options": null,
+      "placeholder": "Explain its utility...",
+      "hint": "Think about how a chatbot needs to access and use the history of the current session.",
+      "feedbackMessage": "`MessagesPlaceholder` is useful because it allows the `ChatPromptTemplate` to be dynamically populated with all previous messages (the chat history) for that session, ensuring the LLM has full context before responding to the latest user query. This makes it easier to load and integrate past interactions."
+    },
+    {
+      "id": "q27",
+      "type": "short",
+      "bloomLevel": "Apply",
+      "text": "Imagine you are building a chatbot using `ChatPromptTemplate`. How would you use `MessagesPlaceholder` to include the conversation history stored in a variable named `session_history`?",
+      "options": null,
+      "placeholder": "Describe the implementation step...",
+      "hint": "Refer to the syntax for `MessagesPlaceholder` and its `variable_name` parameter.",
+      "feedbackMessage": "You would include `MessagesPlaceholder(variable_name=\"session_history\")` within the list of messages passed to `ChatPromptTemplate.from_messages([...])`. When invoking the prompt, you would provide the actual `session_history` list for this variable."
+    },
+    {
+      "id": "q28",
+      "type": "short",
+      "bloomLevel": "Evaluate",
+      "text": "Based on the advantages of dynamic prompts and `PromptTemplate`, evaluate the importance of template validation (e.g., `validate_template=True`) in developing robust LLM applications.",
+      "options": null,
+      "placeholder": "Your evaluation...",
+      "hint": "Consider error prevention, debugging, and reliability.",
+      "feedbackMessage": "Template validation is highly important as it helps catch errors early in development, such as mismatches between defined input variables and their usage in the template. This prevents runtime failures, makes debugging easier, and contributes to more reliable and predictable application behavior by ensuring prompts are correctly formatted before being sent to the LLM."
+    },
+    {
+      "id": "q29",
+      "type": "short",
+      "bloomLevel": "Create",
+      "text": "Design a brief `PromptTemplate` structure (template string and input variables) for an LLM that summarizes a research paper. The summary should target a specified audience (e.g., 'expert', 'layperson') and be of a desired length (e.g., 'short', 'detailed').",
+      "options": null,
+      "placeholder": "Define template string and input_variables...",
+      "hint": "Your template should include placeholders for the paper content, target audience, and desired length.",
+      "feedbackMessage": "A model answer would include:\n`template_string = \"Summarize the following research paper content for a {audience} audience. The summary should be {length}.\\n\\nPaper Content:\\n{paper_content}\"`\n`input_variables = [\"audience\", \"length\", \"paper_content\"]`"
+    },
+    {
+      "id": "q30",
+      "type": "short",
+      "bloomLevel": "Evaluate",
+      "text": "Compare and contrast the use of a simple f-string for prompt formatting versus Langchain's `PromptTemplate`. Which approach would you recommend for a production application and why?",
+      "options": null,
+      "placeholder": "Your comparison and recommendation...",
+      "hint": "Consider features like validation, reusability, and integration with other tools.",
+      "feedbackMessage": "F-strings are simple for basic formatting but lack validation, reusability features (like saving/loading), and direct integration with Langchain's ecosystem. `PromptTemplate` offers these advantages, making it more robust for production by catching errors, promoting cleaner code, and working seamlessly with chains and models. For production, `PromptTemplate` is recommended due to its enhanced safety, maintainability, and integration capabilities."
+    }
+  ],
+  "answers": {
+    "q1": "B",
+    "q2": "True",
+    "q3": "Prompts",
+    "q4_evaluation": {
+      "type": "keywords",
+      "keywords": ["strong influence", "LLM output", "slight changes", "drastically alter", "specialized field"],
+      "modelAnswer": "Prompt Engineering has emerged because prompts have a strong influence on LLM output, and even slight changes in prompt phrasing can drastically alter the response. This necessitates specialized skills to craft effective prompts."
+    },
+    "q5": "B",
+    "q6_evaluation": {
+      "type": "keywords",
+      "keywords": ["inconsistent behavior", "errors", "poorly formed queries", "undesirable content", "hallucinated content"],
+      "modelAnswer": "Two potential downsides are: 1. Inconsistent application behavior or errors from poorly formed user queries. 2. A higher chance of the LLM generating undesirable or 'hallucinated' content."
+    },
+    "q7": "Dynamic",
+    "q8": "C",
+    "q9": "False",
+    "q10_evaluation": {
+      "type": "keywords",
+      "keywords": ["template string", "placeholders", "input_variables"],
+      "modelAnswer": "The two main components are: 1. A `template` string containing placeholders (e.g., `{variable_name}`). 2. The `input_variables` (a list of strings) that correspond to these placeholders."
+    },
+    "q11": "B",
+    "q12": "reusability",
+    "q13_evaluation": {
+      "type": "keywords",
+      "keywords": ["ecosystem integration", "piped to models", "chains", "simplifying workflow"],
+      "modelAnswer": "`PromptTemplate` objects are designed to work seamlessly with other Langchain components, particularly Chains. They can be easily piped to models (e.g., `chain = prompt_template | model`), simplifying the workflow of generating a prompt and then passing it to an LLM."
+    },
+    "q14": "False",
+    "q15_evaluation": {
+      "type": "keywords",
+      "keywords": ["no distinction", "who sent", "confuse LLM", "conversation grows", "less coherent"],
+      "modelAnswer": "The main limitation is that a simple list doesn't distinguish who sent which message (user or AI). This can confuse the LLM as the conversation grows, leading to less coherent and contextually appropriate responses."
+    },
+    "q16": "C",
+    "q17_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "An example SystemMessage content could be: 'You are a helpful and engaging assistant specializing in world history. Please provide accurate information and explanations for any historical queries.'"
+    },
+    "q18": "HumanMessage",
+    "q19": "False",
+    "q20_evaluation": {
+      "type": "keywords",
+      "keywords": ["understand conversational flow", "roles of participants", "coherent responses", "contextually appropriate"],
+      "modelAnswer": "Using distinct message types allows the LLM to understand the conversational flow and the roles of participants (system, user, AI). This leads to more coherent and contextually appropriate responses as the LLM can better interpret the ongoing dialogue."
+    },
+    "q21": "C",
+    "q22": "ChatPromptTemplate",
+    "q23_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "A scenario where `ChatPromptTemplate` is more appropriate is building a multi-turn chatbot. For example, an AI tutor that needs to remember the student's previous questions (`HumanMessage`) and its own previous explanations (`AIMessage`), while also adhering to an initial instruction like 'You are a patient and encouraging math tutor' (`SystemMessage`)."
+    },
+    "q24": "True",
+    "q25": "B",
+    "q26_evaluation": {
+      "type": "keywords",
+      "keywords": ["dynamically populated", "chat history", "full context", "latest query", "integrate past interactions"],
+      "modelAnswer": "`MessagesPlaceholder` is crucial because it allows the `ChatPromptTemplate` to be populated with all previous messages for that session (the chat history). This ensures the LLM has full context before responding to the latest user query, making it easier to load and integrate past interactions into the current prompt."
+    },
+    "q27_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "You would include `MessagesPlaceholder(variable_name=\"session_history\")` in the list of messages when creating the `ChatPromptTemplate`, for example: `ChatPromptTemplate.from_messages([SystemMessage(content=\"...\"), MessagesPlaceholder(variable_name=\"session_history\"), HumanMessage(content=\"{user_input}\")])`. Then, when using the template, you'd pass the actual list of `session_history` messages."
+    },
+    "q28_evaluation": {
+      "type": "self-assess",
+      "modelAnswer": "Template validation is crucial for robust LLM applications because it catches errors early (e.g., mismatched variables and placeholders), preventing runtime failures. This leads to more reliable prompt generation, easier debugging, and ultimately, more stable and predictable application behavior. It's a key feature for ensuring prompts are correctly structured before LLM interaction."
+    },
+    "q29_evaluation": {
+      "type": "model_answer",
+      "modelAnswer": "{\n  \"template_string\": \"Please summarize the key findings from the following research paper content: \\n{paper_content}\\nTailor the summary for a {target_audience} and ensure it is a {summary_length} summary.\",\n  \"input_variables\": [\"paper_content\", \"target_audience\", \"summary_length\"]\n}"
+    },
+    "q30_evaluation": {
+      "type": "self-assess",
+      "modelAnswer": "F-strings offer simplicity for basic, one-off prompt formatting but lack built-in validation, mechanisms for easy reuse (like saving/loading templates), and direct integration into Langchain's chain/component ecosystem. `PromptTemplate` provides these features: validation ensures variables match placeholders, reusability allows templates to be shared and managed, and ecosystem integration simplifies connecting prompts to models and chains. For a production application, `PromptTemplate` is highly recommended due to its robustness, error-checking capabilities, maintainability, and seamless fit within the Langchain framework, leading to more reliable and scalable solutions."
+    }
+  }
+}  </script>
+    <script src="../../static/quiz.js"></script>
+</body>
+
+</html>

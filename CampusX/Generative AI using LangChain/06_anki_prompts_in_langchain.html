@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Flashcards - 3D Introduction</title>
+    <link rel="stylesheet" href="../../anki_cards_app/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="threejs-canvas-container">
+            <!-- Three.js canvas will be appended here by the script -->
+        </div>
+    </div>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- TWEEN.js for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
+
+    <!-- Core functionality -->
+    <script src="../../anki_cards_app/card-core.js"></script>
+    <!-- LangChain specific implementation -->
+    <script src="../../anki_cards_app/langchain-cards.js"></script>
+
+    <script>
+        // Flashcard data
+        const flashcards = [
+  {
+    "front": "In LLM settings, what output characteristic is associated with a `temperature` parameter value near 0?",
+    "back": "Deterministic output (the same input consistently produces the same output).",
+    "type": "basic",
+    "tags": ["study", "langchain", "llm_basics", "temperature_parameter"],
+    "mnemonic": "Temp 0 = Zero deviation/creativity.",
+    "examples": "Useful for applications requiring predictable results, like factual Q&A.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "In LLM settings, what output characteristic is associated with a `temperature` parameter value near 2?",
+    "back": "More creative or varied output for the same input.",
+    "type": "basic",
+    "tags": ["study", "langchain", "llm_basics", "temperature_parameter"],
+    "mnemonic": "Temp 2 = Toooo much creativity (relatively).",
+    "examples": "Suitable for applications where novelty is desired, like story generation.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What are **prompts** in the context of Large Language Models (LLMs)?",
+    "back": "The instructions or messages sent to an LLM.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "llm_basics"],
+    "mnemonic": null,
+    "examples": "A user asking a chatbot 'What's the weather like?' is sending a prompt.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "While prompts can be multimodal, what is the current primary focus for prompt modality in Langchain discussions?",
+    "back": "Text-based prompts.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "The specialized field of {{c1::Prompt Engineering}} has arisen due to the strong influence of prompts on LLM output.",
+    "back": "The specialized field of Prompt Engineering has arisen due to the strong influence of prompts on LLM output.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "prompt_engineering"],
+    "mnemonic": null,
+    "examples": "Slight changes in a prompt can drastically alter the LLM's response.",
+    "cloze_back_extra": "The specialized field of Prompt Engineering has arisen due to the strong influence of prompts on LLM output.",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What is a **Static Prompt**?",
+    "back": "A fixed, pre-written prompt.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "static_prompts"],
+    "mnemonic": null,
+    "examples": "A chatbot that always greets with 'Hello, how can I assist you today?'",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What is a key contextual disadvantage of using **Static Prompts** directly with user input?",
+    "back": "Less flexibility, potential for inconsistent application behavior, errors from poorly formed queries, and higher chance of LLM hallucinations.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "static_prompts"],
+    "mnemonic": null,
+    "examples": "If a user types a name incorrectly into a static prompt for a research summarizer, it may fail.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "**Dynamic Prompts** utilize {{c1::templates with placeholders}} that are filled with specific values at runtime.",
+    "back": "Dynamic Prompts utilize templates with placeholders that are filled with specific values at runtime.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "dynamic_prompts"],
+    "mnemonic": null,
+    "examples": "A template like 'Summarize {paper_title} focusing on {aspect}.'",
+    "cloze_back_extra": "Dynamic Prompts utilize templates with placeholders that are filled with specific values at runtime.",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What is a key advantage of **Dynamic Prompts** for developers regarding LLM input and user experience?",
+    "back": "More control over prompt structure, ensuring consistency, better-formed inputs to the LLM, and a more reliable user experience.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "dynamic_prompts"],
+    "mnemonic": null,
+    "examples": "A research assistant app using dropdowns to populate a dynamic prompt template ensures correct paper selection and output style.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "Which Langchain class is used for creating dynamic prompts using templates?",
+    "back": "The `PromptTemplate` class.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "prompt_template"],
+    "mnemonic": null,
+    "examples": "`template = PromptTemplate(input_variables=['topic'], template='Tell me a joke about {topic}')`",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "In Langchain's `PromptTemplate`, what are `input_variables`?",
+    "back": "A list of variable names that correspond to placeholders in the template string.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "prompt_template"],
+    "mnemonic": null,
+    "examples": "For a template 'Hello, {name}!', `input_variables` would be `['name']`.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What method is used to populate a Langchain `PromptTemplate` with values?",
+    "back": "The `.invoke()` method.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "prompt_template"],
+    "mnemonic": null,
+    "examples": "`prompt_template.invoke({'variable_name': 'value'})`",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "One advantage of Langchain's `PromptTemplate` over simple f-strings is {{c1::Validation}} (using `validate_template=True`).",
+    "back": "One advantage of Langchain's `PromptTemplate` over simple f-strings is Validation (using `validate_template=True`).",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "prompt_template"],
+    "mnemonic": null,
+    "examples": "This ensures all defined `input_variables` are present in the template and vice-versa, catching errors early.",
+    "cloze_back_extra": "One advantage of Langchain's `PromptTemplate` over simple f-strings is Validation (using `validate_template=True`).",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "Another advantage of Langchain's `PromptTemplate` is {{c1::Reusability}}, allowing templates to be saved and loaded.",
+    "back": "Another advantage of Langchain's `PromptTemplate` is Reusability, allowing templates to be saved and loaded.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "prompt_template"],
+    "mnemonic": null,
+    "examples": "`template.save('my_template.json')` and `load_prompt('my_template.json')`.",
+    "cloze_back_extra": "Another advantage of Langchain's `PromptTemplate` is Reusability, allowing templates to be saved and loaded.",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "A third advantage of Langchain's `PromptTemplate` is its {{c1::Ecosystem Integration}}, allowing easy piping to models.",
+    "back": "A third advantage of Langchain's `PromptTemplate` is its Ecosystem Integration, allowing easy piping to models.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "prompt_template", "chains"],
+    "mnemonic": null,
+    "examples": "`chain = prompt_template | model` simplifies workflow.",
+    "cloze_back_extra": "A third advantage of Langchain's `PromptTemplate` is its Ecosystem Integration, allowing easy piping to models.",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What common problem arises in simple chatbots due to each interaction being treated independently?",
+    "back": "Lack of memory or context about the ongoing conversation.",
+    "type": "basic",
+    "tags": ["study", "langchain", "chatbots", "context_management"],
+    "mnemonic": null,
+    "examples": "The chatbot doesn't remember what was said in the previous turn.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "Why can simply appending all messages (user and AI) to a list for chat history confuse an LLM?",
+    "back": "The simple list doesn't distinguish *who* sent which message (user or AI).",
+    "type": "basic",
+    "tags": ["study", "langchain", "chatbots", "context_management", "message_history"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "In Langchain, what is the purpose of a `SystemMessage`?",
+    "back": "To set the overall behavior, role, or context for the LLM at the beginning of a conversation.",
+    "type": "basic",
+    "tags": ["study", "langchain", "message_types", "system_message"],
+    "mnemonic": "System sets the stage.",
+    "examples": "`SystemMessage(content='You are a helpful assistant specializing in science.')`",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "In Langchain, what does a `HumanMessage` represent?",
+    "back": "Messages originating from the human user.",
+    "type": "basic",
+    "tags": ["study", "langchain", "message_types", "human_message"],
+    "mnemonic": null,
+    "examples": "`HumanMessage(content='Tell me about photosynthesis.')`",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "In Langchain, what does an `AIMessage` represent?",
+    "back": "Messages generated by the AI.",
+    "type": "basic",
+    "tags": ["study", "langchain", "message_types", "ai_message"],
+    "mnemonic": null,
+    "examples": "`AIMessage(content='Photosynthesis is the process plants use to convert light energy into chemical energy.')`",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "How does using distinct Langchain message types (`SystemMessage`, `HumanMessage`, `AIMessage`) improve LLM responses in conversations?",
+    "back": "It allows the LLM to understand the conversational flow and the roles of participants, leading to more coherent and contextually appropriate responses.",
+    "type": "basic",
+    "tags": ["study", "langchain", "message_types", "chatbots", "context_management"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "Besides a single message string, what can an LLM's `invoke` function be used with for multi-turn conversations?",
+    "back": "A list of structured messages (e.g., `SystemMessage`, `HumanMessage`, `AIMessage`).",
+    "type": "basic",
+    "tags": ["study", "langchain", "llm_basics", "message_types"],
+    "mnemonic": null,
+    "examples": "Invoking an LLM with a history of `[SystemMessage, HumanMessage, AIMessage, HumanMessage]`.",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "For creating dynamic content within lists of messages in chat scenarios, Langchain provides the {{c1::`ChatPromptTemplate`}} class.",
+    "back": "For creating dynamic content within lists of messages in chat scenarios, Langchain provides the `ChatPromptTemplate` class.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "chat_prompt_template", "message_types"],
+    "mnemonic": null,
+    "examples": "This allows placeholders within the content of `SystemMessage`, `HumanMessage`, etc.",
+    "cloze_back_extra": "For creating dynamic content within lists of messages in chat scenarios, Langchain provides the `ChatPromptTemplate` class.",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What is the Langchain class analogous to `PromptTemplate` but specifically designed for chat interactions?",
+    "back": "`ChatPromptTemplate`.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "chat_prompt_template"],
+    "mnemonic": null,
+    "examples": null,
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "A reliable way to define dynamic chat messages in Langchain's `ChatPromptTemplate.from_messages()` method involves passing {{c1::tuples like `(\"system\", \"You are a helpful {domain} expert\")`}}.",
+    "back": "A reliable way to define dynamic chat messages in Langchain's `ChatPromptTemplate.from_messages()` method involves passing tuples like `(\"system\", \"You are a helpful {domain} expert\")`.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "chat_prompt_template"],
+    "mnemonic": null,
+    "examples": "The first element of the tuple is the message type (string), and the second is the content (string, possibly with placeholders).",
+    "cloze_back_extra": "A reliable way to define dynamic chat messages in Langchain's `ChatPromptTemplate.from_messages()` method involves passing tuples like `(\"system\", \"You are a helpful {domain} expert\")`.",
+    "id": "uuid-v4"
+  },
+  {
+    "front": "What Langchain class acts as a placeholder within a `ChatPromptTemplate` for inserting an entire list of messages, such as chat history?",
+    "back": "The `MessagesPlaceholder` class.",
+    "type": "basic",
+    "tags": ["study", "langchain", "prompts", "chat_prompt_template", "messages_placeholder"],
+    "mnemonic": null,
+    "examples": "`MessagesPlaceholder(variable_name=\"chat_history\")`",
+    "cloze_back_extra": null,
+    "id": "uuid-v4"
+  },
+  {
+    "front": "The {{c1::`MessagesPlaceholder`}} class is crucial for managing ongoing conversations by allowing chat history to be dynamically inserted into a `ChatPromptTemplate`.",
+    "back": "The `MessagesPlaceholder` class is crucial for managing ongoing conversations by allowing chat history to be dynamically inserted into a `ChatPromptTemplate`.",
+    "type": "cloze",
+    "tags": ["study", "langchain", "prompts", "chat_prompt_template", "messages_placeholder", "context_management"],
+    "mnemonic": null,
+    "examples": "This ensures the LLM has full context of previous messages before responding to the latest user query.",
+    "cloze_back_extra": "The `MessagesPlaceholder` class is crucial for managing ongoing conversations by allowing chat history to be dynamically inserted into a `ChatPromptTemplate`.",
+    "id": "uuid-v4"
+  }
+];
+
+        // Initialize the card system
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardSystem = new LangChainCards('threejs-canvas-container', {
+                isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
+            });
+            cardSystem.loadDeck(flashcards);
+        });
+    </script>
+</body>
+
+</html>
