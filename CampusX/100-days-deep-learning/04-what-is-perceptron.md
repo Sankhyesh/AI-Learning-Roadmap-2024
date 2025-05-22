@@ -26,7 +26,7 @@ The material presents a visual diagram of a Perceptron.
     - If $Z \le 0$ (or $Z < 0$ as mentioned for less than zero), output is 0.
     - The material mentions a visual graph for the step function: a horizontal line at $y=0$ for $x<0$ and a jump to a horizontal line at $y=1$ for $x \ge 0$.
   - Other activation functions like ReLU and Tanh are mentioned as topics for future discussion.
-- **Output (Y)**: The final result after the activation function is applied. For the step function, this is typically 0 or 1, representing a class label.
+- **Output (Y)**: The final result after the activation function is applied. For the step function, this is typically 0 or 1, representing a class label.![alt text](images/image-8.png)
 
 > _Visual Aid Suggestion_: A clear diagram of a single perceptron, labeling inputs, weights, bias, summation unit, activation function, and output would be highly beneficial here. The source material likely contains such a diagram.
 
@@ -42,7 +42,7 @@ The material explains the Perceptron's operation using a student placement predi
 #### Two Stages:
 
 1.  **Training**:
-
+![alt text](images/image-9.png)
     - The goal of training is to find the optimal values for the **weights ($w_1, w_2$)** and the **bias (b)**.
     - This is done by feeding the training data (IQ, CGPA, and known Placement status) into the Perceptron.
     - The process of how these values are learned (the "training process") is mentioned as a topic for a future, more detailed discussion.
@@ -61,7 +61,7 @@ The material explains the Perceptron's operation using a student placement predi
 ### Perceptron vs. Biological Neuron
 
 The material draws a comparison between the artificial Perceptron and a **biological neuron**, noting that deep learning is heavily inspired by the human nervous system.
-
+![alt text](images/image-10.png)
 - **Biological Neuron Components**:
 
   - **Dendrites**: Receive input signals.
@@ -88,7 +88,7 @@ The material draws a comparison between the artificial Perceptron and a **biolog
 ### Interpretation of Weights
 
 - **Feature Importance**: The **weights** ($w_1, w_2$, etc.) in a Perceptron model provide an interpretation of the **strength** or **importance** of their corresponding input features.
-- **Example**: If, after training the student placement model, $w_1$ (for IQ) = 2 and $w_2$ (for CGPA) = 4, it suggests that **CGPA is a more important factor** (twice as important in this hypothetical case) than IQ in determining placement, according to the model.
+- **Example**: If, after training the student placement model, $w_1$ (for IQ) = 2 and $w_2$ (for CGPA) = 4, it suggests that **CGPA is a more important factor** (twice as important in this hypothetical case) than IQ in determining placement, according to the model.![alt text](images/image-11.png)
 - The bias term's role is mentioned as a topic for future discussion.
 
 ---
@@ -107,7 +107,7 @@ This section aims to visualize how a Perceptron works.
 - **Regions**: The line divides the input space into **two regions**, corresponding to the two output classes. This is why a Perceptron is a **binary classifier**.
 
 > _Visual Aid Suggestion_: A 2D scatter plot showing two classes of data points (e.g., green for placed, red for not placed) with a line (the decision boundary) separating them would be very effective. The source material shows such a plot.
-
+![alt text](images/image-12.png)
 #### Dimensionality:
 
 - **2D Inputs (e.g., IQ, CGPA)**: The decision boundary is a **line**.
@@ -184,7 +184,8 @@ plt.ylabel('Resume Score')
 plt.title('Perceptron Decision Boundary')
 plt.show()
 ```
-
+![alt text](images/image-13.png)
+![alt text](images/image-14.png)
 ---
 
 ### Stimulating Learning Prompts
