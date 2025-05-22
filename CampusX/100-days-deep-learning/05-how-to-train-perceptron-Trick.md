@@ -40,13 +40,13 @@ A line with the equation $Ax + By + C = 0$ (or in perceptron terms, $w_1x_1 + w_
 The weights ($w_1, w_2$) and the bias ($w_0$) directly control the position and orientation of the decision boundary line:
 
 * **Changing the Bias ($w_0$ or $C$):**
-    * Increasing $w_0$ shifts the line parallelly in one direction (e.g., downwards if $w_2$ is positive).
+    * Increasing $w_0$ shifts the line parallelly in one direction (e.g., downwards if $w_2$ is positive).![alt text](images/image-17.png)
     * Decreasing $w_0$ shifts it parallelly in the opposite direction (e.g., upwards).
     * The material notes that if the equation is $Ax + By + C = 0$, increasing C shifts the line down, and decreasing C shifts it up (assuming B is positive).
 * **Changing Weights ($w_1$ or $A$, $w_2$ or $B$):**
     * Altering $w_1$ (coefficient of $x_1$) or $w_2$ (coefficient of $x_2$) typically causes the line to **rotate**.
     * The combined effect of changing all three ($w_0, w_1, w_2$) allows the line to move and rotate freely to find the best separating position.
-
+![alt text](images/image-18.png) [desmos link](https://www.desmos.com/calculator)
 ---
 
 ### The Perceptron Update Rule (The "Trick")
@@ -58,15 +58,16 @@ Let the line be $w_1x_1 + w_2x_2 + w_0 = 0$. The weights can be represented as a
 1.  **Identify Misclassification:**
     * **Case 1: A "negative" point (true class 0) is in the "positive" region.** (The perceptron wrongly predicts 1). The line needs to move so this point falls into the negative region.
     * **Case 2: A "positive" point (true class 1) is in the "negative" region.** (The perceptron wrongly predicts 0). The line needs to move so this point falls into the positive region.
-
+![alt text](images/image-19.png)
 2.  **The Update Mechanism:**
     * The material explains that to move the line towards a misclassified point $P=(x_{p1}, x_{p2})$ to correct its classification:
         * If $P$ is a **negative point wrongly in the positive region**: You want to "push" the line towards $P$ so $P$ becomes negative. The update involves *subtracting* the point's coordinates (scaled by a **learning rate**) from the line's coefficients.
             $W_{new} = W_{old} - \eta \cdot X_p$
             (where $W_{old} = [w_0, w_1, w_2]$ and $X_p = [1, x_{p1}, x_{p2}]$ for the point P).
+            ![alt text](images/image-20.png)
         * If $P$ is a **positive point wrongly in the negative region**: You want to "pull" the line towards $P$ so $P$ becomes positive. The update involves *adding* the point's coordinates (scaled by a learning rate) to the line's coefficients.
             $W_{new} = W_{old} + \eta \cdot X_p$
-
+![alt text](images/image-21.png)
     * **Learning Rate ($\eta$):** This is a small positive number (e.g., 0.1, 0.01) that controls the magnitude of the update. It prevents the algorithm from making drastic changes based on a single point, leading to smoother convergence. The material emphasizes multiplying the coordinates by the learning rate *before* adding/subtracting.
         * *Significance:* The learning rate is a crucial **hyperparameter**. A too-large value can cause the algorithm to overshoot the optimal solution and oscillate. A too-small value can make training excessively slow.
     * *Visual Suggestion:* A before-and-after diagram showing a misclassified point, the old decision boundary, and the new decision boundary after the update rule is applied (with an arrow indicating the shift) would be very helpful.
