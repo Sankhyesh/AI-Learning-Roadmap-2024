@@ -21,7 +21,7 @@ The material explains **Forward Propagation**, which is the fundamental process 
         * **Hidden Layers**: Intermediate layers that perform computations and feature extraction. The example uses two hidden layers (the first with 3 neurons, the second with 2 neurons).
             * *(Visual Description: The diagram shows these layers connected sequentially.)*
         * An **Output Layer**: Produces the final prediction (e.g., 1 neuron for placement status: yes/no).
-    * **Significance:** The architecture defines the network's capacity to learn complex patterns. The number of layers and neurons are crucial hyperparameters.![alt text](image.png)
+    * **Significance:** The architecture defines the network's capacity to learn complex patterns. The number of layers and neurons are crucial hyperparameters.![alt text](images/10/image.png)
 
 * **Trainable Parameters (Weights and Biases):**
     * **Weights (W):** These are values associated with each connection between neurons in adjacent layers. They determine the strength or importance of an input signal.
@@ -35,7 +35,7 @@ The material explains **Forward Propagation**, which is the fundamental process 
         * *(Visual Aid Suggestion: A table explicitly listing each set of weights and biases with their dimensions for each layer transition would be helpful for clarity.)*
 
 * **Forward Propagation - The Calculation Flow:**
-    The process involves moving layer by layer, calculating the output of each neuron. For any given layer `l` (starting from `l=1` for the first hidden layer):
+    The process involves moving layer by layer, calculating the output of each neuron. For any given layer `l` (starting from `l=1` for the first hidden layer):![alt text](images/10/image-1.png)![alt text](images/10/image-2.png)
     1.  **Weighted Sum (Z):** The inputs from the previous layer (`A^[l-1]`, where `A^[0]` is the initial input `X`) are multiplied by the **weights** (`W^[l]`) connecting them to the current layer's neurons. The **bias** (`B^[l]`) for each neuron in the current layer is then added. This is a matrix operation.
         * The material details this as: `Z^[l] = (W^[l])^T * A^[l-1] + B^[l]`
         * **Notation used in source for `W^[l]`:** A matrix where rows correspond to neurons in the *previous* layer (or input features) and columns correspond to neurons in the *current* layer. For example, `W^[1]` (weights from input to hidden layer 1) would have dimensions `(number_of_input_features x number_of_neurons_in_H1)`.
