@@ -128,8 +128,7 @@ The material discusses a coding example and a visual animation:
 * **Visualization:**
     * The learned weights can be used to plot the decision boundary line. The slope $m = -w_1/w_2$ and intercept $c = -w_0/w_2$ (for $w_1x_1 + w_2x_2 + w_0 = 0$ solved for $x_2$).
     * An **animation** showing the line adjusting its position step-by-step as it processes misclassified points is a powerful way to understand the algorithm's dynamics. The material mentions such an animation where the line moves towards misclassified points.
-
----
+CODE - [code](CODE\05-perceptron-code.ipynb)
 
 ### Stimulating Learning Prompts
 
