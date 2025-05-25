@@ -66,6 +66,7 @@ The **convolution operation** is fundamental for extracting features from an ima
         * The example shows a feature map with high values (255) in the middle rows, corresponding to the detected horizontal edge in the 6x6 input.
         * *A visual illustrating the filter sliding across the input image, with callouts for element-wise multiplication and summation at one step, would be very helpful here to solidify understanding.*
 
+[Link for the Interactive Demo](https://deeplizard.com/resource/pavq7noze2)
 * **Calculating Output Size (Feature Map Dimensions):**
     * If an input image is $N \times N$ and the filter is $M \times M$, the output feature map will be $(N-M+1) \times (N-M+1)$.
     * **Example:** Input 6x6, Filter 3x3 -> Output (6-3+1)x(6-3+1) = 4x4.
