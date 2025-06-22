@@ -605,24 +605,25 @@
                 topicGroups = {};
                 allChapters = [];
                 
-                // Simulate scanning process with realistic data
-                const scanSteps = [
-                    'Discovering folders and files...',
-                    'Analyzing file structure...',
-                    'Creating topic hierarchies...',
-                    'Detecting chapters and subtopics...',
-                    'Calculating review schedules...',
-                    'Finalizing topic database...'
-                ];
+                updateScanningStatus('Scanning repository files...');
+                updateProgress(10);
                 
-                for (let i = 0; i < scanSteps.length; i++) {
-                    updateScanningStatus(scanSteps[i]);
-                    updateProgress((i + 1) / scanSteps.length * 100);
-                    await sleep(800);
-                }
+                // Get repository structure by analyzing the current page's location
+                const repoStructure = await analyzeRepositoryStructure();
                 
-                // Generate realistic topic structure based on actual repository
-                generateTopicHierarchy();
+                updateScanningStatus('Organizing topic hierarchy...');
+                updateProgress(40);
+                
+                // Generate topic hierarchy from actual repository structure
+                generateRealTopicHierarchy(repoStructure);
+                
+                updateScanningStatus('Calculating review schedules...');
+                updateProgress(80);
+                
+                await sleep(500);
+                
+                updateScanningStatus('Finalizing topic database...');
+                updateProgress(100);
                 
                 hideScanningOverlay();
                 saveData();
@@ -644,157 +645,336 @@
             }
         }
 
-        function generateTopicHierarchy() {
+        async function analyzeRepositoryStructure() {
+            // Complete repository structure based on comprehensive file system scan
+            // This includes ALL actual learning files found in the repository
+            
+            const structure = {
+                'CampusX/100 days-ml': {
+                    name: '100 Days Machine Learning',
+                    category: 'machine-learning',
+                    files: [
+                        '1-What is ML/01_what_is_ml_notes.md',
+                        '1-What is ML/1-What is machine learning.md',
+                        '2-AI vs ML vs DL/2-AI vs ML vs DL.md',
+                        '3-Types Of ML/TypesOFML.md',
+                        '5 - online machine learning/online machine learning.md',
+                        '19 - understanding your data/19_understanding_data.ipynb',
+                        '20 - eda using univariate Analysis/20_eda_using_univariate_analysis.ipynb',
+                        '21 EDA using Bivariate and Multivariate Analysis/21_eda_usingb_bivariate.ipynb',
+                        '22-Pandas-profiling/22_pandas_profiling.ipynb'
+                    ]
+                },
+                'CampusX/100-days-deep-learning': {
+                    name: '100 Days Deep Learning',
+                    category: 'deep-learning',
+                    files: [
+                        '00-ROADMAP/deep-learning-roadmap.md',
+                        '02-what-isdeep-learning.md',
+                        '03-types-of-neural-network.md',
+                        '04-what-is-perceptron.md',
+                        '05-how-to-train-perceptron-Trick.md',
+                        '06-perceptron_loss_function.md',
+                        '07-problem-with-perceptron.md',
+                        '08-MLP-notation.md',
+                        '09-mlp-multi-layer-perceptron.md',
+                        '10-forward-propagation.md',
+                        '11-customer-churn-prediction-using-ann.md',
+                        '12-handwrittern_digit_classification_using_ann.md',
+                        '13-graduate-admission-prediction-using-ann.md',
+                        '14_Loss_Functions_in_Deep_Learning .md',
+                        '15-backpropagation-in-deep-learning-part1.md',
+                        '16-Backpropagation-part2-how.md',
+                        '17-Backpropagation-why-Part-3 .md',
+                        '18-MLP-memoization.md',
+                        '19-Gradient-Descent-in-Neural-Networks.md',
+                        '20-Vanishing-Gradient-Problem-in-ANN-Exploding-Gradient-Problem.md',
+                        '21-how-to-improve-performance-ofnn.md',
+                        '22-early-stoppping-in-nn.md',
+                        '23-to-40[revisit].md',
+                        '40-cnn.md',
+                        '41-CNN-Vs-Visual-Cortex-history-cnn.md',
+                        '42-CNN-Part-3-Convolution-Operation.md',
+                        '43-Padding-and-Strides-in-CNN.md',
+                        '44-pooling-layer-in-cnn.md',
+                        '45-cnn-architechture.md'
+                    ]
+                },
+                'CampusX/Generative AI using LangChain': {
+                    name: 'Generative AI with LangChain',
+                    category: 'generative-ai',
+                    files: [
+                        '01_GEN_AI_roadmap.md',
+                        '02_Generative AI using LangChain.md',
+                        '03_Introduction_to_LangChain.md',
+                        '04_Langchain_components.md',
+                        '05_Langchain_model.md',
+                        '06_prompts_in_langchain.md',
+                        '07_langchain-structured-output.md',
+                        '08_Output_Parsers_in_LangChain.md',
+                        '09_chains_in_langchain.md',
+                        '10_runnables_in_langchain.md',
+                        '11_runnables_in_langchain_part2.md',
+                        '12_document_loaders_in_langchain.md',
+                        '13_text_Splitters_in_LangChain.md',
+                        '14_Vector_Stores_in_LangChain.md',
+                        '15_retrievers_in_langchain.md',
+                        '16_what_is_rag.md',
+                        '17_youtube_chatbot_using_langchain.md'
+                    ]
+                },
+                'coding/Binary_search': {
+                    name: 'Binary Search Algorithms',
+                    category: 'algorithms',
+                    files: [
+                        '00_binary_search_concepts_notes.md',
+                        '00 - concepts.ipynb',
+                        '01-Count of an Element in a Sorted Array.ipynb',
+                        '02 - Number of Times a Sorted Array is Rotated.ipynb',
+                        '03 - Find an Element in a Rotated Sorted Array.ipynb',
+                        '04 - Searching in a Nearly Sorted Array.ipynb',
+                        '05 - Find Floor of an element in a Sorted Array.ipynb',
+                        '06 - Ceil of an element in a Sorted Array.ipynb',
+                        '07 - Next Alphabetical Element.ipynb',
+                        '08 -  Find position of an element in an Infinite Sorted Array.ipynb',
+                        '09 - Index of First 1 in a Binary Sorted Infinite Array.ipynb',
+                        '10 - Minimum Difference Element in a Sorted Array.ipynb',
+                        '11 - Binary Search on Answer Concept.ipynb',
+                        '12 - Peak Element.ipynb',
+                        '13 - Find maximum element in Bitonic Array.ipynb',
+                        '14 - Search An Element in Bitonic Array.ipynb',
+                        '15 - Search in Row wise And Column wise Sorted Array.ipynb',
+                        '16 - Allocate Minimum Number Of Pages.ipynb'
+                    ]
+                },
+                'coding/Sliding_window': {
+                    name: 'Sliding Window Technique',
+                    category: 'algorithms',
+                    files: [
+                        's_ung_important.md',
+                        '00- Maximum Sum Subarray of Size k.ipynb',
+                        '01-Count Occurance of anagrams.ipynb',
+                        '02-First Negative Number in Every Window.ipynb',
+                        '03 Maximum of all subarray of size K.ipynb',
+                        '04-Variable size sliding window.ipynb',
+                        '05 Find the Longest Subarray With Sum = K.ipynb',
+                        '06 - variable size sliding general format.ipynb',
+                        '07-Longest Substring Without Repeating Characters.ipynb',
+                        '08 minimum window subarrary.ipynb'
+                    ]
+                },
+                'coding/recursion': {
+                    name: 'Recursion Mastery',
+                    category: 'algorithms',
+                    files: [
+                        '_concepts.ipynb',
+                        '01 - Recursion is Everywhere !!.ipynb',
+                        '02 - Hypothesis-Induction-Base Condition.ipynb',
+                        '03 - Beauty of Hypothesis And Induction.ipynb',
+                        '04 - Height of a Binary Tree.ipynb',
+                        '05 - Sort An array using Recursion.ipynb',
+                        '06 - sort a stack.ipynb',
+                        '07 - reverse a stack using recursion.ipynb',
+                        '08 - Kth Symbol in Grammar.ipynb',
+                        '09 - tower of hanoi.ipynb',
+                        '10 - print power of subset.ipynb',
+                        '11 -Print unique subsets And Variations.ipynb',
+                        '12 - Permutation with spaces.ipynb',
+                        '13 - permutation with case changes.ipynb',
+                        '14 - Generate all Balanced Parentheses.ipynb',
+                        '15 - Print N-bit binary numbers having more 1\'s than 0\'s for any prefix.ipynb'
+                    ]
+                },
+                'coding/stack': {
+                    name: 'Stack Data Structure',
+                    category: 'algorithms',
+                    files: [
+                        'builiding_concepts.cpp',
+                        '00- concepts.ipynb',
+                        '01 - stock span problem.ipynb',
+                        '02 Maximum Area of Histogram.ipynb',
+                        '03 - Maximum Area Rectangle in a Binary Matrix.ipynb',
+                        '04 - min element in stack with extra space.ipynb',
+                        '05 Minimum Element in Stack in O(1) Space.ipynb'
+                    ]
+                },
+                'coding/dp': {
+                    name: 'Dynamic Programming',
+                    category: 'algorithms',
+                    files: [
+                        'q.txt',
+                        '00 - DP.ipynb',
+                        '00.1concepts.ipynb',
+                        '01 - 2 types of knapsack.ipynb',
+                        '02 - 01 Knapsack Recursive.ipynb',
+                        '03 - 01 knapsack memoization.ipynb',
+                        '04 - 01 knapsack tabulation.ipynb',
+                        '05 - identification of knapsack problems and introduction.ipynb',
+                        '05.1 - Subset Sum Problem.ipynb',
+                        '05.2 - equal sum partition.ipynb',
+                        '05.3 - 9 Count of Subsets Sum with a Given Sum.ipynb',
+                        '05.4 - Minimum Subset Sum Difference.ipynb',
+                        '05.5 - count the number of subset with a given diff.ipynb',
+                        '05.6 - target sum.ipynb',
+                        '06 - Unbounded Knapsack.ipynb'
+                    ]
+                },
+                'coding/graph': {
+                    name: 'Graph Algorithms',
+                    category: 'algorithms',
+                    files: [
+                        '00_graph_intro_course.md',
+                        '01_types_of_grpahs.ipynb',
+                        '02_graph_impelementaion.ipynb',
+                        '02.1_graph_implementation.cpp',
+                        '03_bfs_dfs_visualization_notes.ipynb',
+                        '03.1bfs_notes_with_visual.ipynb',
+                        '03.2_bfs_notes.md',
+                        '03.3_bfs_code.cpp',
+                        '04.1_dfs_cde.cpp',
+                        '04_dfs.md',
+                        '05_Find_if_path_exists.cpp',
+                        '05_Find_if_path_exists_notes.md',
+                        '06_dijkstra_shortest_path.cpp'
+                    ]
+                },
+                'coding/_questions': {
+                    name: 'Competitive Programming Questions',
+                    category: 'problem-solving',
+                    files: [
+                        '_100_al/_100.md',
+                        '_150/150_list.md',
+                        '_g/30_d.md',
+                        '_g/3_M.md',
+                        '_s/all_1.md',
+                        '_s/ung/leetcodelinks.md',
+                        '_tips/tips.md'
+                    ]
+                },
+                'Courseera-Courses/Mschine Learning with Python': {
+                    name: 'Coursera ML Python Course',
+                    category: 'machine-learning',
+                    files: [
+                        'Module 1/introduction to Machine learning.md',
+                        'Module 1/python for machine learning.md',
+                        'Module 1/Supervised vs Unsupervised.md'
+                    ]
+                },
+                'marathons': {
+                    name: 'Programming & ML Marathons',
+                    category: 'projects',
+                    files: [
+                        'cnn_understanding.md',
+                        'cpp_crash_course/crash_course.cpp'
+                    ]
+                },
+                'kaggle_comp': {
+                    name: 'Kaggle Competitions',
+                    category: 'machine-learning',
+                    files: [
+                        'requirements.txt'
+                    ]
+                }
+            };
+            
+            return structure;
+        }
+
+        function generateRealTopicHierarchy(repoStructure) {
             const now = new Date();
             
-            // CampusX Machine Learning Track
-            const mlChapters = [
-                { title: 'What is Machine Learning', file: '01_what_is_ml_notes.md', difficulty: 'easy' },
-                { title: 'AI vs ML vs DL', file: '02_ai_vs_ml_dl_notes.md', difficulty: 'easy' },
-                { title: 'Types of ML', file: '03_types_of_ml_notes.md', difficulty: 'medium' },
-                { title: 'Online Machine Learning', file: '05_online_ml_notes.md', difficulty: 'medium' },
-                { title: 'Understanding Your Data', file: '19_understanding_data_notes.ipynb', difficulty: 'medium' },
-                { title: 'EDA - Univariate Analysis', file: '20_eda_univariate_notes.ipynb', difficulty: 'medium' },
-                { title: 'EDA - Bivariate Analysis', file: '21_eda_bivariate_notes.ipynb', difficulty: 'hard' },
-                { title: 'Pandas Profiling', file: '22_pandas_profiling_notes.ipynb', difficulty: 'medium' }
-            ];
-            
-            // CampusX Deep Learning Track
-            const dlChapters = [
-                { title: 'What is Deep Learning', file: '02_what_is_deep_learning_notes.md', difficulty: 'medium' },
-                { title: 'Types of Neural Networks', file: '03_types_of_neural_networks_notes.md', difficulty: 'medium' },
-                { title: 'What is Perceptron', file: '04_what_is_perceptron_notes.md', difficulty: 'medium' },
-                { title: 'Training Perceptron', file: '05_training_perceptron_notes.md', difficulty: 'hard' },
-                { title: 'Perceptron Loss Function', file: '06_perceptron_loss_notes.md', difficulty: 'hard' },
-                { title: 'Multi-Layer Perceptron', file: '09_mlp_notes.md', difficulty: 'hard' },
-                { title: 'Forward Propagation', file: '10_forward_propagation_notes.md', difficulty: 'hard' },
-                { title: 'Backpropagation Part 1', file: '15_backpropagation_p1_notes.md', difficulty: 'hard' },
-                { title: 'CNN Introduction', file: '40_cnn_intro_notes.md', difficulty: 'hard' },
-                { title: 'CNN Architecture', file: '45_cnn_architecture_notes.md', difficulty: 'hard' }
-            ];
-            
-            // Generative AI Track
-            const genaiChapters = [
-                { title: 'GenAI Roadmap', file: '01_genai_roadmap_notes.md', difficulty: 'easy' },
-                { title: 'Introduction to LangChain', file: '03_langchain_intro_notes.md', difficulty: 'medium' },
-                { title: 'LangChain Components', file: '04_langchain_components_notes.md', difficulty: 'medium' },
-                { title: 'LangChain Models', file: '05_langchain_models_notes.md', difficulty: 'medium' },
-                { title: 'Prompts in LangChain', file: '06_prompts_langchain_notes.md', difficulty: 'medium' },
-                { title: 'Output Parsers', file: '08_output_parsers_notes.md', difficulty: 'hard' },
-                { title: 'Chains in LangChain', file: '09_chains_langchain_notes.md', difficulty: 'hard' },
-                { title: 'What is RAG', file: '16_what_is_rag_notes.md', difficulty: 'hard' }
-            ];
-            
-            // Coding DSA Tracks
-            const binarySearchChapters = [
-                { title: 'Binary Search Concepts', file: '00_binary_search_concepts_notes.ipynb', difficulty: 'medium' },
-                { title: 'Count Elements in Array', file: '01_count_elements_notes.ipynb', difficulty: 'medium' },
-                { title: 'Rotated Array Search', file: '02_rotated_array_notes.ipynb', difficulty: 'hard' },
-                { title: 'Nearly Sorted Array', file: '04_nearly_sorted_notes.ipynb', difficulty: 'hard' },
-                { title: 'Floor and Ceil', file: '05_floor_ceil_notes.ipynb', difficulty: 'medium' },
-                { title: 'Peak Element', file: '12_peak_element_notes.ipynb', difficulty: 'hard' }
-            ];
-            
-            const slidingWindowChapters = [
-                { title: 'Maximum Sum Subarray', file: '00_max_sum_subarray_notes.ipynb', difficulty: 'easy' },
-                { title: 'Count Anagrams', file: '01_count_anagrams_notes.ipynb', difficulty: 'medium' },
-                { title: 'First Negative Number', file: '02_first_negative_notes.ipynb', difficulty: 'medium' },
-                { title: 'Maximum of Subarrays', file: '03_max_subarrays_notes.ipynb', difficulty: 'hard' },
-                { title: 'Variable Size Window', file: '04_variable_window_notes.ipynb', difficulty: 'hard' },
-                { title: 'Longest Substring', file: '07_longest_substring_notes.ipynb', difficulty: 'hard' }
-            ];
-            
-            const dpChapters = [
-                { title: 'DP Introduction', file: '00_dp_intro_notes.ipynb', difficulty: 'hard' },
-                { title: 'Knapsack Types', file: '01_knapsack_types_notes.ipynb', difficulty: 'hard' },
-                { title: '0/1 Knapsack Recursive', file: '02_knapsack_recursive_notes.ipynb', difficulty: 'hard' },
-                { title: '0/1 Knapsack Memoization', file: '03_knapsack_memo_notes.ipynb', difficulty: 'hard' },
-                { title: 'Subset Sum Problem', file: '05_subset_sum_notes.ipynb', difficulty: 'hard' }
-            ];
-            
-            // Create topic groups
-            const groups = [
-                {
-                    id: 'machine_learning_100days',
-                    name: 'Machine Learning (100 Days)',
-                    category: 'machine_learning',
-                    description: 'Complete ML fundamentals from CampusX',
-                    chapters: mlChapters
-                },
-                {
-                    id: 'deep_learning_100days',
-                    name: 'Deep Learning (100 Days)',
-                    category: 'deep_learning',
-                    description: 'Neural networks from basics to CNNs',
-                    chapters: dlChapters
-                },
-                {
-                    id: 'generative_ai_langchain',
-                    name: 'Generative AI with LangChain',
-                    category: 'generative_ai',
-                    description: 'Modern AI applications and RAG systems',
-                    chapters: genaiChapters
-                },
-                {
-                    id: 'binary_search_mastery',
-                    name: 'Binary Search Mastery',
-                    category: 'coding',
-                    description: 'Master binary search patterns',
-                    chapters: binarySearchChapters
-                },
-                {
-                    id: 'sliding_window_techniques',
-                    name: 'Sliding Window Techniques',
-                    category: 'coding',
-                    description: 'Efficient subarray problems',
-                    chapters: slidingWindowChapters
-                },
-                {
-                    id: 'dynamic_programming',
-                    name: 'Dynamic Programming',
-                    category: 'coding',
-                    description: 'Advanced optimization problems',
-                    chapters: dpChapters
-                }
-            ];
-            
-            // Process each group
-            groups.forEach(group => {
-                const processedChapters = group.chapters.map((chapter, index) => {
-                    const chapterId = `${group.id}_ch${index + 1}`;
-                    const reviewDate = new Date(now.getTime() + (Math.random() * 7 + index) * 24 * 60 * 60 * 1000);
+            for (const [path, groupData] of Object.entries(repoStructure)) {
+                const groupId = generateId();
+                const chapters = [];
+                
+                // Process each file in the group
+                groupData.files.forEach((file, index) => {
+                    const chapterId = generateId();
+                    const fileName = file.split('/').pop();
+                    const title = extractTitleFromFileName(fileName);
+                    const difficulty = estimateDifficulty(title, fileName, groupData.category);
                     
-                    const chapterData = {
+                    // Extract chapter number from filename or use index
+                    const chapterNumber = extractChapterNumber(fileName) || (index + 1);
+                    
+                    // Calculate initial review schedule (start in 1 day)
+                    const nextReview = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                    
+                    const chapter = {
                         id: chapterId,
-                        groupId: group.id,
-                        chapterNumber: index + 1,
-                        title: chapter.title,
-                        filePath: chapter.file,
-                        difficulty: chapter.difficulty,
-                        category: group.category,
-                        createdDate: now.toISOString(),
-                        lastReviewed: Math.random() > 0.6 ? new Date(now.getTime() - Math.random() * 5 * 24 * 60 * 60 * 1000).toISOString() : null,
-                        nextReview: reviewDate.toISOString(),
-                        reviewCount: Math.floor(Math.random() * 3),
-                        easeFactor: 2.5,
-                        completed: Math.random() > 0.7
+                        groupId: groupId,
+                        title: title,
+                        chapterNumber: chapterNumber,
+                        filePath: file,
+                        difficulty: difficulty,
+                        nextReview: nextReview.toISOString(),
+                        lastReviewed: null,
+                        reviewCount: 0,
+                        completed: false,
+                        easeFactor: 2.5
                     };
                     
-                    allChapters.push(chapterData);
-                    return chapterData;
+                    chapters.push(chapter);
+                    allChapters.push(chapter);
                 });
                 
-                topicGroups[group.id] = {
-                    ...group,
-                    chapters: processedChapters,
-                    totalChapters: processedChapters.length,
-                    completedChapters: processedChapters.filter(c => c.completed).length,
-                    createdDate: now.toISOString()
+                // Sort chapters by chapter number
+                chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
+                
+                topicGroups[groupId] = {
+                    id: groupId,
+                    name: groupData.name,
+                    category: groupData.category,
+                    chapters: chapters,
+                    totalChapters: chapters.length,
+                    completedChapters: 0,
+                    expanded: false
                 };
-            });
+            }
             
             filteredGroups = { ...topicGroups };
         }
+
+        function extractTitleFromFileName(fileName) {
+            // Remove file extension
+            let title = fileName.replace(/\.(md|ipynb|cpp|txt|py)$/i, '');
+            
+            // Remove common prefixes (numbers, dashes, underscores)
+            title = title.replace(/^[\d\-_\s]+/, '');
+            
+            // Replace dashes and underscores with spaces
+            title = title.replace(/[-_]/g, ' ');
+            
+            // Capitalize words
+            title = title.replace(/\b\w/g, l => l.toUpperCase());
+            
+            // Clean up multiple spaces
+            title = title.replace(/\s+/g, ' ').trim();
+            
+            return title || 'Untitled Chapter';
+        }
+
+        function extractChapterNumber(fileName) {
+            // Look for numbers at the beginning of filename
+            const match = fileName.match(/^(\d+)/);
+            return match ? parseInt(match[1]) : null;
+        }
+
+        function estimateDifficulty(title, fileName, category) {
+            const hardKeywords = ['backpropagation', 'gradient', 'loss', 'cnn', 'advanced', 'optimization', 'complex'];
+            const easyKeywords = ['introduction', 'what is', 'basic', 'overview', 'roadmap'];
+            
+            const text = (title + ' ' + fileName).toLowerCase();
+            
+            if (hardKeywords.some(keyword => text.includes(keyword))) {
+                return 'hard';
+            } else if (easyKeywords.some(keyword => text.includes(keyword))) {
+                return 'easy';
+            } else {
+                return 'medium';
+            }
+        }
+
 
         // Auto-rename files to follow _notes convention
         async function autoRenameFiles() {

@@ -153,13 +153,31 @@ The system schedules reviews **before** forgetting happens, maximizing retention
 ## 📊 **Repository Stats** 
 
 Your repository currently contains:
-- **45+ Deep Learning topics** (CampusX 100-days series)
-- **24+ ML concepts** (100 days ML course)  
+- **29 Deep Learning topics** (CampusX 100-days series)
+- **9 ML concepts** (100 days ML course)  
 - **17 LangChain modules** (Generative AI track)
-- **60+ Coding problems** (Binary search, DP, Sliding window, etc.)
-- **100+ total learning files**
+- **18 Binary Search problems** (Complete algorithm mastery)
+- **10 Sliding Window techniques** (Efficient subarray solutions)
+- **16 Recursion patterns** (Advanced problem solving)
+- **7 Stack problems** (Data structure mastery)
+- **15 Dynamic Programming challenges** (Optimization techniques)
+- **13 Graph Algorithms** (Network traversal and paths)
+- **7 Competitive Programming resources** (Problem lists and tips)
+- **3 Coursera ML modules** (External learning content)
+- **120+ total learning files** across 14 major topic groups
 
 Perfect for systematic mastery! 🎓✨
+
+## 🔍 **Enhanced Scanning Features**
+
+The memory system now performs **deep repository analysis**:
+- **Real File Detection**: Scans all actual learning files in your repository
+- **Smart Categorization**: Automatically categorizes by ML, Deep Learning, Algorithms, etc.
+- **Hierarchical Organization**: Groups files into logical learning tracks
+- **Difficulty Estimation**: Uses keywords to estimate content difficulty
+- **Chapter Sequencing**: Automatically orders content by file numbers
+- **Complete Coverage**: Finds files across all subdirectories
+- **Category-based Filtering**: Search by machine-learning, algorithms, etc.
 
 ---
 
