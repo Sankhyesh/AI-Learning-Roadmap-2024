@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  deep-learning:
+    build:
+      context: .
+      dockerfile: Dockerfile.simple
+    image: deep-learning-gpu:latest
+    container_name: dl-workspace
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - JUPYTER_ENABLE_LAB=yes
+    ports:
+      - "8888:8888"  # Jupyter Lab
+      - "6006:6006"  # TensorBoard
+      - "8501:8501"  # Streamlit
+      - "5000:5000"  # Flask/API
+    volumes:
+      - ./notebooks:/workspace/notebooks
+      - ./data:/workspace/data
+      - ./models:/workspace/models
+      - ./scripts:/workspace/scripts
+      - ..:/workspace/project  # Mount entire AI-Learning-Roadmap-2024 project
+      - ~/.cache:/home/dluser/.cache  # Cache for model downloads
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    stdin_open: true
+    tty: true
+    networks:
+      - dl-network
+
+networks:
+  dl-network:
+    driver: bridge

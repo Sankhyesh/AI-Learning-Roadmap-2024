@@ -1,0 +1,23 @@
+# Essential Deep Learning Frameworks
+torch==2.1.0
+torchvision==0.16.0
+tensorflow==2.14.0
+
+# Core Data Science Libraries
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+
+# Jupyter Environment
+jupyter
+jupyterlab
+ipykernel
+
+# Basic Computer Vision
+opencv-python
+
+# Utilities
+tqdm
+requests
