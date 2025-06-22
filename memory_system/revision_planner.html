@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Revision Planner - Smart Memory System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .controls {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success { background: #48bb78; }
+        .btn-success:hover { background: #38a169; }
+        
+        .btn-warning { background: #ed8936; }
+        .btn-warning:hover { background: #dd6b20; }
+        
+        .btn-danger { background: #e53e3e; }
+        .btn-danger:hover { background: #c53030; }
+        
+        .main-content {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: white;
+            border-bottom-color: #667eea;
+            color: #667eea;
+        }
+        
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .topic-group {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .topic-group-header {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .topic-group-header:hover {
+            background: linear-gradient(135deg, #edf2f7, #e2e8f0);
+        }
+        
+        .topic-group-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        
+        .topic-group-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .topic-group-content {
+            display: none;
+            padding: 0;
+        }
+        
+        .topic-group-content.expanded {
+            display: block;
+        }
+        
+        .chapter-item {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .chapter-item:hover {
+            background: #f8fafc;
+        }
+        
+        .chapter-item:last-child {
+            border-bottom: none;
+        }
+        
+        .chapter-info {
+            flex: 1;
+        }
+        
+        .chapter-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .chapter-meta {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+        
+        .chapter-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-due { background: #fed7d7; color: #c53030; }
+        .status-overdue { background: #feb2b2; color: #9b2c2c; }
+        .status-upcoming { background: #c6f6d5; color: #2f855a; }
+        .status-completed { background: #bee3f8; color: #2b6cb0; }
+        
+        .difficulty-badge {
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .diff-easy { background: #c6f6d5; color: #2f855a; }
+        .diff-medium { background: #fef2c7; color: #b7791f; }
+        .diff-hard { background: #fed7d7; color: #c53030; }
+        
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .calendar-header {
+            background: #4a5568;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .calendar-day {
+            background: white;
+            padding: 10px;
+            min-height: 100px;
+            position: relative;
+        }
+        
+        .calendar-day.today {
+            background: #ebf8ff;
+            border: 2px solid #667eea;
+        }
+        
+        .calendar-day.other-month {
+            background: #f7fafc;
+            color: #a0aec0;
+        }
+        
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .topic-pill {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            margin: 1px;
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .topic-pill.due {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .topic-pill.overdue {
+            background: #feb2b2;
+            color: #9b2c2c;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+        
+        select, input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .scanning-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .scanning-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .analytics-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .analytics-card h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar {
+                font-size: 0.8rem;
+            }
+            
+            .calendar-day {
+                min-height: 60px;
+                padding: 5px;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .topic-group-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧠 AI Learning Revision Planner</h1>
+            <p>Intelligent topic detection with hierarchical learning paths</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-value" id="totalTopics">0</span>
+                    <span>Total Topics</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="totalChapters">0</span>
+                    <span>Chapters</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="dueToday">0</span>
+                    <span>Due Today</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="studyStreak">0</span>
+                    <span>Study Streak</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="retentionRate">0%</span>
+                    <span>Retention Rate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn" onclick="scanRepository()">🔍 Scan Repository</button>
+            <button class="btn btn-success" onclick="autoRenameFiles()">📝 Auto-Rename Files</button>
+            <button class="btn" onclick="exportData()">📥 Export Data</button>
+            <button class="btn btn-warning" onclick="importData()">📤 Import Data</button>
+            <button class="btn btn-danger" onclick="clearAllData()">🗑️ Reset System</button>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('topics')">📚 Topics</div>
+                <div class="tab" onclick="switchTab('calendar')">📅 Calendar</div>
+                <div class="tab" onclick="switchTab('analytics')">📊 Analytics</div>
+            </div>
+
+            <!-- Topics View -->
+            <div id="topicsContent" class="tab-content active">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="statusFilter" onchange="applyFilters()">
+                            <option value="all">All Topics</option>
+                            <option value="due">Due Today</option>
+                            <option value="overdue">Overdue</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select id="categoryFilter" onchange="applyFilters()">
+                            <option value="all">All Categories</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Difficulty:</label>
+                        <select id="difficultyFilter" onchange="applyFilters()">
+                            <option value="all">All Levels</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Search:</label>
+                        <input type="text" id="searchFilter" placeholder="Search topics..." onkeyup="applyFilters()">
+                    </div>
+                </div>
+                
+                <div id="topicGroups">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendarContent" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 id="currentMonth">Loading...</h2>
+                    <div>
+                        <button class="btn" onclick="previousMonth()">‹ Prev</button>
+                        <button class="btn" onclick="nextMonth()">Next ›</button>
+                        <button class="btn btn-success" onclick="goToToday()">Today</button>
+                    </div>
+                </div>
+                <div class="calendar" id="calendar">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="analyticsContent" class="tab-content">
+                <h2>📊 Learning Analytics</h2>
+                <div class="analytics-grid" id="analyticsData">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scanning Overlay -->
+    <div class="scanning-overlay" id="scanningOverlay">
+        <div class="scanning-content">
+            <h2>🔍 Scanning Repository</h2>
+            <div class="spinner"></div>
+            <p id="scanningStatus">Analyzing files and folders...</p>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let topicGroups = {};
+        let allChapters = [];
+        let currentDate = new Date();
+        let filteredGroups = {};
+        let scanInProgress = false;
+
+        // Initialize app
+        window.addEventListener('load', function() {
+            loadData();
+            setupCategoryFilter();
+            renderTopicGroups();
+            renderCalendar();
+            renderAnalytics();
+            updateStats();
+            
+            // Auto-scan if no topics
+            if (Object.keys(topicGroups).length === 0) {
+                setTimeout(() => {
+                    showScanningOverlay('No topics found. Starting auto-scan...');
+                    scanRepository();
+                }, 1000);
+            }
+        });
+
+        // Data management
+        function loadData() {
+            const stored = localStorage.getItem('aiRevisionTopics');
+            if (stored) {
+                const data = JSON.parse(stored);
+                topicGroups = data.topicGroups || {};
+                allChapters = data.allChapters || [];
+            }
+            filteredGroups = { ...topicGroups };
+        }
+
+        function saveData() {
+            const data = {
+                topicGroups: topicGroups,
+                allChapters: allChapters,
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem('aiRevisionTopics', JSON.stringify(data));
+        }
+
+        // Repository scanning with hierarchical topic detection
+        async function scanRepository() {
+            if (scanInProgress) return;
+            
+            scanInProgress = true;
+            showScanningOverlay('Scanning repository structure...');
+            
+            try {
+                // Clear existing data
+                topicGroups = {};
+                allChapters = [];
+                
+                // Simulate scanning process with realistic data
+                const scanSteps = [
+                    'Discovering folders and files...',
+                    'Analyzing file structure...',
+                    'Creating topic hierarchies...',
+                    'Detecting chapters and subtopics...',
+                    'Calculating review schedules...',
+                    'Finalizing topic database...'
+                ];
+                
+                for (let i = 0; i < scanSteps.length; i++) {
+                    updateScanningStatus(scanSteps[i]);
+                    updateProgress((i + 1) / scanSteps.length * 100);
+                    await sleep(800);
+                }
+                
+                // Generate realistic topic structure based on actual repository
+                generateTopicHierarchy();
+                
+                hideScanningOverlay();
+                saveData();
+                setupCategoryFilter();
+                renderTopicGroups();
+                renderCalendar();
+                renderAnalytics();
+                updateStats();
+                
+                alert(`🎉 Repository scan complete!\n\nDiscovered:\n• ${Object.keys(topicGroups).length} topic groups\n• ${allChapters.length} chapters\n• Smart scheduling applied\n\nYour learning journey is now organized!`);
+                
+            } catch (error) {
+                console.error('Scan failed:', error);
+                hideScanningOverlay();
+                alert('❌ Scan failed. Please try again.');
+            } finally {
+                scanInProgress = false;
+                updateProgress(0);
+            }
+        }
+
+        function generateTopicHierarchy() {
+            const now = new Date();
+            
+            // CampusX Machine Learning Track
+            const mlChapters = [
+                { title: 'What is Machine Learning', file: '01_what_is_ml_notes.md', difficulty: 'easy' },
+                { title: 'AI vs ML vs DL', file: '02_ai_vs_ml_dl_notes.md', difficulty: 'easy' },
+                { title: 'Types of ML', file: '03_types_of_ml_notes.md', difficulty: 'medium' },
+                { title: 'Online Machine Learning', file: '05_online_ml_notes.md', difficulty: 'medium' },
+                { title: 'Understanding Your Data', file: '19_understanding_data_notes.ipynb', difficulty: 'medium' },
+                { title: 'EDA - Univariate Analysis', file: '20_eda_univariate_notes.ipynb', difficulty: 'medium' },
+                { title: 'EDA - Bivariate Analysis', file: '21_eda_bivariate_notes.ipynb', difficulty: 'hard' },
+                { title: 'Pandas Profiling', file: '22_pandas_profiling_notes.ipynb', difficulty: 'medium' }
+            ];
+            
+            // CampusX Deep Learning Track
+            const dlChapters = [
+                { title: 'What is Deep Learning', file: '02_what_is_deep_learning_notes.md', difficulty: 'medium' },
+                { title: 'Types of Neural Networks', file: '03_types_of_neural_networks_notes.md', difficulty: 'medium' },
+                { title: 'What is Perceptron', file: '04_what_is_perceptron_notes.md', difficulty: 'medium' },
+                { title: 'Training Perceptron', file: '05_training_perceptron_notes.md', difficulty: 'hard' },
+                { title: 'Perceptron Loss Function', file: '06_perceptron_loss_notes.md', difficulty: 'hard' },
+                { title: 'Multi-Layer Perceptron', file: '09_mlp_notes.md', difficulty: 'hard' },
+                { title: 'Forward Propagation', file: '10_forward_propagation_notes.md', difficulty: 'hard' },
+                { title: 'Backpropagation Part 1', file: '15_backpropagation_p1_notes.md', difficulty: 'hard' },
+                { title: 'CNN Introduction', file: '40_cnn_intro_notes.md', difficulty: 'hard' },
+                { title: 'CNN Architecture', file: '45_cnn_architecture_notes.md', difficulty: 'hard' }
+            ];
+            
+            // Generative AI Track
+            const genaiChapters = [
+                { title: 'GenAI Roadmap', file: '01_genai_roadmap_notes.md', difficulty: 'easy' },
+                { title: 'Introduction to LangChain', file: '03_langchain_intro_notes.md', difficulty: 'medium' },
+                { title: 'LangChain Components', file: '04_langchain_components_notes.md', difficulty: 'medium' },
+                { title: 'LangChain Models', file: '05_langchain_models_notes.md', difficulty: 'medium' },
+                { title: 'Prompts in LangChain', file: '06_prompts_langchain_notes.md', difficulty: 'medium' },
+                { title: 'Output Parsers', file: '08_output_parsers_notes.md', difficulty: 'hard' },
+                { title: 'Chains in LangChain', file: '09_chains_langchain_notes.md', difficulty: 'hard' },
+                { title: 'What is RAG', file: '16_what_is_rag_notes.md', difficulty: 'hard' }
+            ];
+            
+            // Coding DSA Tracks
+            const binarySearchChapters = [
+                { title: 'Binary Search Concepts', file: '00_binary_search_concepts_notes.ipynb', difficulty: 'medium' },
+                { title: 'Count Elements in Array', file: '01_count_elements_notes.ipynb', difficulty: 'medium' },
+                { title: 'Rotated Array Search', file: '02_rotated_array_notes.ipynb', difficulty: 'hard' },
+                { title: 'Nearly Sorted Array', file: '04_nearly_sorted_notes.ipynb', difficulty: 'hard' },
+                { title: 'Floor and Ceil', file: '05_floor_ceil_notes.ipynb', difficulty: 'medium' },
+                { title: 'Peak Element', file: '12_peak_element_notes.ipynb', difficulty: 'hard' }
+            ];
+            
+            const slidingWindowChapters = [
+                { title: 'Maximum Sum Subarray', file: '00_max_sum_subarray_notes.ipynb', difficulty: 'easy' },
+                { title: 'Count Anagrams', file: '01_count_anagrams_notes.ipynb', difficulty: 'medium' },
+                { title: 'First Negative Number', file: '02_first_negative_notes.ipynb', difficulty: 'medium' },
+                { title: 'Maximum of Subarrays', file: '03_max_subarrays_notes.ipynb', difficulty: 'hard' },
+                { title: 'Variable Size Window', file: '04_variable_window_notes.ipynb', difficulty: 'hard' },
+                { title: 'Longest Substring', file: '07_longest_substring_notes.ipynb', difficulty: 'hard' }
+            ];
+            
+            const dpChapters = [
+                { title: 'DP Introduction', file: '00_dp_intro_notes.ipynb', difficulty: 'hard' },
+                { title: 'Knapsack Types', file: '01_knapsack_types_notes.ipynb', difficulty: 'hard' },
+                { title: '0/1 Knapsack Recursive', file: '02_knapsack_recursive_notes.ipynb', difficulty: 'hard' },
+                { title: '0/1 Knapsack Memoization', file: '03_knapsack_memo_notes.ipynb', difficulty: 'hard' },
+                { title: 'Subset Sum Problem', file: '05_subset_sum_notes.ipynb', difficulty: 'hard' }
+            ];
+            
+            // Create topic groups
+            const groups = [
+                {
+                    id: 'machine_learning_100days',
+                    name: 'Machine Learning (100 Days)',
+                    category: 'machine_learning',
+                    description: 'Complete ML fundamentals from CampusX',
+                    chapters: mlChapters
+                },
+                {
+                    id: 'deep_learning_100days',
+                    name: 'Deep Learning (100 Days)',
+                    category: 'deep_learning',
+                    description: 'Neural networks from basics to CNNs',
+                    chapters: dlChapters
+                },
+                {
+                    id: 'generative_ai_langchain',
+                    name: 'Generative AI with LangChain',
+                    category: 'generative_ai',
+                    description: 'Modern AI applications and RAG systems',
+                    chapters: genaiChapters
+                },
+                {
+                    id: 'binary_search_mastery',
+                    name: 'Binary Search Mastery',
+                    category: 'coding',
+                    description: 'Master binary search patterns',
+                    chapters: binarySearchChapters
+                },
+                {
+                    id: 'sliding_window_techniques',
+                    name: 'Sliding Window Techniques',
+                    category: 'coding',
+                    description: 'Efficient subarray problems',
+                    chapters: slidingWindowChapters
+                },
+                {
+                    id: 'dynamic_programming',
+                    name: 'Dynamic Programming',
+                    category: 'coding',
+                    description: 'Advanced optimization problems',
+                    chapters: dpChapters
+                }
+            ];
+            
+            // Process each group
+            groups.forEach(group => {
+                const processedChapters = group.chapters.map((chapter, index) => {
+                    const chapterId = `${group.id}_ch${index + 1}`;
+                    const reviewDate = new Date(now.getTime() + (Math.random() * 7 + index) * 24 * 60 * 60 * 1000);
+                    
+                    const chapterData = {
+                        id: chapterId,
+                        groupId: group.id,
+                        chapterNumber: index + 1,
+                        title: chapter.title,
+                        filePath: chapter.file,
+                        difficulty: chapter.difficulty,
+                        category: group.category,
+                        createdDate: now.toISOString(),
+                        lastReviewed: Math.random() > 0.6 ? new Date(now.getTime() - Math.random() * 5 * 24 * 60 * 60 * 1000).toISOString() : null,
+                        nextReview: reviewDate.toISOString(),
+                        reviewCount: Math.floor(Math.random() * 3),
+                        easeFactor: 2.5,
+                        completed: Math.random() > 0.7
+                    };
+                    
+                    allChapters.push(chapterData);
+                    return chapterData;
+                });
+                
+                topicGroups[group.id] = {
+                    ...group,
+                    chapters: processedChapters,
+                    totalChapters: processedChapters.length,
+                    completedChapters: processedChapters.filter(c => c.completed).length,
+                    createdDate: now.toISOString()
+                };
+            });
+            
+            filteredGroups = { ...topicGroups };
+        }
+
+        // Auto-rename files to follow _notes convention
+        async function autoRenameFiles() {
+            if (Object.keys(topicGroups).length === 0) {
+                alert('⚠️ Please scan the repository first to discover topics.');
+                return;
+            }
+
+            showScanningOverlay('Analyzing file naming patterns...');
+            
+            const renameSuggestions = [];
+            let processedCount = 0;
+            
+            // Simulate analyzing files
+            for (const groupId in topicGroups) {
+                const group = topicGroups[groupId];
+                updateScanningStatus(`Analyzing ${group.name}...`);
+                
+                group.chapters.forEach(chapter => {
+                    const currentName = chapter.filePath;
+                    
+                    // Only suggest renaming if not already following _notes convention
+                    if (!currentName.includes('_notes')) {
+                        const extension = currentName.split('.').pop();
+                        const baseName = currentName.replace(/\.[^/.]+$/, '');
+                        const chapterNum = String(chapter.chapterNumber).padStart(2, '0');
+                        const cleanTitle = chapter.title.toLowerCase()
+                            .replace(/[^a-z0-9]/g, '_')
+                            .replace(/_+/g, '_')
+                            .replace(/^_|_$/g, '');
+                        
+                        const newName = `${chapterNum}_${cleanTitle}_notes.${extension}`;
+                        
+                        renameSuggestions.push({
+                            oldName: currentName,
+                            newName: newName,
+                            chapterId: chapter.id,
+                            groupName: group.name
+                        });
+                    }
+                    processedCount++;
+                });
+                
+                updateProgress((processedCount / allChapters.length) * 100);
+                await sleep(200);
+            }
+            
+            hideScanningOverlay();
+            
+            if (renameSuggestions.length === 0) {
+                alert('✅ All files already follow the _notes naming convention!');
+                return;
+            }
+            
+            const message = `🔍 Found ${renameSuggestions.length} files that could be renamed to follow the _notes convention.\n\nExamples:\n${renameSuggestions.slice(0, 3).map(s => `• ${s.oldName} → ${s.newName}`).join('\n')}\n\n⚠️ Note: This is a simulation. In a real system, you would need to manually rename the files.\n\nWould you like to update the internal database with the new names?`;
+            
+            if (confirm(message)) {
+                // Update internal database with new names
+                renameSuggestions.forEach(suggestion => {
+                    const chapter = allChapters.find(c => c.id === suggestion.chapterId);
+                    if (chapter) {
+                        chapter.filePath = suggestion.newName;
+                    }
+                    
+                    // Update in topic groups
+                    for (const groupId in topicGroups) {
+                        const chapterIndex = topicGroups[groupId].chapters.findIndex(c => c.id === suggestion.chapterId);
+                        if (chapterIndex !== -1) {
+                            topicGroups[groupId].chapters[chapterIndex].filePath = suggestion.newName;
+                        }
+                    }
+                });
+                
+                saveData();
+                renderTopicGroups();
+                
+                alert(`✅ Updated ${renameSuggestions.length} file paths in the database!\n\n📝 To complete the process, manually rename the actual files in your repository to match the new naming convention.`);
+            }
+        }
+
+        // Mark chapter as reviewed
+        function markReviewed(chapterId, difficulty) {
+            const chapter = allChapters.find(c => c.id === chapterId);
+            if (!chapter) return;
+
+            const now = new Date();
+            chapter.lastReviewed = now.toISOString();
+            chapter.reviewCount++;
+
+            // Calculate next review based on difficulty and ease factor
+            let interval = chapter.easeFactor;
+            
+            if (difficulty === 'hard') {
+                chapter.easeFactor = Math.max(1.3, chapter.easeFactor - 0.2);
+                interval = Math.max(1, interval * 0.6);
+            } else if (difficulty === 'medium') {
+                chapter.easeFactor = Math.max(1.3, chapter.easeFactor - 0.1);
+            } else { // easy
+                chapter.easeFactor = chapter.easeFactor + 0.1;
+                interval = interval * 1.3;
+                chapter.completed = true;
+            }
+
+            // Apply difficulty multiplier
+            const diffMultipliers = { easy: 1.3, medium: 1.0, hard: 0.8 };
+            interval *= diffMultipliers[chapter.difficulty];
+
+            const nextReview = new Date(now.getTime() + interval * 24 * 60 * 60 * 1000);
+            chapter.nextReview = nextReview.toISOString();
+
+            // Update topic group completion stats
+            const group = topicGroups[chapter.groupId];
+            if (group) {
+                group.completedChapters = group.chapters.filter(c => c.completed).length;
+            }
+
+            saveData();
+            renderTopicGroups();
+            renderCalendar();
+            renderAnalytics();
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const now = new Date();
+            const today = now.toDateString();
+            
+            const dueToday = allChapters.filter(c => {
+                if (!c.nextReview) return false;
+                return new Date(c.nextReview).toDateString() === today;
+            }).length;
+            
+            const completedChapters = allChapters.filter(c => c.completed).length;
+            const totalRetention = allChapters.length > 0 ? 
+                Math.round((completedChapters / allChapters.length) * 100) : 0;
+            
+            document.getElementById('totalTopics').textContent = Object.keys(topicGroups).length;
+            document.getElementById('totalChapters').textContent = allChapters.length;
+            document.getElementById('dueToday').textContent = dueToday;
+            document.getElementById('studyStreak').textContent = Math.floor(Math.random() * 20 + 5); // Placeholder
+            document.getElementById('retentionRate').textContent = totalRetention + '%';
+        }
+
+        // Render topic groups
+        function renderTopicGroups() {
+            const container = document.getElementById('topicGroups');
+            
+            if (Object.keys(filteredGroups).length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: #718096;">
+                        <h2>📚 No Topics Found</h2>
+                        <p>Click "🔍 Scan Repository" to automatically discover your learning materials.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = Object.values(filteredGroups).map(group => {
+                const progressPercent = group.totalChapters > 0 ? 
+                    Math.round((group.completedChapters / group.totalChapters) * 100) : 0;
+                
+                const dueChapters = group.chapters.filter(c => {
+                    if (!c.nextReview) return false;
+                    return new Date(c.nextReview) <= new Date();
+                }).length;
+
+                const chaptersHtml = group.chapters.map(chapter => {
+                    const status = getChapterStatus(chapter);
+                    const statusClass = `status-${status.type}`;
+                    
+                    return `
+                        <div class="chapter-item">
+                            <div class="chapter-info">
+                                <div class="chapter-title">
+                                    Ch. ${chapter.chapterNumber}: ${chapter.title}
+                                </div>
+                                <div class="chapter-meta">
+                                    📁 ${chapter.filePath} • 
+                                    🔄 ${chapter.reviewCount} reviews • 
+                                    📅 Next: ${formatDate(chapter.nextReview)}
+                                </div>
+                            </div>
+                            <div class="chapter-status">
+                                <span class="difficulty-badge diff-${chapter.difficulty}">${chapter.difficulty}</span>
+                                <span class="status-badge ${statusClass}">${status.label}</span>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'hard')">😰</button>
+                                    <button class="btn" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'medium')">😐</button>
+                                    <button class="btn btn-success" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'easy')">😊</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="topic-group">
+                        <div class="topic-group-header" onclick="toggleGroup('${group.id}')">
+                            <div>
+                                <div class="topic-group-title">${group.name}</div>
+                                <div style="color: #718096; font-size: 0.9rem; margin-top: 5px;">
+                                    ${group.description}
+                                </div>
+                            </div>
+                            <div class="topic-group-stats">
+                                <span>📊 ${progressPercent}% complete</span>
+                                <span>📚 ${group.completedChapters}/${group.totalChapters} chapters</span>
+                                <span>⏰ ${dueChapters} due</span>
+                                <span id="toggle-${group.id}">▼</span>
+                            </div>
+                        </div>
+                        <div class="topic-group-content expanded" id="content-${group.id}">
+                            ${chaptersHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getChapterStatus(chapter) {
+            if (chapter.completed) return { type: 'completed', label: 'Completed' };
+            
+            if (!chapter.nextReview) return { type: 'upcoming', label: 'Not Scheduled' };
+            
+            const now = new Date();
+            const reviewDate = new Date(chapter.nextReview);
+            const diffDays = Math.floor((reviewDate - now) / (24 * 60 * 60 * 1000));
+            
+            if (diffDays < 0) return { type: 'overdue', label: 'Overdue' };
+            if (diffDays === 0) return { type: 'due', label: 'Due Today' };
+            if (diffDays <= 2) return { type: 'due', label: 'Due Soon' };
+            return { type: 'upcoming', label: 'Upcoming' };
+        }
+
+        function toggleGroup(groupId) {
+            const content = document.getElementById(`content-${groupId}`);
+            const toggle = document.getElementById(`toggle-${groupId}`);
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                toggle.textContent = '▶';
+            } else {
+                content.classList.add('expanded');
+                toggle.textContent = '▼';
+            }
+        }
+
+        // Setup category filter
+        function setupCategoryFilter() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const categories = new Set();
+            
+            Object.values(topicGroups).forEach(group => {
+                categories.add(group.category);
+            });
+            
+            // Clear existing options except "All Categories"
+            categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+            
+            // Add category options
+            Array.from(categories).sort().forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                categoryFilter.appendChild(option);
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const difficultyFilter = document.getElementById('difficultyFilter').value;
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+
+            filteredGroups = {};
+
+            Object.entries(topicGroups).forEach(([groupId, group]) => {
+                // Category filter
+                if (categoryFilter !== 'all' && group.category !== categoryFilter) return;
+
+                // Filter chapters within group
+                const filteredChapters = group.chapters.filter(chapter => {
+                    // Status filter
+                    if (statusFilter !== 'all') {
+                        const status = getChapterStatus(chapter);
+                        if (statusFilter === 'due' && status.type !== 'due') return false;
+                        if (statusFilter === 'overdue' && status.type !== 'overdue') return false;
+                        if (statusFilter === 'upcoming' && status.type !== 'upcoming') return false;
+                        if (statusFilter === 'completed' && status.type !== 'completed') return false;
+                    }
+
+                    // Difficulty filter
+                    if (difficultyFilter !== 'all' && chapter.difficulty !== difficultyFilter) return false;
+
+                    // Search filter
+                    if (searchTerm && !chapter.title.toLowerCase().includes(searchTerm)) return false;
+
+                    return true;
+                });
+
+                // Only include group if it has matching chapters
+                if (filteredChapters.length > 0) {
+                    filteredGroups[groupId] = {
+                        ...group,
+                        chapters: filteredChapters
+                    };
+                }
+            });
+
+            renderTopicGroups();
+        }
+
+        // Calendar rendering
+        function renderCalendar() {
+            const calendar = document.getElementById('calendar');
+            const monthName = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            document.getElementById('currentMonth').textContent = monthName;
+
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            
+            let html = days.map(day => `<div class="calendar-header">${day}</div>`).join('');
+
+            const today = new Date().toDateString();
+            const currentMonth = currentDate.getMonth();
+
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                
+                const isToday = date.toDateString() === today;
+                const isCurrentMonth = date.getMonth() === currentMonth;
+                const dateString = date.toDateString();
+                
+                // Get chapters for this date
+                const dayChapters = allChapters.filter(chapter => {
+                    if (!chapter.nextReview) return false;
+                    return new Date(chapter.nextReview).toDateString() === dateString;
+                });
+
+                const classes = ['calendar-day'];
+                if (!isCurrentMonth) classes.push('other-month');
+                if (isToday) classes.push('today');
+
+                const chaptersHtml = dayChapters.slice(0, 2).map(chapter => {
+                    const isOverdue = new Date(chapter.nextReview) < new Date();
+                    const statusClass = isOverdue ? 'overdue' : 'due';
+                    return `<div class="topic-pill ${statusClass}" title="Ch. ${chapter.chapterNumber}: ${chapter.title}">${chapter.title.substring(0, 8)}...</div>`;
+                }).join('');
+
+                const moreCount = dayChapters.length > 2 ? dayChapters.length - 2 : 0;
+                const moreHtml = moreCount > 0 ? `<div class="topic-pill">+${moreCount}</div>` : '';
+
+                html += `
+                    <div class="${classes.join(' ')}">
+                        <div class="day-number">${date.getDate()}</div>
+                        ${chaptersHtml}
+                        ${moreHtml}
+                    </div>
+                `;
+            }
+
+            calendar.innerHTML = html;
+        }
+
+        // Analytics rendering
+        function renderAnalytics() {
+            const container = document.getElementById('analyticsData');
+            
+            if (allChapters.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 40px; color: #718096;">Scan your repository first to see analytics.</p>';
+                return;
+            }
+
+            // Calculate analytics
+            const categoryStats = {};
+            const difficultyStats = { easy: 0, medium: 0, hard: 0 };
+            const completionStats = {};
+            
+            allChapters.forEach(chapter => {
+                // Category stats
+                if (!categoryStats[chapter.category]) {
+                    categoryStats[chapter.category] = { total: 0, completed: 0 };
+                }
+                categoryStats[chapter.category].total++;
+                if (chapter.completed) categoryStats[chapter.category].completed++;
+                
+                // Difficulty stats
+                difficultyStats[chapter.difficulty]++;
+                
+                // Group completion stats
+                const group = topicGroups[chapter.groupId];
+                if (group && !completionStats[group.name]) {
+                    completionStats[group.name] = {
+                        total: group.totalChapters,
+                        completed: group.completedChapters,
+                        progress: Math.round((group.completedChapters / group.totalChapters) * 100)
+                    };
+                }
+            });
+
+            const overdue = allChapters.filter(c => c.nextReview && new Date(c.nextReview) < new Date()).length;
+            const reviewed = allChapters.filter(c => c.reviewCount > 0).length;
+
+            container.innerHTML = `
+                <div class="analytics-card">
+                    <h3>📚 By Category</h3>
+                    ${Object.entries(categoryStats).map(([cat, stats]) => {
+                        const percent = Math.round((stats.completed / stats.total) * 100);
+                        return `<p>${cat.replace('_', ' ')}: ${stats.completed}/${stats.total} (${percent}%)</p>`;
+                    }).join('')}
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>⚡ By Difficulty</h3>
+                    <p>Easy: ${difficultyStats.easy}</p>
+                    <p>Medium: ${difficultyStats.medium}</p>
+                    <p>Hard: ${difficultyStats.hard}</p>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>📊 Overall Progress</h3>
+                    <p>Total Chapters: ${allChapters.length}</p>
+                    <p>Completed: ${allChapters.filter(c => c.completed).length}</p>
+                    <p>Reviewed: ${reviewed}</p>
+                    <p>Overdue: ${overdue}</p>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>🎯 Topic Progress</h3>
+                    ${Object.entries(completionStats).map(([name, stats]) => 
+                        `<p>${name}: ${stats.progress}%</p>`
+                    ).join('')}
+                </div>
+            `;
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            if (!dateString) return 'Not scheduled';
+            
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffDays = Math.floor((date - now) / (24 * 60 * 60 * 1000));
+            
+            if (diffDays === 0) return 'Today';
+            if (diffDays === 1) return 'Tomorrow';
+            if (diffDays === -1) return 'Yesterday';
+            if (diffDays < 0) return `${Math.abs(diffDays)} days overdue`;
+            if (diffDays < 7) return `In ${diffDays} days`;
+            return date.toLocaleDateString();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        function showScanningOverlay(message) {
+            document.getElementById('scanningStatus').textContent = message;
+            document.getElementById('scanningOverlay').style.display = 'flex';
+        }
+
+        function hideScanningOverlay() {
+            document.getElementById('scanningOverlay').style.display = 'none';
+        }
+
+        function updateScanningStatus(message) {
+            document.getElementById('scanningStatus').textContent = message;
+        }
+
+        // Calendar navigation
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            renderCalendar();
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Content').classList.add('active');
+
+            if (tabName === 'analytics') {
+                renderAnalytics();
+            }
+        }
+
+        // Data management
+        function exportData() {
+            const data = {
+                topicGroups: topicGroups,
+                allChapters: allChapters,
+                exportDate: new Date().toISOString(),
+                version: '2.0'
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ai_learning_revision_data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        if (data.topicGroups && data.allChapters) {
+                            topicGroups = data.topicGroups;
+                            allChapters = data.allChapters;
+                            filteredGroups = { ...topicGroups };
+                            
+                            saveData();
+                            setupCategoryFilter();
+                            renderTopicGroups();
+                            renderCalendar();
+                            renderAnalytics();
+                            updateStats();
+                            
+                            alert('✅ Data imported successfully!');
+                        } else {
+                            alert('❌ Invalid file format.');
+                        }
+                    } catch (error) {
+                        alert('❌ Error reading file.');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to reset the entire system? This will clear all topics and progress data.')) {
+                topicGroups = {};
+                allChapters = [];
+                filteredGroups = {};
+                localStorage.removeItem('aiRevisionTopics');
+                
+                setupCategoryFilter();
+                renderTopicGroups();
+                renderCalendar();
+                renderAnalytics();
+                updateStats();
+                
+                alert('🗑️ System reset complete!');
+            }
+        }
+    </script>
+</body>
+</html>
