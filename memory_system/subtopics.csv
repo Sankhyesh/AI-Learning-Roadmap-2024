@@ -1,0 +1,98 @@
+subtopic_id,topic_id,chapter_number,subtopic_title,file_path,difficulty,estimated_time_minutes,keywords,last_reviewed,next_review,review_count,mastery_level,notes
+ml_01,ml_100days,1,What is Machine Learning,CampusX/100 days-ml/1-What is ML/01_what_is_ml_notes.md,easy,30,"introduction,basics,definition",,,0,0,Basic ML introduction and definitions
+ml_02,ml_100days,1,What is Machine Learning (Original),CampusX/100 days-ml/1-What is ML/1-What is machine learning.md,easy,25,"comparison,fundamentals",,,0,0,Understanding differences between AI ML and DL
+ml_03,ml_100days,2,AI vs ML vs DL,CampusX/100 days-ml/2-AI vs ML vs DL/2-AI vs ML vs DL.md,easy,40,"supervised,unsupervised,reinforcement",,,0,0,Classification of ML approaches
+ml_04,ml_100days,3,Types of Machine Learning,CampusX/100 days-ml/3-Types Of ML/TypesOFML.md,medium,35,"streaming,incremental",,,0,0,Real-time learning systems
+ml_05,ml_100days,5,Online Machine Learning,CampusX/100 days-ml/5 - online machine learning/online machine learning.md,medium,45,"eda,analysis,statistics",,,0,0,Data exploration and analysis techniques
+ml_06,ml_100days,19,Understanding Your Data,CampusX/100 days-ml/19 - understanding your data/19_understanding_data.ipynb,medium,50,"univariate,visualization,statistics",,,0,0,Single variable data analysis
+ml_07,ml_100days,20,EDA Univariate Analysis,CampusX/100 days-ml/20 - eda using univariate Analysis/20_eda_using_univariate_analysis.ipynb,medium,60,"bivariate,correlation,relationships",,,0,0,Two variable relationship analysis
+ml_08,ml_100days,21,EDA Bivariate Analysis,CampusX/100 days-ml/21 EDA using Bivariate and Multivariate Analysis/21_eda_usingb_bivariate.ipynb,hard,30,"automation,profiling,pandas",,,0,0,Automated data profiling techniques
+ml_09,ml_100days,22,Pandas Profiling,CampusX/100 days-ml/22-Pandas-profiling/22_pandas_profiling.ipynb,medium,40,"scaling,standardization,preprocessing",,,0,0,Data preprocessing and normalization
+ml_10,ml_100days,24,Feature Scaling,CampusX/100 days-ml/24 - Feature Scaling - Standardization/Feature_Scaling_Standardization_Day_24.ipynb,medium,40,"scaling,standardization,preprocessing",,,0,0,Data preprocessing and normalization
+dl_01,dl_100days,0,Deep Learning Roadmap,CampusX/100-days-deep-learning/00-ROADMAP/deep-learning-roadmap.md,easy,20,"roadmap,planning,curriculum",,,0,0,Learning path for deep learning
+dl_02,dl_100days,2,What is Deep Learning,CampusX/100-days-deep-learning/02-what-isdeep-learning.md,medium,35,"introduction,neural networks",,,0,0,Introduction to deep learning concepts
+dl_03,dl_100days,3,Types of Neural Networks,CampusX/100-days-deep-learning/03-types-of-neural-network.md,medium,40,"architectures,types,networks",,,0,0,Different neural network architectures
+dl_04,dl_100days,4,What is Perceptron,CampusX/100-days-deep-learning/04-what-is-perceptron.md,medium,45,"perceptron,basics,linear",,,0,0,Single layer neural network
+dl_05,dl_100days,5,Training Perceptron,CampusX/100-days-deep-learning/05-how-to-train-perceptron-Trick.md,hard,50,"training,algorithms,optimization",,,0,0,Perceptron learning algorithm
+dl_06,dl_100days,6,Perceptron Loss Function,CampusX/100-days-deep-learning/06-perceptron_loss_function.md,hard,45,"loss,optimization,cost",,,0,0,Mathematical foundation of training
+dl_07,dl_100days,7,Problems with Perceptron,CampusX/100-days-deep-learning/07-problem-with-perceptron.md,medium,30,"limitations,linear separability",,,0,0,Understanding perceptron limitations
+dl_08,dl_100days,8,MLP Notation,CampusX/100-days-deep-learning/08-MLP-notation.md,medium,35,"notation,symbols,mathematics",,,0,0,Mathematical notation for MLPs
+dl_09,dl_100days,9,Multi-Layer Perceptron,CampusX/100-days-deep-learning/09-mlp-multi-layer-perceptron.md,hard,55,"mlp,architecture,hidden layers",,,0,0,Multiple layer neural networks
+dl_10,dl_100days,10,Forward Propagation,CampusX/100-days-deep-learning/10-forward-propagation.md,hard,50,"forward pass,computation,activation",,,0,0,Information flow through network
+dl_11,dl_100days,11,Customer Churn Prediction,CampusX/100-days-deep-learning/11-customer-churn-prediction-using-ann.md,hard,60,"application,project,classification",,,0,0,Real-world ANN application
+dl_12,dl_100days,12,Handwritten Digit Classification,CampusX/100-days-deep-learning/12-handwrittern_digit_classification_using_ann.md,hard,65,"mnist,classification,computer vision",,,0,0,Image classification with ANNs
+dl_13,dl_100days,13,Graduate Admission Prediction,CampusX/100-days-deep-learning/13-graduate-admission-prediction-using-ann.md,hard,55,"regression,prediction,application",,,0,0,Regression using neural networks
+dl_14,dl_100days,14,Loss Functions in Deep Learning,CampusX/100-days-deep-learning/14_Loss_Functions_in_Deep_Learning .md,hard,45,"loss functions,optimization,cost",,,0,0,Different types of loss functions
+dl_15,dl_100days,15,Backpropagation Part 1,CampusX/100-days-deep-learning/15-backpropagation-in-deep-learning-part1.md,hard,60,"backpropagation,gradients,chain rule",,,0,0,Backward pass algorithm fundamentals
+dl_16,dl_100days,16,Backpropagation Part 2,CampusX/100-days-deep-learning/16-Backpropagation-part2-how.md,hard,65,"implementation,algorithm,computation",,,0,0,How backpropagation works
+dl_17,dl_100days,17,Backpropagation Part 3,CampusX/100-days-deep-learning/17-Backpropagation-why-Part-3 .md,hard,50,"theory,mathematics,intuition",,,0,0,Why backpropagation works
+dl_18,dl_100days,18,MLP Memoization,CampusX/100-days-deep-learning/18-MLP-memoization.md,medium,40,"optimization,memory,efficiency",,,0,0,Optimizing MLP computations
+dl_19,dl_100days,19,Gradient Descent,CampusX/100-days-deep-learning/19-Gradient-Descent-in-Neural-Networks.md,hard,55,"optimization,gradients,algorithms",,,0,0,Optimization algorithms for training
+dl_20,dl_100days,20,Vanishing Gradient Problem,CampusX/100-days-deep-learning/20-Vanishing-Gradient-Problem-in-ANN-Exploding-Gradient-Problem.md,hard,50,"gradients,problems,solutions",,,0,0,Training challenges in deep networks
+dl_21,dl_100days,21,Improving NN Performance,CampusX/100-days-deep-learning/21-how-to-improve-performance-ofnn.md,hard,45,"optimization,techniques,performance",,,0,0,Methods to enhance neural networks
+dl_22,dl_100days,22,Early Stopping,CampusX/100-days-deep-learning/22-early-stoppping-in-nn.md,medium,35,"regularization,overfitting,validation",,,0,0,Preventing overfitting during training
+dl_23,dl_100days,23,Topics to Revisit,CampusX/100-days-deep-learning/23-to-40[revisit].md,easy,20,"review,checklist,topics",,,0,0,Review checklist for concepts
+dl_40,dl_100days,40,CNN Introduction,CampusX/100-days-deep-learning/40-cnn.md,hard,60,"cnn,convolution,computer vision",,,0,0,Introduction to convolutional networks
+dl_41,dl_100days,41,CNN vs Visual Cortex,CampusX/100-days-deep-learning/41-CNN-Vs-Visual-Cortex-history-cnn.md,medium,40,"history,biology,inspiration",,,0,0,Biological inspiration for CNNs
+dl_42,dl_100days,42,Convolution Operation,CampusX/100-days-deep-learning/42-CNN-Part-3-Convolution-Operation.md,hard,55,"convolution,filters,feature maps",,,0,0,Mathematical foundation of CNNs
+dl_43,dl_100days,43,Padding and Strides,CampusX/100-days-deep-learning/43-Padding-and-Strides-in-CNN.md,hard,50,"padding,strides,dimensions",,,0,0,Controlling CNN output dimensions
+dl_44,dl_100days,44,Pooling Layers,CampusX/100-days-deep-learning/44-pooling-layer-in-cnn.md,medium,40,"pooling,downsampling,features",,,0,0,Reducing spatial dimensions in CNNs
+dl_45,dl_100days,45,CNN Architecture,CampusX/100-days-deep-learning/45-cnn-architechture.md,hard,65,"architecture,design,lenet",,,0,0,Complete CNN architecture design
+ga_01,genai_langchain,1,GenAI Roadmap,CampusX/Generative AI using LangChain/01_GEN_AI_roadmap.md,easy,20,"roadmap,planning,genai",,,0,0,Generative AI learning roadmap
+ga_02,genai_langchain,2,Generative AI with LangChain,CampusX/Generative AI using LangChain/02_Generative AI using LangChain.md,medium,35,"langchain,introduction",,,0,0,Introduction to LangChain
+ga_03,genai_langchain,3,Introduction to LangChain,CampusX/Generative AI using LangChain/03_Introduction_to_LangChain.md,medium,40,"langchain,components",,,0,0,LangChain fundamentals
+ga_04,genai_langchain,4,LangChain Components,CampusX/Generative AI using LangChain/04_Langchain_components.md,medium,45,"components,architecture",,,0,0,LangChain building blocks
+ga_05,genai_langchain,5,LangChain Models,CampusX/Generative AI using LangChain/05_Langchain_model.md,medium,40,"models,llm,integration",,,0,0,Working with LLMs in LangChain
+ga_06,genai_langchain,6,Prompts in LangChain,CampusX/Generative AI using LangChain/06_prompts_in_langchain.md,medium,35,"prompts,templates",,,0,0,Prompt engineering with LangChain
+ga_07,genai_langchain,7,Structured Output,CampusX/Generative AI using LangChain/07_langchain-structured-output.md,hard,45,"structured,output,parsing",,,0,0,Getting structured outputs from LLMs
+ga_08,genai_langchain,8,Output Parsers,CampusX/Generative AI using LangChain/08_Output_Parsers_in_LangChain.md,hard,40,"parsers,output,processing",,,0,0,Processing LLM outputs
+ga_09,genai_langchain,9,Chains in LangChain,CampusX/Generative AI using LangChain/09_chains_in_langchain.md,hard,50,"chains,workflow",,,0,0,Building complex workflows
+ga_10,genai_langchain,10,Runnables Part 1,CampusX/Generative AI using LangChain/10_runnables_in_langchain.md,hard,45,"runnables,execution",,,0,0,LangChain execution framework
+ga_11,genai_langchain,11,Runnables Part 2,CampusX/Generative AI using LangChain/11_runnables_in_langchain_part2.md,hard,45,"runnables,advanced",,,0,0,Advanced runnable patterns
+ga_12,genai_langchain,12,Document Loaders,CampusX/Generative AI using LangChain/12_document_loaders_in_langchain.md,medium,35,"documents,loading,data",,,0,0,Loading various document types
+ga_13,genai_langchain,13,Text Splitters,CampusX/Generative AI using LangChain/13_text_Splitters_in_LangChain.md,medium,30,"text,splitting,chunking",,,0,0,Text preprocessing for RAG
+ga_14,genai_langchain,14,Vector Stores,CampusX/Generative AI using LangChain/14_Vector_Stores_in_LangChain.md,hard,50,"vectors,embeddings,storage",,,0,0,Vector database integration
+ga_15,genai_langchain,15,Retrievers,CampusX/Generative AI using LangChain/15_retrievers_in_langchain.md,hard,40,"retrieval,search,similarity",,,0,0,Information retrieval systems
+ga_16,genai_langchain,16,What is RAG,CampusX/Generative AI using LangChain/16_what_is_rag.md,hard,45,"rag,retrieval,generation",,,0,0,Retrieval Augmented Generation
+ga_17,genai_langchain,17,YouTube Chatbot,CampusX/Generative AI using LangChain/17_youtube_chatbot_using_langchain.md,hard,60,"chatbot,project,application",,,0,0,Building a YouTube chatbot
+bs_01,binary_search,0,Binary Search Concepts,coding/Binary_search/00_binary_search_concepts_notes.md,medium,45,"algorithm,searching,sorted",,,0,0,Fundamental binary search concepts
+bs_02,binary_search,0,Binary Search Concepts (Notebook),coding/Binary_search/00 - concepts.ipynb,medium,40,"algorithm,searching,implementation",,,0,0,Binary search implementation
+bs_03,binary_search,1,Count Elements in Array,coding/Binary_search/01-Count of an Element in a Sorted Array.ipynb,medium,40,"counting,frequency,duplicates",,,0,0,Finding element frequency in sorted array
+bs_04,binary_search,2,Rotated Array Count,coding/Binary_search/02 - Number of Times a Sorted Array is Rotated.ipynb,hard,50,"rotation,circular,pivot",,,0,0,Finding rotation point in array
+bs_05,binary_search,3,Search in Rotated Array,coding/Binary_search/03 - Find an Element in a Rotated Sorted Array.ipynb,hard,55,"rotated,search,modified",,,0,0,Searching in rotated sorted arrays
+bs_06,binary_search,4,Nearly Sorted Array,coding/Binary_search/04 - Searching in a Nearly Sorted Array.ipynb,hard,45,"nearly sorted,search",,,0,0,Searching in nearly sorted arrays
+bs_07,binary_search,5,Floor Element,coding/Binary_search/05 - Find Floor of an element in a Sorted Array.ipynb,medium,35,"floor,lower bound",,,0,0,Finding floor of element
+bs_08,binary_search,6,Ceil Element,coding/Binary_search/06 - Ceil of an element in a Sorted Array.ipynb,medium,35,"ceil,upper bound",,,0,0,Finding ceiling of element
+bs_09,binary_search,12,Peak Element,coding/Binary_search/12 - Peak Element.ipynb,hard,50,"peak,local maximum",,,0,0,Finding peak element in array
+bs_10,binary_search,15,2D Array Search,coding/Binary_search/15 - Search in Row wise And Column wise Sorted Array.ipynb,hard,60,"2d array,matrix,search",,,0,0,Searching in 2D sorted matrix
+sw_01,sliding_window,0,Maximum Sum Subarray,coding/Sliding_window/00- Maximum Sum Subarray of Size k.ipynb,easy,35,"subarray,sum,window",,,0,0,Fixed size sliding window problems
+sw_02,sliding_window,1,Count Anagrams,coding/Sliding_window/01-Count Occurance of anagrams.ipynb,medium,45,"anagrams,string,patterns",,,0,0,Finding anagram patterns in strings
+sw_03,sliding_window,2,First Negative Number,coding/Sliding_window/02-First Negative Number in Every Window.ipynb,easy,30,"negative,window,array",,,0,0,Finding first negative in window
+sw_04,sliding_window,3,Maximum of Subarrays,coding/Sliding_window/03 Maximum of all subarray of size K.ipynb,medium,40,"maximum,subarray,deque",,,0,0,Maximum in sliding window
+sw_05,sliding_window,4,Variable Size Window,coding/Sliding_window/04-Variable size sliding window.ipynb,hard,50,"variable,adaptive,window",,,0,0,Variable size sliding window
+sw_06,sliding_window,7,Longest Substring,coding/Sliding_window/07-Longest Substring Without Repeating Characters.ipynb,hard,55,"substring,unique,characters",,,0,0,Longest substring without repetition
+rec_01,recursion,1,Recursion Everywhere,coding/recursion/01 - Recursion is Everywhere !!.ipynb,easy,30,"introduction,concepts,examples",,,0,0,Understanding recursive thinking
+rec_02,recursion,2,Hypothesis Induction,coding/recursion/02 - Hypothesis-Induction-Base Condition.ipynb,medium,40,"methodology,approach,structure",,,0,0,Structured approach to recursion
+rec_03,recursion,3,Beauty of Recursion,coding/recursion/03 - Beauty of Hypothesis And Induction.ipynb,medium,35,"beauty,elegance,thinking",,,0,0,Elegant recursive solutions
+rec_04,recursion,4,Binary Tree Height,coding/recursion/04 - Height of a Binary Tree.ipynb,medium,40,"tree,height,recursion",,,0,0,Finding tree height recursively
+rec_05,recursion,5,Sort Array,coding/recursion/05 - Sort An array using Recursion.ipynb,medium,45,"sorting,merge sort,recursion",,,0,0,Recursive sorting algorithms
+rec_06,recursion,6,Sort Stack,coding/recursion/06 - sort a stack.ipynb,hard,50,"stack,sorting,recursion",,,0,0,Sorting stack using recursion
+stk_01,stack_ds,0,Stack Concepts,coding/stack/00- concepts.ipynb,easy,25,"data structure,lifo,operations",,,0,0,Basic stack operations and concepts
+stk_02,stack_ds,1,Stock Span Problem,coding/stack/01 - stock span problem.ipynb,medium,45,"application,monotonic,finance",,,0,0,Real-world stack application
+stk_03,stack_ds,2,Maximum Area Histogram,coding/stack/02 Maximum Area of Histogram.ipynb,hard,60,"histogram,area,stack",,,0,0,Finding maximum area in histogram
+stk_04,stack_ds,3,Maximum Rectangle Matrix,coding/stack/03 - Maximum Area Rectangle in a Binary Matrix.ipynb,hard,70,"matrix,rectangle,dynamic programming",,,0,0,Maximum rectangle in binary matrix
+dp_01,dynamic_programming,0,DP Introduction,coding/dp/00 - DP.ipynb,hard,60,"optimization,memoization,tabulation",,,0,0,Introduction to dynamic programming
+dp_02,dynamic_programming,1,Knapsack Types,coding/dp/01 - 2 types of knapsack.ipynb,hard,50,"knapsack,0-1,unbounded",,,0,0,Different knapsack problem variations
+dp_03,dynamic_programming,2,01 Knapsack Recursive,coding/dp/02 - 01 Knapsack Recursive.ipynb,hard,55,"knapsack,recursive,optimization",,,0,0,Recursive approach to knapsack
+dp_04,dynamic_programming,3,01 Knapsack Memoization,coding/dp/03 - 01 knapsack memoization.ipynb,hard,55,"knapsack,memoization,top-down",,,0,0,Memoized knapsack solution
+dp_05,dynamic_programming,4,01 Knapsack Tabulation,coding/dp/04 - 01 knapsack tabulation.ipynb,hard,60,"knapsack,tabulation,bottom-up",,,0,0,Tabulated knapsack solution
+dp_06,dynamic_programming,5,Subset Sum,coding/dp/05.1 - Subset Sum Problem.ipynb,hard,50,"subset,sum,decision",,,0,0,Subset sum decision problem
+gr_01,graph_algorithms,0,Graph Introduction,coding/graph/00_graph_intro_course.md,easy,30,"graph,introduction,basics",,,0,0,Introduction to graph theory
+gr_02,graph_algorithms,1,Types of Graphs,coding/graph/01_types_of_grpahs.ipynb,easy,35,"graph types,directed,undirected",,,0,0,Different types of graphs
+gr_03,graph_algorithms,2,Graph Implementation,coding/graph/02_graph_impelementaion.ipynb,medium,40,"implementation,adjacency,representation",,,0,0,Graph data structure implementation
+gr_04,graph_algorithms,3,BFS Notes,coding/graph/03.2_bfs_notes.md,medium,45,"bfs,breadth first,traversal",,,0,0,Breadth-first search algorithm
+gr_05,graph_algorithms,4,DFS Notes,coding/graph/04_dfs.md,medium,40,"dfs,depth first,traversal",,,0,0,Depth-first search algorithm
+gr_06,graph_algorithms,5,Path Exists,coding/graph/05_Find_if_path_exists_notes.md,medium,35,"path,connectivity,search",,,0,0,Finding if path exists between nodes
+cm_01,coursera_ml,1,Introduction to ML,Courseera-Courses/Mschine Learning with Python/Module 1/introduction to Machine learning.md,easy,30,"introduction,machine learning,basics",,,0,0,ML fundamentals from Coursera
+cm_02,coursera_ml,1,Python for ML,Courseera-Courses/Mschine Learning with Python/Module 1/python for machine learning.md,easy,35,"python,programming,ml tools",,,0,0,Python tools for machine learning
+cm_03,coursera_ml,1,Supervised vs Unsupervised,Courseera-Courses/Mschine Learning with Python/Module 1/Supervised vs Unsupervised.md,medium,40,"supervised,unsupervised,comparison",,,0,0,Comparing learning paradigms

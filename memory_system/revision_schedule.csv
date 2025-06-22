@@ -1,0 +1,6 @@
+schedule_id,subtopic_id,scheduled_date,review_type,priority,status,difficulty_rating,time_spent_minutes,notes
+rev_001,ml_01,2024-06-23,initial,high,pending,,,First review of ML basics
+rev_002,ml_02,2024-06-23,initial,high,pending,,,AI vs ML vs DL concepts
+rev_003,dl_01,2024-06-24,initial,medium,pending,,,Deep learning roadmap overview
+rev_004,bs_01,2024-06-24,initial,medium,pending,,,Binary search fundamentals
+rev_005,sw_01,2024-06-25,initial,low,pending,,,Sliding window introduction

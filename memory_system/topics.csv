@@ -1,0 +1,15 @@
+topic_id,topic_name,category,description,total_subtopics,completed_subtopics,difficulty_level,estimated_hours,created_date
+ml_100days,100 Days Machine Learning,machine-learning,Complete ML fundamentals from CampusX,9,0,medium,40,2024-06-22
+dl_100days,100 Days Deep Learning,deep-learning,Neural networks from basics to CNNs,29,0,hard,80,2024-06-22
+genai_langchain,Generative AI with LangChain,generative-ai,Modern AI applications and RAG systems,17,0,hard,35,2024-06-22
+binary_search,Binary Search Algorithms,algorithms,Complete binary search pattern mastery,18,0,medium,25,2024-06-22
+sliding_window,Sliding Window Technique,algorithms,Efficient subarray problem solving,10,0,medium,15,2024-06-22
+recursion,Recursion Mastery,algorithms,Advanced recursive problem solving,16,0,hard,30,2024-06-22
+stack_ds,Stack Data Structure,algorithms,Stack-based problem solving,7,0,easy,12,2024-06-22
+dynamic_programming,Dynamic Programming,algorithms,Optimization and memoization techniques,15,0,hard,40,2024-06-22
+graph_algorithms,Graph Algorithms,algorithms,Network traversal and shortest paths,13,0,hard,35,2024-06-22
+competitive_programming,Competitive Programming,problem-solving,Contest problems and strategies,7,0,medium,20,2024-06-22
+coursera_ml,Coursera ML Python,machine-learning,External ML course from Coursera,3,0,easy,8,2024-06-22
+marathons,Programming Marathons,projects,Intensive coding and ML projects,2,0,medium,15,2024-06-22
+kaggle_competitions,Kaggle Competitions,machine-learning,Data science competitions,1,0,hard,10,2024-06-22
+ai_tools,AI Development Tools,tools,Tools and utilities for AI development,1,0,easy,5,2024-06-22

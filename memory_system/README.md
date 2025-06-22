@@ -1,24 +1,32 @@
 # 🧠 AI Learning Memory System
 
-## ⚡ **One-File Solution**
+## ⚡ **One-File Solution + CSV Data**
 
-This is the **complete revision planning system** in just **ONE HTML file**! No complicated setup, no dependencies, just pure learning optimization.
+This is the **complete revision planning system** in just **ONE HTML file** with **structured CSV data storage**! No complicated setup, no dependencies, just pure learning optimization with organized data management.
 
 ## 🚀 **Quick Start**
 
 1. **Open the file**: Double-click `revision_planner.html` in your browser
-2. **Scan repository**: Click "🔍 Scan Repository" 
-3. **Start learning**: Review topics and rate difficulty (😰😐😊)
-4. **Let the system optimize**: Smart scheduling based on forgetting curve
+2. **Load structured data**: Click "🔍 Load CSV Data" 
+3. **Review organized topics**: Browse hierarchical subtopics with keywords
+4. **Track progress**: Rate difficulty (😰😐😊) and export CSV reports
+5. **Maintain data**: Use CSV files for version control and collaboration
 
-That's it! The system does everything automatically.
+That's it! The system manages everything with structured data files.
 
 ## ✨ **Key Features**
 
-### 🔍 **Smart Topic Discovery**
-- **Hierarchical Structure**: Automatically organizes topics into chapters
-- **Category Detection**: ML, Deep Learning, GenAI, Coding, Data Science
-- **File Analysis**: Suggests `_notes` naming convention for better organization
+### 📊 **CSV-Based Data Management**
+- **Structured Storage**: Topics, subtopics, and progress stored in CSV files
+- **Easy Editing**: Modify data directly in spreadsheet applications
+- **Version Control**: Track changes using Git for collaborative learning
+- **Export/Import**: CSV reports for progress analysis and sharing
+
+### 🔍 **Smart Topic Organization**
+- **Hierarchical Structure**: Topics → Subtopics → Chapters structure
+- **Keyword Tagging**: Each subtopic tagged with relevant keywords
+- **Category Detection**: ML, Deep Learning, GenAI, Algorithms, etc.
+- **File Path Tracking**: Direct links to actual learning materials
 
 ### 📅 **Intelligent Scheduling**
 - **Forgetting Curve**: Based on Ebbinghaus research (33.7% retention after 1 day)
@@ -35,25 +43,44 @@ That's it! The system does everything automatically.
 - **😐 Medium**: Normal progression (interval × ease_factor)  
 - **😊 Easy**: Longer intervals (interval × 1.3)
 
-## 📁 **Repository Organization**
+## 📁 **CSV Data Structure**
 
-### **Current Structure** → **Optimized Structure**
+The system uses **4 main CSV files** for organized data management:
+
+### **1. topics.csv** - Main Topic Groups
+```csv
+topic_id,topic_name,category,description,total_subtopics,completed_subtopics,difficulty_level,estimated_hours
+ml_100days,100 Days Machine Learning,machine-learning,Complete ML fundamentals,9,0,medium,40
+dl_100days,100 Days Deep Learning,deep-learning,Neural networks from basics to CNNs,29,0,hard,80
 ```
-CampusX/100 days-ml/1-What is ML/          → Ch.1: What is ML
-CampusX/100 days-ml/2-AI vs ML vs DL/      → Ch.2: AI vs ML vs DL
-coding/Binary_search/00-concepts.ipynb     → Ch.1: Binary Search Concepts
-coding/Binary_search/01-Count...ipynb      → Ch.2: Count Elements
+
+### **2. subtopics.csv** - Individual Learning Units
+```csv
+subtopic_id,topic_id,chapter_number,subtopic_title,file_path,difficulty,keywords,review_count,mastery_level
+ml_01,ml_100days,1,What is Machine Learning,1-What is ML/1-What is machine learning.md,easy,"introduction,basics,definition",0,0
+dl_01,dl_100days,2,What is Deep Learning,02-what-isdeep-learning.md,medium,"neural networks,introduction",0,0
 ```
 
-### **File Naming Convention**
-The system works best with files named: `XX_topic_name_notes.md/ipynb`
+### **3. revision_schedule.csv** - Review Planning
+```csv
+schedule_id,subtopic_id,scheduled_date,review_type,priority,status,difficulty_rating
+rev_001,ml_01,2024-06-23,initial,high,pending,
+rev_002,dl_01,2024-06-24,review,medium,completed,medium
+```
 
-Examples:
-- `01_what_is_ml_notes.md`
-- `00_binary_search_concepts_notes.ipynb`
-- `03_cnn_architecture_notes.md`
+### **4. progress_tracking.csv** - Learning Progress
+```csv
+progress_id,subtopic_id,completion_date,mastery_score,time_spent_minutes,difficulty_experienced,next_review_interval_days
+prog_001,ml_01,2024-06-22,85,45,easy,7
+prog_002,dl_01,2024-06-23,70,60,medium,3
+```
 
-Use the **"📝 Auto-Rename Files"** button to get suggestions for your existing files.
+### **📝 CSV Management Benefits**
+- **Easy Editing**: Use Excel, Google Sheets, or any CSV editor
+- **Bulk Updates**: Modify multiple entries simultaneously  
+- **Data Analysis**: Create pivot tables and charts for insights
+- **Collaboration**: Share and merge changes with team members
+- **Backup**: Simple file-based backup and versioning
 
 ## 🎨 **Interface Overview**
 

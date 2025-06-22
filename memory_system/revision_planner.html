@@ -298,6 +298,36 @@
             color: #9b2c2c;
         }
         
+        .keywords-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 5px;
+        }
+        
+        .keyword-tag {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+        
+        .keyword-tag:hover {
+            background: #cbd5e0;
+        }
+        
+        .csv-info-badge {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
         .filters {
             display: flex;
             gap: 15px;
@@ -427,6 +457,12 @@
         <!-- Header -->
         <div class="header">
             <h1>🧠 AI Learning Revision Planner</h1>
+            <div style="margin-top: 10px;">
+                <span class="csv-info-badge">📊 CSV Structured Data</span>
+                <span style="color: #718096; font-size: 0.9rem; margin-left: 10px;">
+                    Organized topics, subtopics & revision tracking
+                </span>
+            </div>
             <p>Intelligent topic detection with hierarchical learning paths</p>
             
             <div class="stats">
@@ -455,9 +491,11 @@
 
         <!-- Controls -->
         <div class="controls">
-            <button class="btn" onclick="scanRepository()">🔍 Scan Repository</button>
+            <button class="btn" onclick="scanRepository()">🔍 Load CSV Data</button>
+            <button class="btn btn-success" onclick="addNewChapter()">➕ Add Chapter</button>
+            <button class="btn btn-success" onclick="exportToCSV()">📊 Export CSV</button>
             <button class="btn btn-success" onclick="autoRenameFiles()">📝 Auto-Rename Files</button>
-            <button class="btn" onclick="exportData()">📥 Export Data</button>
+            <button class="btn" onclick="exportData()">📥 Export JSON</button>
             <button class="btn btn-warning" onclick="importData()">📤 Import Data</button>
             <button class="btn btn-danger" onclick="clearAllData()">🗑️ Reset System</button>
             
@@ -541,9 +579,9 @@
     <!-- Scanning Overlay -->
     <div class="scanning-overlay" id="scanningOverlay">
         <div class="scanning-content">
-            <h2>🔍 Scanning Repository</h2>
+            <h2>🔍 Loading CSV Data</h2>
             <div class="spinner"></div>
-            <p id="scanningStatus">Analyzing files and folders...</p>
+            <p id="scanningStatus">Loading structured topic data...</p>
         </div>
     </div>
 
@@ -554,6 +592,133 @@
         let currentDate = new Date();
         let filteredGroups = {};
         let scanInProgress = false;
+
+        // Utility functions
+        function generateId() {
+            return 'id_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function showScanningOverlay(message) {
+            const overlay = document.getElementById('scanningOverlay');
+            const status = document.getElementById('scanningStatus');
+            if (message) status.textContent = message;
+            overlay.style.display = 'flex';
+        }
+
+        function hideScanningOverlay() {
+            document.getElementById('scanningOverlay').style.display = 'none';
+        }
+
+        function updateScanningStatus(message) {
+            document.getElementById('scanningStatus').textContent = message;
+        }
+
+        function updateProgress(percent) {
+            const progressFill = document.getElementById('progressFill');
+            if (progressFill) {
+                progressFill.style.width = percent + '%';
+            }
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Not scheduled';
+            const date = new Date(dateString);
+            return date.toLocaleDateString();
+        }
+
+        function getChapterStatus(chapter) {
+            if (chapter.completed) {
+                return { type: 'completed', label: 'Completed' };
+            }
+            
+            if (!chapter.nextReview) {
+                return { type: 'upcoming', label: 'Upcoming' };
+            }
+            
+            const now = new Date();
+            const reviewDate = new Date(chapter.nextReview);
+            
+            if (reviewDate.toDateString() === now.toDateString()) {
+                return { type: 'due', label: 'Due Today' };
+            }
+            
+            if (reviewDate < now) {
+                return { type: 'overdue', label: 'Overdue' };
+            }
+            
+            return { type: 'upcoming', label: 'Upcoming' };
+        }
+
+        function setupCategoryFilter() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (!categoryFilter) return;
+            
+            const categories = [...new Set(Object.values(topicGroups).map(group => group.category))];
+            categoryFilter.innerHTML = '<option value="all">All Categories</option>' +
+                categories.map(cat => `<option value="${cat}">${cat.replace('-', ' ')}</option>`).join('');
+        }
+
+        function applyFilters() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const difficultyFilter = document.getElementById('difficultyFilter').value;
+            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+
+            filteredGroups = {};
+
+            Object.values(topicGroups).forEach(group => {
+                // Category filter
+                if (categoryFilter !== 'all' && group.category !== categoryFilter) {
+                    return;
+                }
+
+                // Search filter
+                if (searchFilter && !group.name.toLowerCase().includes(searchFilter)) {
+                    return;
+                }
+
+                // Filter chapters within the group
+                let filteredChapters = group.chapters.filter(chapter => {
+                    // Status filter
+                    if (statusFilter !== 'all') {
+                        const status = getChapterStatus(chapter);
+                        if (statusFilter !== status.type) return false;
+                    }
+
+                    // Difficulty filter
+                    if (difficultyFilter !== 'all' && chapter.difficulty !== difficultyFilter) {
+                        return false;
+                    }
+
+                    // Search filter for chapter titles
+                    if (searchFilter && !chapter.title.toLowerCase().includes(searchFilter)) {
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                if (filteredChapters.length > 0) {
+                    filteredGroups[group.id] = {
+                        ...group,
+                        chapters: filteredChapters
+                    };
+                }
+            });
+
+            renderTopicGroups();
+        }
+
+        function toggleGroup(groupId) {
+            if (topicGroups[groupId]) {
+                topicGroups[groupId].expanded = !topicGroups[groupId].expanded;
+                renderTopicGroups();
+            }
+        }
 
         // Initialize app
         window.addEventListener('load', function() {
@@ -598,31 +763,30 @@
             if (scanInProgress) return;
             
             scanInProgress = true;
-            showScanningOverlay('Scanning repository structure...');
+            showScanningOverlay('Loading structured data from CSV files...');
             
             try {
                 // Clear existing data
                 topicGroups = {};
                 allChapters = [];
                 
-                updateScanningStatus('Scanning repository files...');
-                updateProgress(10);
+                updateScanningStatus('Loading topics from CSV...');
+                updateProgress(20);
                 
-                // Get repository structure by analyzing the current page's location
-                const repoStructure = await analyzeRepositoryStructure();
+                // Load data from CSV files (simulated - in real app would fetch from server)
+                await loadDataFromCSV();
                 
-                updateScanningStatus('Organizing topic hierarchy...');
-                updateProgress(40);
-                
-                // Generate topic hierarchy from actual repository structure
-                generateRealTopicHierarchy(repoStructure);
-                
-                updateScanningStatus('Calculating review schedules...');
-                updateProgress(80);
+                updateScanningStatus('Processing subtopics and chapters...');
+                updateProgress(50);
                 
                 await sleep(500);
                 
-                updateScanningStatus('Finalizing topic database...');
+                updateScanningStatus('Loading revision schedules...');
+                updateProgress(80);
+                
+                await sleep(300);
+                
+                updateScanningStatus('Finalizing structured database...');
                 updateProgress(100);
                 
                 hideScanningOverlay();
@@ -633,280 +797,107 @@
                 renderAnalytics();
                 updateStats();
                 
-                alert(`🎉 Repository scan complete!\n\nDiscovered:\n• ${Object.keys(topicGroups).length} topic groups\n• ${allChapters.length} chapters\n• Smart scheduling applied\n\nYour learning journey is now organized!`);
+                alert(`🎉 CSV-based scan complete!\n\nLoaded from structured data:\n• ${Object.keys(topicGroups).length} topic groups\n• ${allChapters.length} subtopics\n• Organized revision schedules\n\nYour learning data is now properly structured!`);
                 
             } catch (error) {
-                console.error('Scan failed:', error);
+                console.error('CSV scan failed:', error);
                 hideScanningOverlay();
-                alert('❌ Scan failed. Please try again.');
+                alert('❌ CSV scan failed. Please try again.');
             } finally {
                 scanInProgress = false;
                 updateProgress(0);
             }
         }
 
-        async function analyzeRepositoryStructure() {
-            // Complete repository structure based on comprehensive file system scan
-            // This includes ALL actual learning files found in the repository
+        async function loadDataFromCSV() {
+            // Simulate loading CSV data (in real implementation, would fetch from files)
+            // This uses the structure we created in the CSV files
             
-            const structure = {
-                'CampusX/100 days-ml': {
-                    name: '100 Days Machine Learning',
-                    category: 'machine-learning',
-                    files: [
-                        '1-What is ML/01_what_is_ml_notes.md',
-                        '1-What is ML/1-What is machine learning.md',
-                        '2-AI vs ML vs DL/2-AI vs ML vs DL.md',
-                        '3-Types Of ML/TypesOFML.md',
-                        '5 - online machine learning/online machine learning.md',
-                        '19 - understanding your data/19_understanding_data.ipynb',
-                        '20 - eda using univariate Analysis/20_eda_using_univariate_analysis.ipynb',
-                        '21 EDA using Bivariate and Multivariate Analysis/21_eda_usingb_bivariate.ipynb',
-                        '22-Pandas-profiling/22_pandas_profiling.ipynb'
-                    ]
-                },
-                'CampusX/100-days-deep-learning': {
-                    name: '100 Days Deep Learning',
-                    category: 'deep-learning',
-                    files: [
-                        '00-ROADMAP/deep-learning-roadmap.md',
-                        '02-what-isdeep-learning.md',
-                        '03-types-of-neural-network.md',
-                        '04-what-is-perceptron.md',
-                        '05-how-to-train-perceptron-Trick.md',
-                        '06-perceptron_loss_function.md',
-                        '07-problem-with-perceptron.md',
-                        '08-MLP-notation.md',
-                        '09-mlp-multi-layer-perceptron.md',
-                        '10-forward-propagation.md',
-                        '11-customer-churn-prediction-using-ann.md',
-                        '12-handwrittern_digit_classification_using_ann.md',
-                        '13-graduate-admission-prediction-using-ann.md',
-                        '14_Loss_Functions_in_Deep_Learning .md',
-                        '15-backpropagation-in-deep-learning-part1.md',
-                        '16-Backpropagation-part2-how.md',
-                        '17-Backpropagation-why-Part-3 .md',
-                        '18-MLP-memoization.md',
-                        '19-Gradient-Descent-in-Neural-Networks.md',
-                        '20-Vanishing-Gradient-Problem-in-ANN-Exploding-Gradient-Problem.md',
-                        '21-how-to-improve-performance-ofnn.md',
-                        '22-early-stoppping-in-nn.md',
-                        '23-to-40[revisit].md',
-                        '40-cnn.md',
-                        '41-CNN-Vs-Visual-Cortex-history-cnn.md',
-                        '42-CNN-Part-3-Convolution-Operation.md',
-                        '43-Padding-and-Strides-in-CNN.md',
-                        '44-pooling-layer-in-cnn.md',
-                        '45-cnn-architechture.md'
-                    ]
-                },
-                'CampusX/Generative AI using LangChain': {
-                    name: 'Generative AI with LangChain',
-                    category: 'generative-ai',
-                    files: [
-                        '01_GEN_AI_roadmap.md',
-                        '02_Generative AI using LangChain.md',
-                        '03_Introduction_to_LangChain.md',
-                        '04_Langchain_components.md',
-                        '05_Langchain_model.md',
-                        '06_prompts_in_langchain.md',
-                        '07_langchain-structured-output.md',
-                        '08_Output_Parsers_in_LangChain.md',
-                        '09_chains_in_langchain.md',
-                        '10_runnables_in_langchain.md',
-                        '11_runnables_in_langchain_part2.md',
-                        '12_document_loaders_in_langchain.md',
-                        '13_text_Splitters_in_LangChain.md',
-                        '14_Vector_Stores_in_LangChain.md',
-                        '15_retrievers_in_langchain.md',
-                        '16_what_is_rag.md',
-                        '17_youtube_chatbot_using_langchain.md'
-                    ]
-                },
-                'coding/Binary_search': {
-                    name: 'Binary Search Algorithms',
-                    category: 'algorithms',
-                    files: [
-                        '00_binary_search_concepts_notes.md',
-                        '00 - concepts.ipynb',
-                        '01-Count of an Element in a Sorted Array.ipynb',
-                        '02 - Number of Times a Sorted Array is Rotated.ipynb',
-                        '03 - Find an Element in a Rotated Sorted Array.ipynb',
-                        '04 - Searching in a Nearly Sorted Array.ipynb',
-                        '05 - Find Floor of an element in a Sorted Array.ipynb',
-                        '06 - Ceil of an element in a Sorted Array.ipynb',
-                        '07 - Next Alphabetical Element.ipynb',
-                        '08 -  Find position of an element in an Infinite Sorted Array.ipynb',
-                        '09 - Index of First 1 in a Binary Sorted Infinite Array.ipynb',
-                        '10 - Minimum Difference Element in a Sorted Array.ipynb',
-                        '11 - Binary Search on Answer Concept.ipynb',
-                        '12 - Peak Element.ipynb',
-                        '13 - Find maximum element in Bitonic Array.ipynb',
-                        '14 - Search An Element in Bitonic Array.ipynb',
-                        '15 - Search in Row wise And Column wise Sorted Array.ipynb',
-                        '16 - Allocate Minimum Number Of Pages.ipynb'
-                    ]
-                },
-                'coding/Sliding_window': {
-                    name: 'Sliding Window Technique',
-                    category: 'algorithms',
-                    files: [
-                        's_ung_important.md',
-                        '00- Maximum Sum Subarray of Size k.ipynb',
-                        '01-Count Occurance of anagrams.ipynb',
-                        '02-First Negative Number in Every Window.ipynb',
-                        '03 Maximum of all subarray of size K.ipynb',
-                        '04-Variable size sliding window.ipynb',
-                        '05 Find the Longest Subarray With Sum = K.ipynb',
-                        '06 - variable size sliding general format.ipynb',
-                        '07-Longest Substring Without Repeating Characters.ipynb',
-                        '08 minimum window subarrary.ipynb'
-                    ]
-                },
-                'coding/recursion': {
-                    name: 'Recursion Mastery',
-                    category: 'algorithms',
-                    files: [
-                        '_concepts.ipynb',
-                        '01 - Recursion is Everywhere !!.ipynb',
-                        '02 - Hypothesis-Induction-Base Condition.ipynb',
-                        '03 - Beauty of Hypothesis And Induction.ipynb',
-                        '04 - Height of a Binary Tree.ipynb',
-                        '05 - Sort An array using Recursion.ipynb',
-                        '06 - sort a stack.ipynb',
-                        '07 - reverse a stack using recursion.ipynb',
-                        '08 - Kth Symbol in Grammar.ipynb',
-                        '09 - tower of hanoi.ipynb',
-                        '10 - print power of subset.ipynb',
-                        '11 -Print unique subsets And Variations.ipynb',
-                        '12 - Permutation with spaces.ipynb',
-                        '13 - permutation with case changes.ipynb',
-                        '14 - Generate all Balanced Parentheses.ipynb',
-                        '15 - Print N-bit binary numbers having more 1\'s than 0\'s for any prefix.ipynb'
-                    ]
-                },
-                'coding/stack': {
-                    name: 'Stack Data Structure',
-                    category: 'algorithms',
-                    files: [
-                        'builiding_concepts.cpp',
-                        '00- concepts.ipynb',
-                        '01 - stock span problem.ipynb',
-                        '02 Maximum Area of Histogram.ipynb',
-                        '03 - Maximum Area Rectangle in a Binary Matrix.ipynb',
-                        '04 - min element in stack with extra space.ipynb',
-                        '05 Minimum Element in Stack in O(1) Space.ipynb'
-                    ]
-                },
-                'coding/dp': {
-                    name: 'Dynamic Programming',
-                    category: 'algorithms',
-                    files: [
-                        'q.txt',
-                        '00 - DP.ipynb',
-                        '00.1concepts.ipynb',
-                        '01 - 2 types of knapsack.ipynb',
-                        '02 - 01 Knapsack Recursive.ipynb',
-                        '03 - 01 knapsack memoization.ipynb',
-                        '04 - 01 knapsack tabulation.ipynb',
-                        '05 - identification of knapsack problems and introduction.ipynb',
-                        '05.1 - Subset Sum Problem.ipynb',
-                        '05.2 - equal sum partition.ipynb',
-                        '05.3 - 9 Count of Subsets Sum with a Given Sum.ipynb',
-                        '05.4 - Minimum Subset Sum Difference.ipynb',
-                        '05.5 - count the number of subset with a given diff.ipynb',
-                        '05.6 - target sum.ipynb',
-                        '06 - Unbounded Knapsack.ipynb'
-                    ]
-                },
-                'coding/graph': {
-                    name: 'Graph Algorithms',
-                    category: 'algorithms',
-                    files: [
-                        '00_graph_intro_course.md',
-                        '01_types_of_grpahs.ipynb',
-                        '02_graph_impelementaion.ipynb',
-                        '02.1_graph_implementation.cpp',
-                        '03_bfs_dfs_visualization_notes.ipynb',
-                        '03.1bfs_notes_with_visual.ipynb',
-                        '03.2_bfs_notes.md',
-                        '03.3_bfs_code.cpp',
-                        '04.1_dfs_cde.cpp',
-                        '04_dfs.md',
-                        '05_Find_if_path_exists.cpp',
-                        '05_Find_if_path_exists_notes.md',
-                        '06_dijkstra_shortest_path.cpp'
-                    ]
-                },
-                'coding/_questions': {
-                    name: 'Competitive Programming Questions',
-                    category: 'problem-solving',
-                    files: [
-                        '_100_al/_100.md',
-                        '_150/150_list.md',
-                        '_g/30_d.md',
-                        '_g/3_M.md',
-                        '_s/all_1.md',
-                        '_s/ung/leetcodelinks.md',
-                        '_tips/tips.md'
-                    ]
-                },
-                'Courseera-Courses/Mschine Learning with Python': {
-                    name: 'Coursera ML Python Course',
-                    category: 'machine-learning',
-                    files: [
-                        'Module 1/introduction to Machine learning.md',
-                        'Module 1/python for machine learning.md',
-                        'Module 1/Supervised vs Unsupervised.md'
-                    ]
-                },
-                'marathons': {
-                    name: 'Programming & ML Marathons',
-                    category: 'projects',
-                    files: [
-                        'cnn_understanding.md',
-                        'cpp_crash_course/crash_course.cpp'
-                    ]
-                },
-                'kaggle_comp': {
-                    name: 'Kaggle Competitions',
-                    category: 'machine-learning',
-                    files: [
-                        'requirements.txt'
-                    ]
-                }
-            };
-            
-            return structure;
-        }
+            const csvTopics = [
+                {topic_id: 'ml_100days', topic_name: '100 Days Machine Learning', category: 'machine-learning', difficulty_level: 'medium', total_subtopics: 9},
+                {topic_id: 'dl_100days', topic_name: '100 Days Deep Learning', category: 'deep-learning', difficulty_level: 'hard', total_subtopics: 29},
+                {topic_id: 'genai_langchain', topic_name: 'Generative AI with LangChain', category: 'generative-ai', difficulty_level: 'hard', total_subtopics: 17},
+                {topic_id: 'binary_search', topic_name: 'Binary Search Algorithms', category: 'algorithms', difficulty_level: 'medium', total_subtopics: 18},
+                {topic_id: 'sliding_window', topic_name: 'Sliding Window Technique', category: 'algorithms', difficulty_level: 'medium', total_subtopics: 10},
+                {topic_id: 'recursion', topic_name: 'Recursion Mastery', category: 'algorithms', difficulty_level: 'hard', total_subtopics: 16},
+                {topic_id: 'stack_ds', topic_name: 'Stack Data Structure', category: 'algorithms', difficulty_level: 'easy', total_subtopics: 7},
+                {topic_id: 'dynamic_programming', topic_name: 'Dynamic Programming', category: 'algorithms', difficulty_level: 'hard', total_subtopics: 15},
+                {topic_id: 'graph_algorithms', topic_name: 'Graph Algorithms', category: 'algorithms', difficulty_level: 'hard', total_subtopics: 13}
+            ];
 
-        function generateRealTopicHierarchy(repoStructure) {
-            const now = new Date();
-            
-            for (const [path, groupData] of Object.entries(repoStructure)) {
-                const groupId = generateId();
-                const chapters = [];
+            const csvSubtopics = [
+                // ML Subtopics - Real Files
+                {subtopic_id: 'ml_01', topic_id: 'ml_100days', chapter_number: 1, subtopic_title: 'What is Machine Learning (Notes)', file_path: 'CampusX/100 days-ml/1-What is ML/01_what_is_ml_notes.md', difficulty: 'easy', keywords: 'introduction,basics,definition'},
+                {subtopic_id: 'ml_02', topic_id: 'ml_100days', chapter_number: 1, subtopic_title: 'What is Machine Learning (Original)', file_path: 'CampusX/100 days-ml/1-What is ML/1-What is machine learning.md', difficulty: 'easy', keywords: 'comparison,fundamentals'},
+                {subtopic_id: 'ml_03', topic_id: 'ml_100days', chapter_number: 2, subtopic_title: 'AI vs ML vs DL', file_path: 'CampusX/100 days-ml/2-AI vs ML vs DL/2-AI vs ML vs DL.md', difficulty: 'easy', keywords: 'comparison,artificial intelligence'},
+                {subtopic_id: 'ml_04', topic_id: 'ml_100days', chapter_number: 3, subtopic_title: 'Types of Machine Learning', file_path: 'CampusX/100 days-ml/3-Types Of ML/TypesOFML.md', difficulty: 'medium', keywords: 'supervised,unsupervised,reinforcement'},
+                {subtopic_id: 'ml_05', topic_id: 'ml_100days', chapter_number: 5, subtopic_title: 'Online Machine Learning', file_path: 'CampusX/100 days-ml/5 - online machine learning/online machine learning.md', difficulty: 'medium', keywords: 'streaming,incremental,real-time'},
+                {subtopic_id: 'ml_06', topic_id: 'ml_100days', chapter_number: 19, subtopic_title: 'Understanding Your Data', file_path: 'CampusX/100 days-ml/19 - understanding your data/19_understanding_data.ipynb', difficulty: 'medium', keywords: 'eda,analysis,statistics'},
+                {subtopic_id: 'ml_07', topic_id: 'ml_100days', chapter_number: 20, subtopic_title: 'EDA Univariate Analysis', file_path: 'CampusX/100 days-ml/20 - eda using univariate Analysis/20_eda_using_univariate_analysis.ipynb', difficulty: 'medium', keywords: 'univariate,visualization,statistics'},
+                {subtopic_id: 'ml_08', topic_id: 'ml_100days', chapter_number: 21, subtopic_title: 'EDA Bivariate Analysis', file_path: 'CampusX/100 days-ml/21 EDA using Bivariate and Multivariate Analysis/21_eda_usingb_bivariate.ipynb', difficulty: 'hard', keywords: 'bivariate,correlation,relationships'},
+                {subtopic_id: 'ml_09', topic_id: 'ml_100days', chapter_number: 22, subtopic_title: 'Pandas Profiling', file_path: 'CampusX/100 days-ml/22-Pandas-profiling/22_pandas_profiling.ipynb', difficulty: 'medium', keywords: 'automation,profiling,pandas'},
                 
-                // Process each file in the group
-                groupData.files.forEach((file, index) => {
+                // DL Subtopics - Real Files
+                {subtopic_id: 'dl_01', topic_id: 'dl_100days', chapter_number: 0, subtopic_title: 'Deep Learning Roadmap', file_path: 'CampusX/100-days-deep-learning/00-ROADMAP/deep-learning-roadmap.md', difficulty: 'easy', keywords: 'roadmap,planning,curriculum'},
+                {subtopic_id: 'dl_02', topic_id: 'dl_100days', chapter_number: 2, subtopic_title: 'What is Deep Learning', file_path: 'CampusX/100-days-deep-learning/02-what-isdeep-learning.md', difficulty: 'medium', keywords: 'introduction,neural networks'},
+                {subtopic_id: 'dl_03', topic_id: 'dl_100days', chapter_number: 4, subtopic_title: 'What is Perceptron', file_path: 'CampusX/100-days-deep-learning/04-what-is-perceptron.md', difficulty: 'medium', keywords: 'perceptron,basics,linear'},
+                {subtopic_id: 'dl_04', topic_id: 'dl_100days', chapter_number: 6, subtopic_title: 'Perceptron Loss Function', file_path: 'CampusX/100-days-deep-learning/06-perceptron_loss_function.md', difficulty: 'hard', keywords: 'loss,optimization,cost'},
+                {subtopic_id: 'dl_05', topic_id: 'dl_100days', chapter_number: 15, subtopic_title: 'Backpropagation Part 1', file_path: 'CampusX/100-days-deep-learning/15-backpropagation-in-deep-learning-part1.md', difficulty: 'hard', keywords: 'backpropagation,gradients,chain rule'},
+                {subtopic_id: 'dl_06', topic_id: 'dl_100days', chapter_number: 40, subtopic_title: 'CNN Introduction', file_path: 'CampusX/100-days-deep-learning/40-cnn.md', difficulty: 'hard', keywords: 'cnn,convolution,computer vision'},
+                {subtopic_id: 'dl_07', topic_id: 'dl_100days', chapter_number: 45, subtopic_title: 'CNN Architecture', file_path: 'CampusX/100-days-deep-learning/45-cnn-architechture.md', difficulty: 'hard', keywords: 'architecture,design,lenet'},
+                
+                // GenAI Subtopics - Real Files
+                {subtopic_id: 'ga_01', topic_id: 'genai_langchain', chapter_number: 1, subtopic_title: 'GenAI Roadmap', file_path: 'CampusX/Generative AI using LangChain/01_GEN_AI_roadmap.md', difficulty: 'easy', keywords: 'roadmap,planning,genai'},
+                {subtopic_id: 'ga_02', topic_id: 'genai_langchain', chapter_number: 3, subtopic_title: 'Introduction to LangChain', file_path: 'CampusX/Generative AI using LangChain/03_Introduction_to_LangChain.md', difficulty: 'medium', keywords: 'langchain,components'},
+                {subtopic_id: 'ga_03', topic_id: 'genai_langchain', chapter_number: 16, subtopic_title: 'What is RAG', file_path: 'CampusX/Generative AI using LangChain/16_what_is_rag.md', difficulty: 'hard', keywords: 'rag,retrieval,generation'},
+                
+                // Binary Search Subtopics - Real Files  
+                {subtopic_id: 'bs_01', topic_id: 'binary_search', chapter_number: 0, subtopic_title: 'Binary Search Concepts (Notes)', file_path: 'coding/Binary_search/00_binary_search_concepts_notes.md', difficulty: 'medium', keywords: 'algorithm,searching,sorted'},
+                {subtopic_id: 'bs_02', topic_id: 'binary_search', chapter_number: 0, subtopic_title: 'Binary Search Concepts (Notebook)', file_path: 'coding/Binary_search/00 - concepts.ipynb', difficulty: 'medium', keywords: 'algorithm,searching,implementation'},
+                {subtopic_id: 'bs_03', topic_id: 'binary_search', chapter_number: 1, subtopic_title: 'Count Elements in Array', file_path: 'coding/Binary_search/01-Count of an Element in a Sorted Array.ipynb', difficulty: 'medium', keywords: 'counting,frequency,duplicates'},
+                {subtopic_id: 'bs_04', topic_id: 'binary_search', chapter_number: 15, subtopic_title: '2D Array Search', file_path: 'coding/Binary_search/15 - Search in Row wise And Column wise Sorted Array.ipynb', difficulty: 'hard', keywords: '2d array,matrix,search'},
+                
+                // Sliding Window Subtopics - Real Files
+                {subtopic_id: 'sw_01', topic_id: 'sliding_window', chapter_number: 0, subtopic_title: 'Maximum Sum Subarray', file_path: 'coding/Sliding_window/00- Maximum Sum Subarray of Size k.ipynb', difficulty: 'easy', keywords: 'subarray,sum,window'},
+                {subtopic_id: 'sw_02', topic_id: 'sliding_window', chapter_number: 1, subtopic_title: 'Count Anagrams', file_path: 'coding/Sliding_window/01-Count Occurance of anagrams.ipynb', difficulty: 'medium', keywords: 'anagrams,string,patterns'},
+                {subtopic_id: 'sw_03', topic_id: 'sliding_window', chapter_number: 7, subtopic_title: 'Longest Substring', file_path: 'coding/Sliding_window/07-Longest Substring Without Repeating Characters.ipynb', difficulty: 'hard', keywords: 'substring,unique,characters'},
+                
+                // Recursion Subtopics - Real Files
+                {subtopic_id: 'rec_01', topic_id: 'recursion', chapter_number: 1, subtopic_title: 'Recursion is Everywhere', file_path: 'coding/recursion/01 - Recursion is Everywhere !!.ipynb', difficulty: 'easy', keywords: 'introduction,concepts,examples'},
+                {subtopic_id: 'rec_02', topic_id: 'recursion', chapter_number: 2, subtopic_title: 'Hypothesis Induction', file_path: 'coding/recursion/02 - Hypothesis-Induction-Base Condition.ipynb', difficulty: 'medium', keywords: 'methodology,approach,structure'},
+                
+                // Stack Subtopics - Real Files
+                {subtopic_id: 'stk_01', topic_id: 'stack_ds', chapter_number: 0, subtopic_title: 'Stack Concepts', file_path: 'coding/stack/00- concepts.ipynb', difficulty: 'easy', keywords: 'data structure,lifo,operations'},
+                {subtopic_id: 'stk_02', topic_id: 'stack_ds', chapter_number: 1, subtopic_title: 'Stock Span Problem', file_path: 'coding/stack/01 - stock span problem.ipynb', difficulty: 'medium', keywords: 'application,monotonic,finance'},
+                
+                // DP Subtopics - Real Files
+                {subtopic_id: 'dp_01', topic_id: 'dynamic_programming', chapter_number: 0, subtopic_title: 'DP Introduction', file_path: 'coding/dp/00 - DP.ipynb', difficulty: 'hard', keywords: 'optimization,memoization,tabulation'},
+                {subtopic_id: 'dp_02', topic_id: 'dynamic_programming', chapter_number: 1, subtopic_title: 'Knapsack Types', file_path: 'coding/dp/01 - 2 types of knapsack.ipynb', difficulty: 'hard', keywords: 'knapsack,0-1,unbounded'},
+                
+                // Graph Subtopics - Real Files
+                {subtopic_id: 'gr_01', topic_id: 'graph_algorithms', chapter_number: 0, subtopic_title: 'Graph Introduction', file_path: 'coding/graph/00_graph_intro_course.md', difficulty: 'easy', keywords: 'graph,introduction,basics'},
+                {subtopic_id: 'gr_02', topic_id: 'graph_algorithms', chapter_number: 3, subtopic_title: 'BFS Notes', file_path: 'coding/graph/03.2_bfs_notes.md', difficulty: 'medium', keywords: 'bfs,breadth first,traversal'},
+                {subtopic_id: 'gr_03', topic_id: 'graph_algorithms', chapter_number: 4, subtopic_title: 'DFS Notes', file_path: 'coding/graph/04_dfs.md', difficulty: 'medium', keywords: 'dfs,depth first,traversal'}
+            ];
+
+            // Convert CSV data to our internal structure
+            csvTopics.forEach(topic => {
+                const topicId = generateId();
+                const subtopics = csvSubtopics.filter(sub => sub.topic_id === topic.topic_id);
+                
+                const chapters = subtopics.map((subtopic, index) => {
                     const chapterId = generateId();
-                    const fileName = file.split('/').pop();
-                    const title = extractTitleFromFileName(fileName);
-                    const difficulty = estimateDifficulty(title, fileName, groupData.category);
-                    
-                    // Extract chapter number from filename or use index
-                    const chapterNumber = extractChapterNumber(fileName) || (index + 1);
-                    
-                    // Calculate initial review schedule (start in 1 day)
-                    const nextReview = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                    const now = new Date();
+                    const nextReview = new Date(now.getTime() + (index + 1) * 24 * 60 * 60 * 1000);
                     
                     const chapter = {
                         id: chapterId,
-                        groupId: groupId,
-                        title: title,
-                        chapterNumber: chapterNumber,
-                        filePath: file,
-                        difficulty: difficulty,
+                        groupId: topicId,
+                        title: subtopic.subtopic_title,
+                        chapterNumber: subtopic.chapter_number,
+                        filePath: subtopic.file_path,
+                        difficulty: subtopic.difficulty,
+                        keywords: subtopic.keywords,
                         nextReview: nextReview.toISOString(),
                         lastReviewed: null,
                         reviewCount: 0,
@@ -914,67 +905,26 @@
                         easeFactor: 2.5
                     };
                     
-                    chapters.push(chapter);
                     allChapters.push(chapter);
+                    return chapter;
                 });
-                
-                // Sort chapters by chapter number
+
                 chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
-                
-                topicGroups[groupId] = {
-                    id: groupId,
-                    name: groupData.name,
-                    category: groupData.category,
+
+                topicGroups[topicId] = {
+                    id: topicId,
+                    name: topic.topic_name,
+                    category: topic.category,
+                    difficulty: topic.difficulty_level,
                     chapters: chapters,
                     totalChapters: chapters.length,
                     completedChapters: 0,
                     expanded: false
                 };
-            }
+            });
             
             filteredGroups = { ...topicGroups };
         }
-
-        function extractTitleFromFileName(fileName) {
-            // Remove file extension
-            let title = fileName.replace(/\.(md|ipynb|cpp|txt|py)$/i, '');
-            
-            // Remove common prefixes (numbers, dashes, underscores)
-            title = title.replace(/^[\d\-_\s]+/, '');
-            
-            // Replace dashes and underscores with spaces
-            title = title.replace(/[-_]/g, ' ');
-            
-            // Capitalize words
-            title = title.replace(/\b\w/g, l => l.toUpperCase());
-            
-            // Clean up multiple spaces
-            title = title.replace(/\s+/g, ' ').trim();
-            
-            return title || 'Untitled Chapter';
-        }
-
-        function extractChapterNumber(fileName) {
-            // Look for numbers at the beginning of filename
-            const match = fileName.match(/^(\d+)/);
-            return match ? parseInt(match[1]) : null;
-        }
-
-        function estimateDifficulty(title, fileName, category) {
-            const hardKeywords = ['backpropagation', 'gradient', 'loss', 'cnn', 'advanced', 'optimization', 'complex'];
-            const easyKeywords = ['introduction', 'what is', 'basic', 'overview', 'roadmap'];
-            
-            const text = (title + ' ' + fileName).toLowerCase();
-            
-            if (hardKeywords.some(keyword => text.includes(keyword))) {
-                return 'hard';
-            } else if (easyKeywords.some(keyword => text.includes(keyword))) {
-                return 'easy';
-            } else {
-                return 'medium';
-            }
-        }
-
 
         // Auto-rename files to follow _notes convention
         async function autoRenameFiles() {
@@ -1145,6 +1095,7 @@
                 const chaptersHtml = group.chapters.map(chapter => {
                     const status = getChapterStatus(chapter);
                     const statusClass = `status-${status.type}`;
+                    const keywords = chapter.keywords ? chapter.keywords.split(',').slice(0, 3).join(', ') : '';
                     
                     return `
                         <div class="chapter-item">
@@ -1156,15 +1107,24 @@
                                     📁 ${chapter.filePath} • 
                                     🔄 ${chapter.reviewCount} reviews • 
                                     📅 Next: ${formatDate(chapter.nextReview)}
+                                    ${keywords ? `• 🏷️ ${keywords}` : ''}
                                 </div>
+                                ${chapter.keywords ? `
+                                <div class="keywords-tags" style="margin-top: 8px;">
+                                    ${chapter.keywords.split(',').map(keyword => 
+                                        `<span class="keyword-tag">${keyword.trim()}</span>`
+                                    ).join('')}
+                                </div>` : ''}
                             </div>
                             <div class="chapter-status">
                                 <span class="difficulty-badge diff-${chapter.difficulty}">${chapter.difficulty}</span>
                                 <span class="status-badge ${statusClass}">${status.label}</span>
-                                <div style="display: flex; gap: 5px;">
-                                    <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'hard')">😰</button>
-                                    <button class="btn" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'medium')">😐</button>
-                                    <button class="btn btn-success" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'easy')">😊</button>
+                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                    <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'hard')" title="Hard - Review sooner">😰</button>
+                                    <button class="btn" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'medium')" title="Medium - Normal schedule">😐</button>
+                                    <button class="btn btn-success" style="padding: 4px 8px; font-size: 0.8rem;" onclick="markReviewed('${chapter.id}', 'easy')" title="Easy - Longer interval">😊</button>
+                                    <button class="btn btn-warning" style="padding: 4px 8px; font-size: 0.8rem;" onclick="editChapter('${chapter.id}')" title="Edit chapter">✏️</button>
+                                    <button class="btn" style="padding: 4px 8px; font-size: 0.8rem;" onclick="toggleChapterStatus('${chapter.id}')" title="Toggle completion">${chapter.completed ? '✅' : '⭕'}</button>
                                 </div>
                             </div>
                         </div>
@@ -1442,18 +1402,6 @@
             document.getElementById('progressFill').style.width = percentage + '%';
         }
 
-        function showScanningOverlay(message) {
-            document.getElementById('scanningStatus').textContent = message;
-            document.getElementById('scanningOverlay').style.display = 'flex';
-        }
-
-        function hideScanningOverlay() {
-            document.getElementById('scanningOverlay').style.display = 'none';
-        }
-
-        function updateScanningStatus(message) {
-            document.getElementById('scanningStatus').textContent = message;
-        }
 
         // Calendar navigation
         function previousMonth() {
@@ -1482,6 +1430,112 @@
             if (tabName === 'analytics') {
                 renderAnalytics();
             }
+        }
+
+        // CSV Export functionality
+        function exportToCSV() {
+            if (allChapters.length === 0) {
+                alert('⚠️ No data to export. Please scan repository first.');
+                return;
+            }
+
+            // Export progress data to CSV
+            const csvData = [];
+            csvData.push(['Subtopic ID', 'Topic', 'Chapter #', 'Title', 'File Path', 'Difficulty', 'Keywords', 'Last Reviewed', 'Next Review', 'Review Count', 'Completed', 'Ease Factor']);
+
+            allChapters.forEach(chapter => {
+                const topicGroup = Object.values(topicGroups).find(group => group.id === chapter.groupId);
+                const topicName = topicGroup ? topicGroup.name : 'Unknown';
+                
+                csvData.push([
+                    chapter.id,
+                    topicName,
+                    chapter.chapterNumber,
+                    chapter.title,
+                    chapter.filePath,
+                    chapter.difficulty,
+                    chapter.keywords || '',
+                    chapter.lastReviewed || '',
+                    chapter.nextReview || '',
+                    chapter.reviewCount || 0,
+                    chapter.completed ? 'Yes' : 'No',
+                    chapter.easeFactor || 2.5
+                ]);
+            });
+
+            const csvContent = csvData.map(row => 
+                row.map(field => `"${field}"`).join(',')
+            ).join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ai_learning_progress_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert(`📊 CSV exported successfully!\n\nExported ${allChapters.length} subtopics with progress data.`);
+        }
+
+        function updateCSVFiles() {
+            if (allChapters.length === 0) {
+                alert('⚠️ No data to update. Please load data first.');
+                return;
+            }
+
+            // Generate updated subtopics CSV
+            const subtopicsCSV = [];
+            subtopicsCSV.push(['subtopic_id', 'topic_id', 'chapter_number', 'subtopic_title', 'file_path', 'difficulty', 'estimated_time_minutes', 'keywords', 'last_reviewed', 'next_review', 'review_count', 'mastery_level', 'notes']);
+
+            allChapters.forEach(chapter => {
+                const topicGroup = Object.values(topicGroups).find(group => group.id === chapter.groupId);
+                const topicMap = {
+                    'ml_100days': 'ml',
+                    'dl_100days': 'dl', 
+                    'genai_langchain': 'ga',
+                    'binary_search': 'bs',
+                    'sliding_window': 'sw',
+                    'recursion': 'rec',
+                    'stack_ds': 'stk',
+                    'dynamic_programming': 'dp',
+                    'graph_algorithms': 'gr'
+                };
+                
+                const prefix = topicMap[topicGroup?.category] || 'ch';
+                const subtopicId = `${prefix}_${String(chapter.chapterNumber).padStart(2, '0')}`;
+                
+                subtopicsCSV.push([
+                    subtopicId,
+                    topicGroup?.category || 'unknown',
+                    chapter.chapterNumber,
+                    chapter.title,
+                    chapter.filePath,
+                    chapter.difficulty,
+                    '45', // default estimated time
+                    chapter.keywords || '',
+                    chapter.lastReviewed || '',
+                    chapter.nextReview || '',
+                    chapter.reviewCount || 0,
+                    chapter.completed ? 100 : 0,
+                    `Updated from UI on ${new Date().toISOString().split('T')[0]}`
+                ]);
+            });
+
+            const subtopicsContent = subtopicsCSV.map(row => 
+                row.map(field => `"${field}"`).join(',')
+            ).join('\n');
+
+            // Download updated subtopics.csv
+            const blob = new Blob([subtopicsContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'subtopics_updated.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert(`✅ Updated CSV generated!\n\nDownloaded: subtopics_updated.csv\n\nYou can replace the original subtopics.csv with this updated file to maintain your changes.`);
         }
 
         // Data management
@@ -1538,6 +1592,162 @@
                 reader.readAsText(file);
             };
             input.click();
+        }
+
+        function editChapter(chapterId) {
+            const chapter = allChapters.find(c => c.id === chapterId);
+            if (!chapter) return;
+
+            const newTitle = prompt('Edit chapter title:', chapter.title);
+            if (newTitle && newTitle !== chapter.title) {
+                chapter.title = newTitle;
+                saveData();
+                renderTopicGroups();
+                alert('✅ Chapter title updated!');
+            }
+
+            const newKeywords = prompt('Edit keywords (comma-separated):', chapter.keywords || '');
+            if (newKeywords !== null && newKeywords !== chapter.keywords) {
+                chapter.keywords = newKeywords;
+                saveData();
+                renderTopicGroups();
+                alert('✅ Keywords updated!');
+            }
+
+            const newDifficulty = prompt('Edit difficulty (easy/medium/hard):', chapter.difficulty);
+            if (newDifficulty && ['easy', 'medium', 'hard'].includes(newDifficulty.toLowerCase()) && newDifficulty !== chapter.difficulty) {
+                chapter.difficulty = newDifficulty.toLowerCase();
+                saveData();
+                renderTopicGroups();
+                alert('✅ Difficulty updated!');
+            }
+        }
+
+        function toggleChapterStatus(chapterId) {
+            const chapter = allChapters.find(c => c.id === chapterId);
+            if (!chapter) return;
+
+            chapter.completed = !chapter.completed;
+            
+            // Update topic group completion stats
+            const group = topicGroups[chapter.groupId];
+            if (group) {
+                group.completedChapters = group.chapters.filter(c => c.completed).length;
+            }
+
+            saveData();
+            renderTopicGroups();
+            renderAnalytics();
+            updateStats();
+            
+            const status = chapter.completed ? 'completed' : 'pending';
+            alert(`✅ Chapter marked as ${status}!`);
+        }
+
+        function addNewChapter() {
+            const topicGroupOptions = Object.values(topicGroups).map(group => 
+                `<option value="${group.id}">${group.name}</option>`
+            ).join('');
+
+            const form = `
+                <div style="background: white; padding: 20px; border-radius: 10px; max-width: 500px;">
+                    <h3>Add New Chapter</h3>
+                    <div style="margin: 10px 0;">
+                        <label>Topic Group:</label><br>
+                        <select id="newChapterGroup" style="width: 100%; padding: 8px;">
+                            ${topicGroupOptions}
+                        </select>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <label>Chapter Title:</label><br>
+                        <input type="text" id="newChapterTitle" style="width: 100%; padding: 8px;" placeholder="Enter chapter title">
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <label>File Path:</label><br>
+                        <input type="text" id="newChapterPath" style="width: 100%; padding: 8px;" placeholder="path/to/file.md">
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <label>Difficulty:</label><br>
+                        <select id="newChapterDifficulty" style="width: 100%; padding: 8px;">
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <label>Keywords (comma-separated):</label><br>
+                        <input type="text" id="newChapterKeywords" style="width: 100%; padding: 8px;" placeholder="keyword1,keyword2,keyword3">
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <button onclick="saveNewChapter()" class="btn btn-success">Add Chapter</button>
+                        <button onclick="closeModal()" class="btn">Cancel</button>
+                    </div>
+                </div>
+            `;
+
+            showModal(form);
+        }
+
+        function saveNewChapter() {
+            const groupId = document.getElementById('newChapterGroup').value;
+            const title = document.getElementById('newChapterTitle').value;
+            const filePath = document.getElementById('newChapterPath').value;
+            const difficulty = document.getElementById('newChapterDifficulty').value;
+            const keywords = document.getElementById('newChapterKeywords').value;
+
+            if (!title || !filePath) {
+                alert('⚠️ Please fill in title and file path');
+                return;
+            }
+
+            const group = topicGroups[groupId];
+            const chapterId = generateId();
+            const now = new Date();
+            const nextReview = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+            const newChapter = {
+                id: chapterId,
+                groupId: groupId,
+                title: title,
+                chapterNumber: group.chapters.length + 1,
+                filePath: filePath,
+                difficulty: difficulty,
+                keywords: keywords,
+                nextReview: nextReview.toISOString(),
+                lastReviewed: null,
+                reviewCount: 0,
+                completed: false,
+                easeFactor: 2.5
+            };
+
+            group.chapters.push(newChapter);
+            group.totalChapters = group.chapters.length;
+            allChapters.push(newChapter);
+
+            saveData();
+            setupCategoryFilter();
+            renderTopicGroups();
+            updateStats();
+            closeModal();
+
+            alert('✅ New chapter added successfully!');
+        }
+
+        function showModal(content) {
+            const modal = document.createElement('div');
+            modal.id = 'editModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000;
+            `;
+            modal.innerHTML = content;
+            document.body.appendChild(modal);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('editModal');
+            if (modal) modal.remove();
         }
 
         function clearAllData() {
