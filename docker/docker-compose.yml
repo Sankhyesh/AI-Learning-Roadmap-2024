@@ -17,6 +17,7 @@ services:
       - "6006:6006"  # TensorBoard
       - "8501:8501"  # Streamlit
       - "5000:5000"  # Flask/API
+      - "12434:12434"  # OpenAI API
     volumes:
       - ./notebooks:/workspace/notebooks
       - ./data:/workspace/data

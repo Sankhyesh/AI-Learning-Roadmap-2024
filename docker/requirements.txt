@@ -50,6 +50,7 @@ pyyaml==6.0.1
 h5py==3.10.0
 requests==2.31.0
 python-dotenv==1.0.0
+openai
 
 # Model Deployment
 onnx==1.15.0
