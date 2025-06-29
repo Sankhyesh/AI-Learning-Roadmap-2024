@@ -1,5 +1,5 @@
 # Regularization in Deep Learning
-
+[Colab Link](https://colab.research.google.com/drive/1PObj5KrXLDDmHjoJ1x0bVmxAFbif5s7q?usp=sharing#scrollTo=xwXhLZecZKHt)
 ## Introduction
 
 The material continues the deep learning playlist by covering **regularization**, a crucial technique for reducing overfitting in neural networks. This builds upon previous concepts from machine learning (particularly L1/L2 regularization with linear models) and extends them to deep neural networks.
