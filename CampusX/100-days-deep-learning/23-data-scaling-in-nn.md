@@ -1,4 +1,5 @@
- ### Holistic Deep Dive Summary: Improving Neural Network Performance by Normalizing Inputs
+ ### Holistic Deep Dive Summary: Improving Neural Network Performance by Normalizing Inputs 
+ https://colab.research.google.com/drive/1lexRUY37fJd6op-WiJicPRB65PwA8YaO?usp=sharing#scrollTo=InsXWldoAVWW
 
 This material explores a critical technique for enhancing the training process of neural networks: **input normalization**. The core idea is that the scale of input features can dramatically impact training speed and stability. When features have vastly different ranges (e.g., 'age' from 0-100 and 'salary' from 20,000-2,000,000), the network struggles to learn effectively. Normalizing these inputs to a similar scale can lead to faster convergence and better overall performance.
 
