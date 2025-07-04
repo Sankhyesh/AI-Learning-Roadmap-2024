@@ -29,10 +29,41 @@ graph TD
 ```
 
 ### Color Conventions in Contour Plots
-• **Blue/Purple**: Low altitude (minima)
-• **Yellow/Orange**: High altitude (maxima)
-• **Closely spaced contours**: Steep gradients
-• **Widely spaced contours**: Flat regions
+
+Understanding contour plots is crucial for visualizing optimization behavior. These plots represent **3D loss surfaces projected onto 2D**, where colors encode the third dimension (loss values).
+
+#### Standard Color Schemes
+• **Red/Warm Colors**: High loss values (regions to avoid)
+• **Blue/Cool Colors**: Low loss values (target regions)  
+• **Color Gradient**: Red → Orange → Yellow → Green → Blue (High → Low loss)
+
+#### Contour Line Interpretation
+• **Contour lines**: Connect points of **equal loss value**
+• **Closely spaced contours**: **Steep gradients** (rapid loss change)
+• **Widely spaced contours**: **Gentle slopes** (gradual loss change)
+• **Contour density**: Indicates the **steepness** of the loss landscape
+
+![Gradient Descent Contour Visualization](https://adeveloperdiary.github.io/assets/img/How-to-visualize-Gradient-Descent-using-Contour-plot-in-Python-adeveloperdiary.com-6.webp)
+
+#### Reading Optimization Paths
+• **Arrows on contours**: Show gradient descent trajectory
+• **Step size variation**: Larger steps in steep regions, smaller steps in flat regions
+• **Path direction**: Always perpendicular to contour lines (steepest descent)
+
+#### Practical Insights from Contour Analysis
+When analyzing momentum vs SGD on contour plots:
+
+1. **Flat Red Regions** (High Loss):
+   - SGD takes tiny, cautious steps
+   - Momentum maintains velocity and crosses faster
+
+2. **Steep Transitions** (Dense Contours):
+   - SGD can overshoot and oscillate
+   - Momentum builds appropriate speed
+
+3. **Blue Valleys** (Low Loss):
+   - SGD settles quickly but may get trapped
+   - Momentum might overshoot but finds better minima
 
 ## Non-Convex Optimization: The Core Challenge
 
@@ -231,17 +262,34 @@ These visualizations perfectly demonstrate the **"ball rolling down a hill"** me
 - **With momentum**: Like a ball that accumulates speed and maintains direction
 
 ### Multi-Algorithm Comparison
+
 ![Multiple optimizers comparison](https://towardsdatascience.com/wp-content/uploads/2025/03/image-18.gif)
+*Source: Interactive visualizations from optimization research*
 
 Interactive visualizations comparing multiple optimizers show:
 
-**Blue/Purple line**: Momentum-based optimizers
-**Other colors**: Various optimization methods
+**Color Coding in Multi-Optimizer Comparisons**:
+• **Cyan**: Standard Gradient Descent
+• **Magenta**: Momentum
+• **White**: AdaGrad  
+• **Green**: RMSProp
+• **Blue**: Adam
 
-Key observations:
+**Key Behavioral Observations**:
 1. **Momentum initially faster**: Reaches vicinity of minimum quickly
 2. **Oscillation phase**: Overshoots and oscillates before settling  
 3. **Final convergence**: May take longer to fully stabilize than expected
+4. **Escape ability**: Can escape local minima that trap vanilla SGD
+
+#### Algorithm-Specific Behaviors on Loss Landscapes
+
+From comprehensive optimization visualizations, we observe:
+
+• **SGD (Cyan)**: Conservative, methodical, but easily trapped
+• **Momentum (Magenta)**: Bold, fast, but overshoots target
+• **AdaGrad (White)**: Adaptive step sizes, slows down over time
+• **RMSProp (Green)**: Fixes AdaGrad's slowdown issue
+• **Adam (Blue)**: Combines best of momentum and adaptive methods
 
 ### Surface Navigation Patterns
 
