@@ -28,6 +28,14 @@ The material begins by comparing RNN and LSTM architectures side by side. "Even 
 
 **LSTM vs RNN Key Differences**:
 
+**Visual Comparison with Animations**:
+
+![RNN Animation](https://ai4sme.aisingapore.org/wp-content/uploads/2022/06/animated1.gif)
+*Vanilla RNN: Simple single-pathway information flow*
+
+![LSTM Animation](https://ai4sme.aisingapore.org/wp-content/uploads/2022/06/animated2.gif)
+*LSTM: Complex dual-pathway architecture with gate mechanisms*
+
 ```mermaid
 graph LR
     subgraph "RNN - Simple but Limited"
@@ -713,8 +721,11 @@ The instructor notes some differences: "Before showing you this, I want to tell 
 - "The colors of sigmoid and tanh are slightly different which I can't understand on my laptop screen"
 - "But let's see once how LSTM cell works"
 
-![LSTM Animation Placeholder](https://d2l.ai/_images/lstm-3.svg)
-*LSTM cell showing the flow of information through gates and state updates - animations help visualize the sequential processing nature*
+![LSTM Live Animation](https://ai4sme.aisingapore.org/wp-content/uploads/2022/06/animated2.gif)
+*Live animation showing LSTM cell operations: gates controlling information flow, memory updates, and sequential processing in real-time*
+
+![LSTM Static Architecture](https://d2l.ai/_images/lstm-3.svg)
+*Static LSTM cell architecture diagram showing the mathematical structure and flow of information through gates*
 
 **Key Animation Elements to Observe**:
 1. "Here we calculated i_t (input gate)"

@@ -167,10 +167,16 @@ graph LR
 - **Simple structure**: Minimal internal complexity
 - **Limited capability**: Cannot maintain long-term dependencies
 
+![Vanilla RNN Animation](https://ai4sme.aisingapore.org/wp-content/uploads/2022/06/animated1.gif)
+*Animated visualization of a vanilla RNN showing simple information flow through a single hidden state pathway*
+
 **LSTM Architecture**:
 - **Dual state pathways**: Separate short-term and long-term memory
 - **Complex internal structure**: Sophisticated gate mechanisms
 - **Enhanced capability**: Effective long-term dependency learning
+
+![LSTM Animation](https://ai4sme.aisingapore.org/wp-content/uploads/2022/06/animated2.gif)
+*Animated visualization of LSTM showing complex gate mechanisms and dual memory pathways in action*
 
 ### The Three-Gate System
 
@@ -178,6 +184,11 @@ The material introduces LSTM's core innovation: **three specialized gates** that
 
 ![LSTM Cell Architecture with Gates](https://miro.medium.com/v2/resize:fit:1400/1*Gu7YQer2NQlBtkFiENOO7Q.png)
 *Detailed LSTM cell architecture showing the three gates (forget, input, output) and how they control information flow through the cell*
+
+**Dynamic LSTM Visualization**:
+
+![LSTM Cell Animation](https://ai4sme.aisingapore.org/wp-content/uploads/2022/06/animated2.gif)
+*Real-time animation showing how information flows through LSTM gates: the forget gate (removing outdated information), input gate (adding new information), and output gate (generating predictions)*
 
 ```mermaid
 mindmap
