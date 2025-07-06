@@ -39,19 +39,19 @@ The material identifies why sequence-to-sequence problems are particularly diffi
 2. **Variable Output Length**: Output length is unpredictable and independent
 3. **No Length Guarantee**: A 3-word English sentence might not translate to 3 Hindi words - it could be 6 words or even 600 words!
 
-The presenter emphasizes: "Variable length को handle करना सबसे बड़ा challenge होने वाला है - not only in input but also in output."
+The presenter emphasizes: "Handling variable length is going to be the biggest challenge - not only in input but also in output."
 
 ## High-Level Encoder-Decoder Architecture
 
-The presenter describes the architecture's beauty: "इसका high level overview इतना simple है कि शायद मैं वह किसी बच्चे को भी समझा सकता हूं।"
+The presenter describes the architecture's beauty: "Its high-level overview is so simple that perhaps I could explain it even to a child."
 
 Three main components:
 
 **1. Encoder Block**:
 - Receives input sequence word-by-word (token-by-token)
-- "इस पूरे sentence को समझने की कोशिश करेगा"
-- "उसका essence capture करने की कोशिश करेगा"
-- "उसको summarize करने की कोशिश करेगा"
+- "It will try to understand the entire sentence"
+- "It will try to capture its essence"
+- "It will try to summarize it"
 - Outputs a fixed-size vector
 
 **2. Context Vector**:
@@ -61,7 +61,7 @@ Three main components:
 
 **3. Decoder Block**:
 - Receives the context vector
-- "इस context vector को समझने की कोशिश करेगा"
+- "It will try to understand this context vector"
 - Generates output word-by-word
 - Translates the summary into target language
 
@@ -115,7 +115,7 @@ The decoder also uses an LSTM but with key differences:
 - Uses special `<START>` symbol to begin
 - Stops when `<END>` symbol is generated
 
-Important: "हर time step पर कुछ output produce करना"
+Important: "It must produce some output at every time step"
 
 ## Complete Training Example with 2-Row Dataset
 
@@ -153,7 +153,7 @@ The presenter uses a minimal dataset to explain training:
 6. जाओ
 7. `<END>`
 
-The presenter emphasizes: "आपको दो additional words डालने पड़ेंगे... START input में देना होता है और ये END output में निकल के आ सकता है।"
+The presenter emphasizes: "You have to add two additional words... START has to be given in input and END can come out in the output."
 
 **One-Hot Encoding Examples**:
 - "Think" = [1, 0, 0, 0, 0]
@@ -180,9 +180,9 @@ Using "Think about it" → "सोच लो":
 - **Correct answer should be**: "सोच"
 - Model made a mistake!
 
-The presenter explains: "भले यहां पर यह 'लो' का output है... ऐसा नहीं है कि आप भेज नहीं सकते हो... बट ऐसा करने से training थोड़ी सी slow हो जाती है।"
+The presenter explains: "Even though the output here is 'लो'... it's not that you can't send it... but doing so makes the training a bit slow."
 
-This is **Teacher Forcing**: "During the training process हर अगले time step पे जो input है वह हम correct भेजेंगे।"
+This is **Teacher Forcing**: "During the training process, at every next time step, we will send the correct input."
 
 **Time Step 2**:
 - Input: "सोच" (correct answer, not model's prediction)
@@ -215,22 +215,22 @@ L = -Σ(i=1 to V) y_true[i] × log(y_pred[i])
 
 Total Loss = 2.39
 
-The presenter notes: "जब उसने सही output दिया तो जो loss है वो कम है, जब उसने गलत output दिया तो loss ज्यादा है।"
+The presenter notes: "When it gave the correct output, the loss is low; when it gave the wrong output, the loss is high."
 
 ### Backpropagation and Weight Updates
 
-1. **Gradient Calculation**: "हर trainable parameter के respect में आप loss का derivative निकालते हो"
+1. **Gradient Calculation**: "You calculate the derivative of loss with respect to every trainable parameter"
 2. **Parameter Update**: Using optimizer (SGD, Adam, RMSprop)
 3. **Learning Rate**: Controls update speed
 
-"ये gradients basically यह measure करते हैं कि किसी एक particular parameter ने loss function में कितना contribute किया है।"
+"These gradients basically measure how much a particular parameter contributed to the loss function."
 
 ## Inference/Prediction Process
 
 The presenter demonstrates prediction on "Think about it":
 
 **Key Differences**:
-- "हमें true values नहीं पता"
+- "We don't know the true values"
 - "No teacher forcing"
 - "No backpropagation (frozen weights)"
 
@@ -247,39 +247,39 @@ The presenter demonstrates prediction on "Think about it":
 
 **Final incorrect translation**: "सोच जाओ लो"
 
-The presenter notes: "मैंने जान बुझ के ऐसा example रखा so that आप यह समझ पाओ कि गलत भी हो सकता है। It depends on the training।"
+The presenter notes: "I deliberately kept such an example so that you can understand it can also be wrong. It depends on the training."
 
 ## Three Critical Improvements
 
 ### Improvement 1: Word Embeddings
 
-**Problem**: "Real cases में आपके पास एक लाख words हो सकते हैं... एक लाख dimension हो जाएगा।"
+**Problem**: "In real cases, you can have one hundred thousand words... it will become one hundred thousand dimensions."
 
 **Solution**: Dense embeddings
 - Instead of 100,000-dim one-hot vectors
 - Use 300-1000 dimensional dense vectors
-- "Low dimension होती है और dense होती है"
+- "They are low-dimensional and dense"
 - Can use pre-trained (Word2Vec, GloVe) or train with model
 
 ### Improvement 2: Deep LSTMs
 
-**Motivation**: "Single layer LSTM को use करने के बदले deep LSTM को use करने लगो।"
+**Motivation**: "Instead of using single layer LSTM, start using deep LSTM."
 
 The presenter explains the original paper used **4 layers with 1000 units each**.
 
 **Three Benefits**:
 
 1. **Better Long-term Dependencies**: 
-   - "Long sentences... बड़े paragraph के ऊपर performance उतना अच्छा नहीं रहता है"
+   - "For long sentences... performance on large paragraphs is not that good"
    - Multiple context vectors provide more capacity
 
 2. **Hierarchical Learning**:
-   - "Lower LSTM... word level चीजों को समझना start करते हैं"
-   - "Middle layer... sentence level पर समझना start करते हैं"
-   - "Top level... paragraph level पर समझना start करते हैं"
+   - "Lower LSTMs... start understanding word-level things"
+   - "Middle layers... start understanding at sentence level"
+   - "Top level... starts understanding at paragraph level"
 
 3. **Increased Model Capacity**:
-   - "जभी भी आप parameters बढ़ाते हो तो learning capability बढ़ जाता है"
+   - "Whenever you increase parameters, the learning capability increases"
    - Can capture "minute variations" in data
 
 ### Improvement 3: Input Reversal
@@ -290,10 +290,10 @@ The presenter explains the original paper used **4 layers with 1000 units each**
 
 **Why it works**:
 - "Distance between 'Think' and 'सोच' is less"
-- "Gradient को propagate करने में कम मेहनत लगेगी"
-- Works for "certain language pairs जहां पे initial words में ज्यादा context छुपा होता है"
+- "Less effort will be required to propagate the gradient"
+- Works for "certain language pairs where initial words contain more context"
 
-The presenter cautions: "ये हमेशा काम नहीं करता... कुछ language pairs के लिए काम करता है।"
+The presenter cautions: "This doesn't always work... it works for certain language pairs."
 
 ## Sutskever et al. (2014) Paper Details
 
@@ -303,7 +303,7 @@ The presenter provides specific details about the original research:
 - 12 million sentence pairs (English-French)
 - 348 million French words
 - 304 million English words
-- "बहुत बड़े dataset पर train हुआ"
+- "It was trained on a very large dataset"
 
 **Vocabulary**:
 - Input (English): 160,000 words
@@ -319,8 +319,8 @@ The presenter provides specific details about the original research:
 
 **Performance**:
 - BLEU score: 34.8
-- "Baseline model को cross कर गया था"
-- "उस time के जो baseline statistical model था उससे ज्यादा था"
+- "It crossed the baseline model"
+- "It was higher than the baseline statistical model of that time"
 
 # 3. Visual Enhancement
 
@@ -406,9 +406,9 @@ for epoch in range(num_epochs):
 
 **Key Limitations/Future Directions**:
 
-The presenter emphasizes this is "starting point होने वाला है" for the journey to LLMs. The architecture established foundational concepts but has clear limitations:
+The presenter emphasizes this is "going to be the starting point" for the journey to LLMs. The architecture established foundational concepts but has clear limitations:
 
-- **Information Bottleneck**: "पूरे के पूरे sentence का summary carry कर पाना थोड़ा मुश्किल है" with single context vector
+- **Information Bottleneck**: "Carrying the summary of the entire sentence is a bit difficult" with single context vector
 - **Sequential Nature**: Both encoding and decoding happen sequentially, limiting parallelization
 - **Long Sequence Degradation**: Performance drops significantly for sequences > 30 words
 
@@ -416,6 +416,6 @@ The presenter emphasizes this is "starting point होने वाला ह�
 
 1. The presenter asks us to consider: If variable-length handling was partially solved by LSTMs for input, how does the encoder-decoder extend this to handle variable output lengths while maintaining coherent translations?
 
-2. Given that teacher forcing creates fundamentally different conditions during training vs. inference ("यह पता करते थे कि सही output क्या होना चाहिए था"), how might this distribution mismatch affect real-world deployment where the model must rely entirely on its own predictions?
+2. Given that teacher forcing creates fundamentally different conditions during training vs. inference ("we knew what the correct output should have been"), how might this distribution mismatch affect real-world deployment where the model must rely entirely on its own predictions?
 
 [End of Notes]
