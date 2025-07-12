@@ -770,17 +770,175 @@ Let's discuss the architecture of Luong attention.
 
 ### Key Architectural Difference
 
+```mermaid
+graph TB
+    subgraph "Bahdanau vs Luong: Context Vector Placement"
+    
+    subgraph "Bahdanau Attention (Context as Input)"
+    BA_C1[c₁<br/>Context Vector] --> BA_LSTM[LSTM Decoder]
+    BA_PREV[Previous Output] --> BA_LSTM
+    BA_S0[s₀<br/>Previous State] --> BA_LSTM
+    BA_LSTM --> BA_S1[s₁<br/>New State]
+    BA_LSTM --> BA_OUT1[लाइट]
+    end
+    
+    subgraph "Luong Attention (Context at Output)"
+    LA_PREV[Previous Output] --> LA_LSTM[LSTM Decoder]
+    LA_S0[s₀<br/>Previous State] --> LA_LSTM
+    LA_LSTM --> LA_S1[s₁<br/>Current State]
+    LA_S1 --> LA_CONCAT[Concatenate]
+    LA_C1[c₁<br/>Context Vector] --> LA_CONCAT
+    LA_CONCAT --> LA_FF[Feed Forward<br/>+ Softmax]
+    LA_FF --> LA_OUT1[लाइट]
+    end
+    end
+    
+    style BA_C1 fill:#FFB6C1
+    style LA_C1 fill:#FFB6C1
+    style BA_LSTM fill:#98FB98
+    style LA_LSTM fill:#98FB98
+    style LA_CONCAT fill:#FFA07A
+```
+
 **Important difference**: As soon as you get c₁, in Bahdanau attention, you would put c₁ as input here. **You don't need to put input here now**. This LSTM has done its job - it has calculated s₁.
 
 **What you do**: You take this c₁ and give it in the output. You concatenate this s₁ with c₁. This gives you a different state, on which you apply feed-forward neural network and then softmax to finally print this word.
 
 **Main difference**: The context vector goes to the output, not the input. It concatenates at the output level.
 
+```mermaid
+graph LR
+    subgraph "Luong Attention: Detailed Flow"
+    subgraph "Step 1: Generate Current State"
+    PREV["Previous Word"] --> DECODER[LSTM Decoder]
+    S_PREV["Previous State"] --> DECODER
+    DECODER --> S_CURR["Current State st"]
+    end
+    
+    subgraph "Step 2: Compute Attention Scores"
+    S_CURR --> DOT1["st dot h1"]
+    S_CURR --> DOT2["st dot h2"]
+    S_CURR --> DOT3["st dot h3"]
+    S_CURR --> DOT4["st dot h4"]
+    
+    H1[h1] --> DOT1
+    H2[h2] --> DOT2
+    H3[h3] --> DOT3
+    H4[h4] --> DOT4
+    
+    DOT1 --> SM[Softmax]
+    DOT2 --> SM
+    DOT3 --> SM
+    DOT4 --> SM
+    
+    SM --> ALPHA["Attention Weights"]
+    end
+    
+    subgraph "Step 3: Create Context & Output"
+    ALPHA --> WS[Weighted Sum]
+    H1 --> WS
+    H2 --> WS
+    H3 --> WS
+    H4 --> WS
+    WS --> CONTEXT["Context Vector ct"]
+    
+    S_CURR --> CONCAT["Concatenate st and ct"]
+    CONTEXT --> CONCAT
+    CONCAT --> FF["Feed Forward + Softmax"]
+    FF --> OUTPUT["Output Word"]
+    end
+    end
+    
+    style S_CURR fill:#FFE4E1
+    style CONTEXT fill:#98FB98
+    style CONCAT fill:#FFA07A
+    style OUTPUT fill:#FFB6C1
+```
+
 ### Complete Flow
+
+```mermaid
+sequenceDiagram
+    participant Input as Input Sequence
+    participant Encoder as Encoder LSTM
+    participant Decoder as Decoder LSTM
+    participant Attention as Dot Product Attention
+    participant Output as Output Layer
+    
+    Note over Input, Output: Complete Luong Attention Flow
+    
+    Input->>Encoder: Turn off the lights
+    Encoder->>Encoder: Generate h1, h2, h3, h4
+    
+    Note over Decoder, Output: Timestep 1
+    Decoder->>Decoder: s0 + START gives s1
+    Decoder->>Attention: s1 current state
+    Encoder->>Attention: h1, h2, h3, h4
+    Attention->>Attention: e1j = s1 dot hj
+    Attention->>Attention: alpha1j = softmax e1j
+    Attention->>Output: c1 = sum alpha1j * hj
+    Output->>Output: concat s1 and c1 then FF
+    
+    Note over Decoder, Output: Timestep 2
+    Decoder->>Decoder: s1 + word1 gives s2
+    Decoder->>Attention: s2 current state
+    Attention->>Attention: e2j = s2 dot hj
+    Attention->>Attention: alpha2j = softmax e2j
+    Attention->>Output: c2 = sum alpha2j * hj
+    Output->>Output: concat s2 and c2 then FF
+    
+    Note over Decoder, Output: Timestep 3
+    Decoder->>Decoder: s2 + word2 gives s3
+    Decoder->>Attention: s3 current state
+    Attention->>Attention: e3j = s3 dot hj
+    Attention->>Attention: alpha3j = softmax e3j
+    Attention->>Output: c3 = sum alpha3j * hj
+    Output->>Output: concat s3 and c3 then FF
+```
 
 **Second timestep**: s₁ and this input together give you s₂. Then you take s₂, dot product with all four, get e₂₁, e₂₂, e₂₃, e₂₄. Apply softmax to get α₂₁, α₂₂, α₂₃, α₂₄. This gives you c₂.
 
 **Output**: You take c₂ here and concatenate with s₂. Apply feed-forward and softmax to print "बंद". Using s₂, you get s₃, and this process repeats.
+
+```mermaid
+graph TB
+    subgraph "Architecture Differences: Bahdanau vs Luong"
+    
+    subgraph "Difference 1: Scoring Function"
+    BD1["Bahdanau: Neural Network f(s_prev, h_j)"]
+    LD1["Luong: Dot Product s_curr dot h_j"]
+    BD1 -.->|Simpler| LD1
+    end
+    
+    subgraph "Difference 2: Decoder State Usage"
+    BD2["Bahdanau: Previous State s_prev"]
+    LD2["Luong: Current State s_curr"]
+    BD2 -.->|More Updated| LD2
+    end
+    
+    subgraph "Difference 3: Context Integration"
+    BD3["Bahdanau: Context as Input to LSTM"]
+    LD3["Luong: Context concatenated at Output"]
+    BD3 -.->|Design Change| LD3
+    end
+    
+    subgraph "Results"
+    PERF["Better Performance + Faster + Fewer Parameters"]
+    end
+    
+    LD1 --> PERF
+    LD2 --> PERF
+    LD3 --> PERF
+    end
+    
+    style BD1 fill:#FFE4E1
+    style BD2 fill:#FFE4E1
+    style BD3 fill:#FFE4E1
+    style LD1 fill:#98FB98
+    style LD2 fill:#98FB98
+    style LD3 fill:#98FB98
+    style PERF fill:#FFA07A
+```
 
 **Architecture differences**:
 1. **First difference**: We eliminated the neural network entirely and used a simpler alignment score - dot product
