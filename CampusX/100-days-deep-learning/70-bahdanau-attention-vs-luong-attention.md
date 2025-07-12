@@ -239,17 +239,53 @@ Now let's go a bit deeper into the architecture and understand how this entire n
 
 ### Data Flow Process
 
+![Bahdanau attention mechanism architecture](https://d2l.ai/_images/seq2seq-attention-details.svg)
+
+**Data Flow Architecture Explained:**
+This diagram illustrates the Bahdanau attention mechanism in action. The encoder processes the input sequence to generate hidden states, while the attention mechanism computes dynamic context vectors at each decoder step. The alignment model (shown in the center) takes the previous decoder state and all encoder hidden states to compute attention weights, creating a focused context vector for each output word.
+
+```mermaid
+graph TD
+    subgraph "Step 1: Encoder Processing"
+    T1[Turn] --> H1["h₁ = [a,b,c,d]"]
+    T2[off] --> H2["h₂ = [e,f,g,h]"] 
+    T3[the] --> H3["h₃ = [i,j,k,l]"]
+    T4[lights] --> H4["h₄ = [m,n,o,p]"]
+    end
+    
+    subgraph "Step 2: Decoder State"
+    S0["s₀ = [e,f,g,h]<br/>(Previous decoder state)"]
+    end
+    
+    subgraph "Step 3: Context Vector Calculation"
+    H1 --> CV["c₁ = α₁₁h₁ + α₁₂h₂ + α₁₃h₃ + α₁₄h₄"]
+    H2 --> CV
+    H3 --> CV  
+    H4 --> CV
+    S0 --> NN["Neural Network<br/>(Alignment Model)"]
+    NN --> ALPHA["α₁₁, α₁₂, α₁₃, α₁₄"]
+    ALPHA --> CV
+    end
+    
+    style H1 fill:#FFE4E1
+    style H2 fill:#E6E6FA
+    style H3 fill:#98FB98
+    style H4 fill:#FFB6C1
+    style CV fill:#FFA07A
+```
+
 **Step 1: Encoder Processing**
 You input the sentence into the encoder:
-- First you send "Turn" → get h₁
-- Then you send "off" → get h₂  
-- Then you send "the" → get h₃
-- Then "lights" → get h₄ 
+- First you send "Turn" → get h₁ = [a, b, c, d]
+- Then you send "off" → get h₂ = [e, f, g, h]
+- Then you send "the" → get h₃ = [i, j, k, l]
+- Then "lights" → get h₄ = [m, n, o, p]
 
 Basically, in this step, you've sent the sentence to the encoder and received all your hidden states: h₁, h₂, h₃, h₄ are all ready.
 
 **Step 2: Decoder Ready**
 Now your decoder is ready sitting there to decode/translate, and you're currently at timestep 1 (i=1).
+- Previous decoder state: s₀ = [e, f, g, h] (initialized)
 
 **Step 3: Context Vector Calculation**
 You need to pass a context vector from here, which is c₁. How do you calculate c₁?
@@ -260,6 +296,47 @@ You have h₁, h₂, h₃, h₄. You need to find these alphas. To find these al
 
 ### Matrix Operations in Detail
 
+![Neural attention score computation](https://lilianweng.github.io/posts/2018-06-24-attention/attention-mechanism.png)
+
+**Neural Network Scoring Process:**
+This visualization shows how the alignment model (neural network) computes attention scores. The previous decoder state and each encoder state are fed through a feed-forward network to produce compatibility scores, which are then normalized via softmax to create attention weights.
+
+```mermaid
+graph TD
+    subgraph "Step 1: Matrix Formation"
+    S0["s₀ = [e,f,g,h]"] 
+    H1["h₁ = [a,b,c,d]"]
+    H2["h₂ = [e,f,g,h]"] 
+    H3["h₃ = [i,j,k,l]"]
+    H4["h₄ = [m,n,o,p]"]
+    
+    S0 --> C1["[e,f,g,h,a,b,c,d]"]
+    H1 --> C1
+    S0 --> C2["[e,f,g,h,e,f,g,h]"]
+    H2 --> C2
+    S0 --> C3["[e,f,g,h,i,j,k,l]"]
+    H3 --> C3
+    S0 --> C4["[e,f,g,h,m,n,o,p]"]
+    H4 --> C4
+    
+    C1 --> MAT["4×8 Matrix"]
+    C2 --> MAT
+    C3 --> MAT
+    C4 --> MAT
+    end
+    
+    subgraph "Step 2: Neural Network Processing"
+    MAT --> NN["Neural Network<br/>8→3→1"]
+    NN --> W1["Weights: 8×3"]
+    NN --> W2["Weights: 3×1"] 
+    NN --> SCORES["e₁₁, e₁₂, e₁₃, e₁₄"]
+    end
+    
+    style MAT fill:#FFE4E1
+    style NN fill:#98FB98
+    style SCORES fill:#FFB6C1
+```
+
 **Step 1: Matrix Formation**
 As I told you, alpha depends on two things - all these alphas depend on s₀ (previous decoder timestep) and hⱼ (current encoder hidden state).
 
@@ -269,12 +346,41 @@ You need to take s₀ from here and put it in this neural network. Since you nee
 
 **Concatenation Process**: You need to concatenate this s₀ with h₁, with h₂, with h₃, and with h₄. Basically, you need to form a matrix.
 
-**The matrix will look like**:
+```mermaid
+graph LR
+    subgraph "Concatenation Visualization"
+    S["s₀<br/>[e,f,g,h]"] 
+    H1["h₁<br/>[a,b,c,d]"]
+    H2["h₂<br/>[e,f,g,h]"]
+    H3["h₃<br/>[i,j,k,l]"]
+    H4["h₄<br/>[m,n,o,p]"]
+    
+    S --> R1["Row 1: [e,f,g,h,a,b,c,d]"]
+    H1 --> R1
+    S --> R2["Row 2: [e,f,g,h,e,f,g,h]"]
+    H2 --> R2
+    S --> R3["Row 3: [e,f,g,h,i,j,k,l]"]
+    H3 --> R3
+    S --> R4["Row 4: [e,f,g,h,m,n,o,p]"]
+    H4 --> R4
+    end
+    
+    style S fill:#FFA07A
+    style R1 fill:#FFE4E1
+    style R2 fill:#E6E6FA
+    style R3 fill:#98FB98
+    style R4 fill:#FFB6C1
 ```
-Row 1: [e, f, g, h, a, b, c, d]  # s₀ + h₁
-Row 2: [e, f, g, h, e, f, g, h]  # s₀ + h₂  
-Row 3: [e, f, g, h, i, j, k, l]  # s₀ + h₃
-Row 4: [e, f, g, h, m, n, o, p]  # s₀ + h₄
+
+**The matrix will look like**:
+```python
+# Input matrix formation (4×8 matrix)
+input_matrix = [
+    [e, f, g, h, a, b, c, d],  # s₀ + h₁ (Turn)
+    [e, f, g, h, e, f, g, h],  # s₀ + h₂ (off) 
+    [e, f, g, h, i, j, k, l],  # s₀ + h₃ (the)
+    [e, f, g, h, m, n, o, p]   # s₀ + h₄ (lights)
+]
 ```
 
 **This is the matrix** - it has four rows and eight columns.
@@ -287,6 +393,14 @@ Since it's a fully connected neural network, you'll have weights here. How many 
 **Batch Processing**: You can either send one by one, or you can send this entire matrix together as a batch operation. Let's say we're sending a batch of 4.
 
 **Forward Propagation**: 
+```python
+# Step-by-step neural network computation
+input_layer = input_matrix  # 4×8
+hidden_layer = tanh(input_layer @ W1 + b1)  # 4×8 @ 8×3 = 4×3
+output_layer = hidden_layer @ W2 + b2       # 4×3 @ 3×1 = 4×1
+# Result: [e₁₁, e₁₂, e₁₃, e₁₄]
+```
+
 - Matrix sent from here: 4×8
 - Dot product with weights: 8×3  
 - Result: 4×3 matrix
