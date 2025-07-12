@@ -239,10 +239,61 @@ Now let's go a bit deeper into the architecture and understand how this entire n
 
 ### Data Flow Process
 
-![Bahdanau attention mechanism architecture](https://d2l.ai/_images/seq2seq-attention-details.svg)
+```mermaid
+graph TB
+    subgraph "Complete Bahdanau Attention Data Flow"
+    subgraph "Input Processing"
+    I1[Turn] --> E1[LSTM Cell]
+    I2[off] --> E2[LSTM Cell] 
+    I3[the] --> E3[LSTM Cell]
+    I4[lights] --> E4[LSTM Cell]
+    
+    E1 --> H1[h₁]
+    E2 --> H2[h₂]
+    E3 --> H3[h₃] 
+    E4 --> H4[h₄]
+    end
+    
+    subgraph "Attention Mechanism"
+    H1 --> AM[Alignment Model<br/>Neural Network]
+    H2 --> AM
+    H3 --> AM
+    H4 --> AM
+    S0[s₀<br/>Previous State] --> AM
+    
+    AM --> A1[α₁₁]
+    AM --> A2[α₁₂]
+    AM --> A3[α₁₃]
+    AM --> A4[α₁₄]
+    
+    A1 --> WS[Weighted Sum]
+    A2 --> WS
+    A3 --> WS
+    A4 --> WS
+    H1 --> WS
+    H2 --> WS
+    H3 --> WS
+    H4 --> WS
+    
+    WS --> C1[c₁<br/>Context Vector]
+    end
+    
+    subgraph "Output Generation"
+    C1 --> D1[LSTM Decoder]
+    S0 --> D1
+    START[START] --> D1
+    D1 --> OUT1[लाइट]
+    D1 --> S1[s₁<br/>New State]
+    end
+    end
+    
+    style AM fill:#FFB6C1
+    style C1 fill:#98FB98
+    style OUT1 fill:#FFA07A
+```
 
 **Data Flow Architecture Explained:**
-This diagram illustrates the Bahdanau attention mechanism in action. The encoder processes the input sequence to generate hidden states, while the attention mechanism computes dynamic context vectors at each decoder step. The alignment model (shown in the center) takes the previous decoder state and all encoder hidden states to compute attention weights, creating a focused context vector for each output word.
+This comprehensive diagram shows the complete Bahdanau attention data flow from input to output. The encoder processes each word sequentially to generate hidden states (h₁-h₄). The alignment model (neural network) takes the previous decoder state (s₀) and all encoder states to compute attention weights (α). These weights create a dynamic context vector (c₁) through weighted summation, which is then used by the decoder to generate the output word "लाइट".
 
 ```mermaid
 graph TD
@@ -296,10 +347,60 @@ You have h₁, h₂, h₃, h₄. You need to find these alphas. To find these al
 
 ### Matrix Operations in Detail
 
-![Neural attention score computation](https://lilianweng.github.io/posts/2018-06-24-attention/attention-mechanism.png)
+```mermaid
+graph LR
+    subgraph "Neural Network Attention Score Computation"
+    subgraph "Input Layer"
+    SI["s_{i-1}<br/>[Previous Decoder State]"]
+    H1["h₁<br/>[Encoder State 1]"]
+    H2["h₂<br/>[Encoder State 2]"]
+    H3["h₃<br/>[Encoder State 3]"]
+    H4["h₄<br/>[Encoder State 4]"]
+    end
+    
+    subgraph "Alignment Model"
+    SI --> CONCAT1["Concatenate<br/>[s_{i-1}, h₁]"]
+    H1 --> CONCAT1
+    SI --> CONCAT2["Concatenate<br/>[s_{i-1}, h₂]"]
+    H2 --> CONCAT2
+    SI --> CONCAT3["Concatenate<br/>[s_{i-1}, h₃]"]
+    H3 --> CONCAT3
+    SI --> CONCAT4["Concatenate<br/>[s_{i-1}, h₄]"]
+    H4 --> CONCAT4
+    
+    CONCAT1 --> NN1["Neural Network<br/>f(s_{i-1}, h₁)"]
+    CONCAT2 --> NN2["Neural Network<br/>f(s_{i-1}, h₂)"]
+    CONCAT3 --> NN3["Neural Network<br/>f(s_{i-1}, h₃)"]
+    CONCAT4 --> NN4["Neural Network<br/>f(s_{i-1}, h₄)"]
+    
+    NN1 --> E1["e_{i1}"]
+    NN2 --> E2["e_{i2}"]
+    NN3 --> E3["e_{i3}"]
+    NN4 --> E4["e_{i4}"]
+    end
+    
+    subgraph "Normalization"
+    E1 --> SOFTMAX["Softmax"]
+    E2 --> SOFTMAX
+    E3 --> SOFTMAX
+    E4 --> SOFTMAX
+    
+    SOFTMAX --> A1["α_{i1}"]
+    SOFTMAX --> A2["α_{i2}"]
+    SOFTMAX --> A3["α_{i3}"]
+    SOFTMAX --> A4["α_{i4}"]
+    end
+    end
+    
+    style NN1 fill:#FFB6C1
+    style NN2 fill:#FFB6C1
+    style NN3 fill:#FFB6C1
+    style NN4 fill:#FFB6C1
+    style SOFTMAX fill:#98FB98
+```
 
 **Neural Network Scoring Process:**
-This visualization shows how the alignment model (neural network) computes attention scores. The previous decoder state and each encoder state are fed through a feed-forward network to produce compatibility scores, which are then normalized via softmax to create attention weights.
+This visualization shows how the alignment model (neural network) computes attention scores. The previous decoder state (s_{i-1}) is concatenated with each encoder state (h_j), then passed through identical neural networks f(s_{i-1}, h_j) to produce raw scores (e_{ij}). These scores are normalized via softmax to create the final attention weights (α_{ij}) that sum to 1.
 
 ```mermaid
 graph TD
