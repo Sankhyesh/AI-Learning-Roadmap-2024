@@ -886,13 +886,13 @@ flowchart LR
 
 **🎬 Embedded Animation - Self-Attention Process:**
 
-<iframe src="https://prvnsmpth.github.io/animated-transformer/" width="800" height="600" frameborder="0"></iframe>
+<iframe src="https://prvnsmpth.github.io/animated-transformer/" width="1250" height="600" frameborder="0"></iframe>
 
 *Interactive animation showing the complete self-attention mechanism step by step*
 
 **🎥 Query-Key-Value Visualization:**
 
-<iframe src="https://poloclub.github.io/transformer-explainer/" width="800" height="700" frameborder="0"></iframe>
+<iframe src="https://poloclub.github.io/transformer-explainer/" width="1250" height="700" frameborder="0"></iframe>
 
 *Interactive visualization showing Q, K, V matrix transformations in real-time*
 
