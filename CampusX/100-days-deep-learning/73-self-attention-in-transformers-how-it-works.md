@@ -997,13 +997,8 @@ my_dict = {
 - **[The Animated Transformer](https://prvnsmpth.github.io/animated-transformer/)** - See animated Query-Key-Value computations
 - **[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)** - Visual step-by-step QKV matrix creation
 - **[BertViz Interactive Demo](https://colab.research.google.com/drive/1hXIQ77A4TYS4y3UthWF-Ci7V7vVUoxmQ?usp=sharing)** - Live attention visualization in Colab
-
-**🎬 Embedded BertViz Demo:**
-
-<iframe src="https://tensorflow.github.io/tensor2tensor/visualization.html" width="800" height="650" frameborder="0"></iframe>
-
-*Live attention pattern visualization for different transformer models*
-
+ 
+ 
 ### The Fundamental Problem
 
 "Every word embedding is playing three roles with the SAME vector:"
