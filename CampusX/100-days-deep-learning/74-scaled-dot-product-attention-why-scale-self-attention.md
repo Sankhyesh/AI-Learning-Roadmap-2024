@@ -643,7 +643,7 @@ graph TD
 ### Step 1: Single Row Analysis - Concrete Example
 
 The instructor focuses on analyzing just the first row to understand the pattern:
-
+![alt text](images/74/image2.png)
 **Video Quote**: "Thodi der ke liye hum pure matrix par focus na karke sirf pehle row par focus karenge"
 
 ```mermaid
