@@ -403,7 +403,7 @@ graph TD
 ```
 
 ### Detailed Implementation Architecture
-
+![alt text](images/77/image-3.png)
 **Step 1: Enhanced Input Processing**
 
 ```mermaid
@@ -808,6 +808,11 @@ The elegant simplicity of parallel self-attention heads has revolutionized how w
 - **Model View Tutorial**: [Multi-Layer Visualization](https://colab.research.google.com/github/jessevig/bertviz/blob/master/model_view_tutorial.ipynb)
 - **GitHub Repository**: [BertViz Source Code](https://github.com/jessevig/bertviz)
 
+**🚀 Advanced Multi-Head Attention Analysis Tool**
+- **Interactive Colab Notebook**: [Multi-Head Attention Deep Dive](https://colab.research.google.com/drive/1hXIQ77A4TYS4y3UthWF-Ci7V7vVUoxmQ#scrollTo=YLAhBxDSScmV)
+- **Features**: Step-by-step attention mechanism exploration with live code execution
+- **Perfect for**: Understanding the mathematical foundations covered in this video
+
 **🎞️ Create Your Own Attention Animations**
 - **Attention-to-GIF Generator**: [GitHub Tool](https://github.com/valayDave/attention_to_gif) - Create GIFs from attention weights
 - **Custom Animation Tutorial**: Generate attention transition videos across transformer layers
@@ -854,6 +859,12 @@ head_view(outputs.attentions, tokenizer.convert_ids_to_tokens(inputs['input_ids'
 - Notice how early layers focus on syntax, later layers on semantics
 - Track the evolution from local to global attention patterns
 
+**🧪 Experiment 4: Mathematical Deep Dive**
+- **Interactive Colab**: [Multi-Head Attention Analysis](https://colab.research.google.com/drive/1hXIQ77A4TYS4y3UthWF-Ci7V7vVUoxmQ#scrollTo=YLAhBxDSScmV)
+- Step through the mathematical operations covered in the video
+- Experiment with different embedding dimensions and head counts
+- Visualize the Q, K, V matrix transformations interactively
+
 ## 📚 References and Further Learning
 
 ### Academic Papers
@@ -875,5 +886,33 @@ head_view(outputs.attentions, tokenizer.convert_ids_to_tokens(inputs['input_ids'
 - **The Illustrated Transformer**: [Jay Alammar's Visual Guide](https://jalammar.github.io/illustrated-transformer/)
 - **Transformer Architecture Deep Dive**: [Lilian Weng's Blog](https://lilianweng.github.io/posts/2020-04-07-the-transformer-family/)
 - **Attention Mechanisms Survey**: [Comprehensive Review](https://arxiv.org/abs/2106.05962)
+
+---
+
+## 🎮 Interactive 3D LLM Visualization
+
+**Experience multi-head attention in action with this interactive 3D visualization!**
+
+<iframe src="https://bbycroft.net/llm" width="100%" height="800px" frameborder="0" style="border: 2px solid #4da6ff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <p>Your browser does not support iframes. Please visit <a href="https://bbycroft.net/llm" target="_blank">https://bbycroft.net/llm</a> directly to explore the 3D LLM visualization.</p>
+</iframe>
+
+**🎯 How to Use This Visualization:**
+1. **🖱️ Navigate**: Use mouse to rotate and zoom the 3D model
+2. **🎮 Interact**: Click on different components to see detailed explanations
+3. **🔍 Explore**: Follow the data flow from input tokens through attention layers
+4. **📊 Observe**: Watch how multi-head attention processes information in parallel
+5. **🎬 Animate**: Use controls to see step-by-step token processing
+
+**🌟 Key Features to Explore:**
+- **Multi-Head Attention Layers**: See how 8 attention heads work in parallel
+- **Token Flow**: Follow how input tokens transform through the network
+- **Attention Patterns**: Visualize attention weights in 3D space
+- **Layer-by-Layer Processing**: Understand the hierarchical nature of transformers
+- **Mathematical Operations**: See matrix multiplications and transformations in action
+
+**💡 Perfect for understanding the concepts covered in this video lesson!**
+
+---
 
 [End of Notes]
