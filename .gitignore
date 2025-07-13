@@ -5,4 +5,5 @@
 /.venv 
 /CampusX/Generative AI using LangChain/CODE/chat_models/huggingface_cache
 /.env
-.claude/settings.local.json
+.claude/settings.local.json 
+CLAUDE.md
