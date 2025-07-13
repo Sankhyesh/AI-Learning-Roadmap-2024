@@ -939,12 +939,7 @@ flowchart TD
 
 "This is exactly like Python dictionary operations - Query asks, Keys respond, Values provide content!"
 
-**🎬 Role Visualization Animation:**
-
-<iframe src="https://huggingface.co/spaces/nielsr/attention-viz" width="800" height="600" frameborder="0"></iframe>
-
-*Interactive demo showing Query, Key, Value roles in attention computation*
-
+ 
 ```mermaid
 flowchart TD
     subgraph "Money Word<br/>Embedding Usage"
@@ -1246,12 +1241,7 @@ flowchart LR
 ```
 
 "Just like you optimize different versions of your information for different purposes, we need to optimize our word embeddings for different roles in attention!"
-
-**🎬 Marriage Analogy Animation:**
-
-<iframe src="https://www.youtube.com/embed/kJHaBb7Y_6Y" width="800" height="450" frameborder="0" allowfullscreen></iframe>
-
-*Visual explanation of Query-Key-Value concept using real-world analogies*
+ 
 
 ### Creating Specialized Q, K, V Vectors
 
@@ -1421,12 +1411,9 @@ flowchart LR
     style D fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
 ```
 
-**🎯 Database Query Animation:**
+![alt text](images/73/image2.png)
 
-<iframe src="https://sqlzoo.net/wiki/SELECT_basics" width="800" height="550" frameborder="0"></iframe>
-
-*Interactive SQL tutorial showing how Query-Key-Value operations work in databases*
-
+![alt text](images/73/image3.png)
 ### How the Learning Happens: From Random to Expert
 
 "Here's the magic - these weight matrices start random but learn to become experts through training!"
