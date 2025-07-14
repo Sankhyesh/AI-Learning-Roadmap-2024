@@ -490,31 +490,203 @@ graph LR
 
 ```mermaid
 graph TD
-    A[z₁ᴺᵒʳᵐ, z₂ᴺᵒʳᵐ, z₃ᴺᵒʳᵐ] --> B[Feed-Forward Network]
-    B --> C[y₁, y₂, y₃]
+    subgraph "Input Vectors"
+        A[z1_norm: How - 512 dims]
+        B[z2_norm: are - 512 dims]
+        C[z3_norm: you - 512 dims]
+    end
     
-    A --> D[Add]
+    subgraph "Feed-Forward Processing"
+        D[Matrix Formation<br/>3×512]
+        E[First Transform<br/>3×512 → 3×2048]
+        F[ReLU Activation<br/>Non-linearity]
+        G[Second Transform<br/>3×2048 → 3×512]
+        H[Linear Activation<br/>No function]
+    end
+    
+    subgraph "Output Vectors"
+        I[y1: How - 512 dims]
+        J[y2: are - 512 dims]
+        K[y3: you - 512 dims]
+    end
+    
+    subgraph "Residual Connection"
+        L[Add Original Input]
+        M[Layer Normalization]
+        N[y1_norm, y2_norm, y3_norm]
+    end
+    
+    A --> D
+    B --> D
     C --> D
-    D --> E[Layer Norm]
-    E --> F[y₁ⁿᵒʳᵐ, y₂ⁿᵒʳᵐ, y₃ⁿᵒʳᵐ]
+    D --> E --> F --> G --> H
+    H --> I
+    H --> J
+    H --> K
+    
+    A -.-> L
+    B -.-> L
+    C -.-> L
+    I --> L
+    J --> L
+    K --> L
+    L --> M --> N
+    
+    style A fill:#e3f2fd
+    style B fill:#e3f2fd
+    style C fill:#e3f2fd
+    style F fill:#ff9800
+    style N fill:#c8e6c9
 ```
 
 **The instructor explains the matrix processing:**
 
 1. **Matrix Formation**: The three vectors are stacked to form a 3×512 matrix (3 words, each 512 dimensions)
+
+```mermaid
+graph TD
+    subgraph "Individual Vectors"
+        A[z1_norm: How<br/>512 dimensions]
+        B[z2_norm: are<br/>512 dimensions]
+        C[z3_norm: you<br/>512 dimensions]
+    end
+    
+    subgraph "Matrix Formation"
+        D[Stacking Operation]
+        E[3×512 Matrix<br/>Row 1: z1_norm<br/>Row 2: z2_norm<br/>Row 3: z3_norm]
+    end
+    
+    A --> D
+    B --> D
+    C --> D
+    D --> E
+    
+    style A fill:#e3f2fd
+    style B fill:#e3f2fd
+    style C fill:#e3f2fd
+    style E fill:#c8e6c9
+```
 2. **First Transformation**: 
    - Matrix multiplication: (3×512) × (512×2048) = (3×2048)
    - Add bias b₁ and apply ReLU activation
    - Result: 3×2048 matrix (dimension increased from 512 to 2048)
+
+```mermaid
+sequenceDiagram
+    participant Input as Input Matrix (3×512)
+    participant W1 as Weight Matrix W₁ (512×2048)
+    participant Bias1 as Bias b₁ (2048)
+    participant ReLU as ReLU Activation
+    participant Output as Output Matrix (3×2048)
+    
+    Input->>W1: Matrix Multiplication
+    Note over Input,W1: (3×512) × (512×2048) = (3×2048)
+    W1->>Bias1: Add bias to each element
+    Note over W1,Bias1: Element-wise addition<br/>Each row gets same bias
+    Bias1->>ReLU: Apply ReLU activation
+    Note over Bias1,ReLU: ReLU(x) = max(0, x)<br/>Introduces non-linearity
+    ReLU->>Output: Activated output
+    Note over ReLU,Output: 3×2048 matrix<br/>Dimension expanded 4x
+```
 3. **Second Transformation**: 
    - Matrix multiplication: (3×2048) × (2048×512) = (3×512)  
    - Add bias b₂ with linear activation
    - Result: 3×512 matrix (dimension back to 512)
 
+```mermaid
+flowchart TD
+    subgraph "Second Transformation"
+        A[Input Matrix<br/>3×2048<br/>Expanded features]
+        B[Weight Matrix W₂<br/>2048×512<br/>Compression weights]
+        C[Matrix Multiplication<br/>3×2048 × 2048×512]
+        D[Result Matrix<br/>3×512<br/>Compressed features]
+        E[Add Bias b₂<br/>512 bias values]
+        F[Linear Activation<br/>No activation function]
+        G[Final Output<br/>3×512 matrix<br/>Same shape as input]
+    end
+    
+    A --> C
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    
+    style A fill:#e3f2fd
+    style B fill:#fff9c4
+    style G fill:#c8e6c9
+    style F fill:#ffeb3b
+```
+
 **Key Insights from the Instructor:**
 - **Why increase then decrease dimensions?** The instructor explains that we first increase the dimension (512 → 2048) and then decrease it back (2048 → 512)
 - **What's the benefit?** The ReLU activation in the first layer provides non-linearity, which helps the model capture complex patterns
 - **Final output**: We get back three 512-dimensional vectors, same shape as input
+
+```mermaid
+graph LR
+    subgraph "Complete Matrix Processing Pipeline"
+        A((Input<br/>3×512)) --> B((Stack<br/>Formation))
+        B --> C((First Transform<br/>3×512 → 3×2048))
+        C --> D((ReLU<br/>Non-linearity))
+        D --> E((Second Transform<br/>3×2048 → 3×512))
+        E --> F((Linear<br/>Activation))
+        F --> G((Output<br/>3×512))
+    end
+    
+    subgraph "Parameter Details"
+        H((W₁: 512×2048<br/>b₁: 2048))
+        I((W₂: 2048×512<br/>b₂: 512))
+    end
+    
+    C -.-> H
+    E -.-> I
+    
+    style A fill:#e3f2fd
+    style D fill:#ff9800
+    style F fill:#ffeb3b
+    style G fill:#c8e6c9
+    style H fill:#fff9c4
+    style I fill:#fff9c4
+```
+
+**Mathematical Visualization of the Process:**
+
+```mermaid
+classDiagram
+    class MatrixOperations {
+        +input_matrix: 3×512
+        +weight_matrix_1: 512×2048
+        +bias_1: 2048
+        +weight_matrix_2: 2048×512
+        +bias_2: 512
+        +output_matrix: 3×512
+        
+        +first_transform() 3×2048
+        +apply_relu() 3×2048
+        +second_transform() 3×512
+        +calculate_parameters() int
+    }
+    
+    class DimensionFlow {
+        +step_1: "3×512 → Stack vectors"
+        +step_2: "3×512 × 512×2048 = 3×2048"
+        +step_3: "3×2048 + bias → ReLU"
+        +step_4: "3×2048 × 2048×512 = 3×512"
+        +step_5: "3×512 + bias → Linear"
+        +total_params: "2,098,176"
+    }
+    
+    class NonLinearityRole {
+        +linear_attention: "Q×K^T, Softmax, ×V"
+        +problem: "Cannot capture complex patterns"
+        +solution: "ReLU introduces non-linearity"
+        +benefit: "Complex language patterns"
+    }
+    
+    MatrixOperations --> DimensionFlow
+    MatrixOperations --> NonLinearityRole
+```
 
 **Additional Explanation from the Video:**
 
@@ -638,7 +810,228 @@ For each vector (like y₁), the layer normalization:
 - Are normalized for stable training
 - Will serve as input to the **next encoder block**
 
-**Important Architecture Note**: The instructor emphasizes that each encoder block has its own parameters. The weights and biases in encoder block 1 are different from those in encoder block 2, and so on. Though the architecture is identical (copy-paste), the learned parameter values are different for each block.
+**Important Architecture Note**: Each encoder block has its own parameters. The weights and biases in encoder block 1 are different from those in encoder block 2, and so on. Though the architecture is identical (copy-paste), the learned parameter values are different for each block.
+
+### The Journey Through Multiple Encoder Blocks
+
+An interesting and crucial aspect to understand is how the output from one encoder block becomes the input to the next encoder block. The normalization process creates y1_norm, y2_norm, y3_norm vectors, and these become the input for the next encoder block.
+
+```mermaid
+graph TD
+    subgraph "Encoder Block 1"
+        A[x1, x2, x3<br/>Initial input] --> B[Multi-Head Attention] 
+        B --> C[Add & Norm]
+        C --> D[Feed-Forward]
+        D --> E[Add & Norm]
+        E --> F[y1_norm, y2_norm, y3_norm<br/>Block 1 output]
+    end
+    
+    subgraph "Encoder Block 2"
+        G[y1_norm, y2_norm, y3_norm<br/>Block 2 input] --> H[Multi-Head Attention]
+        H --> I[Add & Norm]
+        I --> J[Feed-Forward]
+        J --> K[Add & Norm]
+        K --> L[z1_norm, z2_norm, z3_norm<br/>Block 2 output]
+    end
+    
+    subgraph "Encoder Block 3"
+        M[z1_norm, z2_norm, z3_norm<br/>Block 3 input] --> N[Multi-Head Attention]
+        N --> O[Add & Norm]
+        O --> P[Feed-Forward]
+        P --> Q[Add & Norm]
+        Q --> R[Next Block Input]
+    end
+    
+    F --> G
+    L --> M
+    
+    style F fill:#c8e6c9
+    style G fill:#e3f2fd
+    style L fill:#c8e6c9
+    style M fill:#e3f2fd
+```
+
+**Key Points About the Journey:**
+
+1. **Same Operations, Different Parameters**: Each encoder block performs identical operations (multi-head attention, add & norm, feed-forward, add & norm) but with different learned parameters.
+
+2. **Seamless Flow**: The output from one block seamlessly becomes the input to the next block, creating a continuous processing pipeline.
+
+3. **Progressive Understanding**: Each block builds upon the understanding of previous blocks, creating increasingly sophisticated representations.
+
+### Parameter Independence Across Encoder Blocks
+
+A crucial concept to understand is that while the architecture is identical across all encoder blocks, the parameters (weights and biases) are completely different for each block.
+
+```mermaid
+classDiagram
+    class EncoderBlock1 {
+        +multi_head_attention: MHA_Block1
+        +feed_forward: FF_Block1
+        +layer_norm1: LN1_Block1
+        +layer_norm2: LN2_Block1
+        +parameters: θ₁
+        
+        +process(x1, x2, x3): y1_norm, y2_norm, y3_norm
+    }
+    
+    class EncoderBlock2 {
+        +multi_head_attention: MHA_Block2
+        +feed_forward: FF_Block2
+        +layer_norm1: LN1_Block2
+        +layer_norm2: LN2_Block2
+        +parameters: θ₂
+        
+        +process(y1_norm, y2_norm, y3_norm): z1_norm, z2_norm, z3_norm
+    }
+    
+    class EncoderBlock6 {
+        +multi_head_attention: MHA_Block6
+        +feed_forward: FF_Block6
+        +layer_norm1: LN1_Block6
+        +layer_norm2: LN2_Block6
+        +parameters: θ₆
+        
+        +process(input): final_output
+    }
+    
+    EncoderBlock1 --> EncoderBlock2 : output becomes input
+    EncoderBlock2 --> EncoderBlock6 : continues through all blocks
+```
+
+**Important Distinctions:**
+
+- **Architecture**: Copy-paste identical across all blocks
+- **Parameters**: Completely different and learned independently
+- **Purpose**: Each block learns different aspects of language understanding
+- **Training**: Backpropagation updates each block's parameters differently
+
+### Complete Processing Summary
+
+Let's trace the complete journey from input sentence to final encoder output:
+
+```mermaid
+sequenceDiagram
+    participant Input as "How are you"
+    participant Tokenizer as Tokenization
+    participant Embedding as Word Embedding
+    participant PosEnc as Positional Encoding
+    participant Block1 as Encoder Block 1
+    participant Block2 as Encoder Block 2
+    participant Block6 as Encoder Block 6
+    participant Decoder as Decoder
+    
+    Input->>Tokenizer: "How are you"
+    Tokenizer->>Embedding: ["How", "are", "you"]
+    Embedding->>PosEnc: [x1, x2, x3] (512 dims each)
+    PosEnc->>Block1: [x1+pos1, x2+pos2, x3+pos3]
+    
+    Note over Block1: Multi-Head Attention<br/>Add & Norm<br/>Feed-Forward<br/>Add & Norm
+    Block1->>Block2: [y1_norm, y2_norm, y3_norm]
+    
+    Note over Block2: Same operations<br/>Different parameters
+    Block2->>Block6: [z1_norm, z2_norm, z3_norm]
+    
+    Note over Block6: Final processing<br/>Encoder Block 6
+    Block6->>Decoder: [final1, final2, final3]
+    
+    Note over Input,Decoder: Dimension consistency: 3×512 throughout entire process
+```
+
+**Critical Insight - Dimension Consistency**: Throughout this entire journey, the dimensions remain constant at 3×512. Whether you check the output after the input processing, after encoder block 1, block 2, or the final encoder block 6, you will always find 3×512 dimensions. This consistency is fundamental to the transformer architecture.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Input_Processing: "How are you"
+    
+    state Input_Processing {
+        [*] --> Tokenization
+        Tokenization --> Embedding
+        Embedding --> Positional_Encoding
+        Positional_Encoding --> [*]
+    }
+    
+    Input_Processing --> Encoder_Block_1: 3×512 dimensions
+    
+    state Encoder_Block_1 {
+        [*] --> Multi_Head_Attention_1
+        Multi_Head_Attention_1 --> Add_Norm_1
+        Add_Norm_1 --> Feed_Forward_1
+        Feed_Forward_1 --> Add_Norm_2
+        Add_Norm_2 --> [*]
+    }
+    
+    Encoder_Block_1 --> Encoder_Block_2: 3×512 dimensions
+    
+    state Encoder_Block_2 {
+        [*] --> Multi_Head_Attention_2
+        Multi_Head_Attention_2 --> Add_Norm_3
+        Add_Norm_3 --> Feed_Forward_2
+        Feed_Forward_2 --> Add_Norm_4
+        Add_Norm_4 --> [*]
+    }
+    
+    Encoder_Block_2 --> Encoder_Block_6: 3×512 dimensions
+    
+    state Encoder_Block_6 {
+        [*] --> Multi_Head_Attention_6
+        Multi_Head_Attention_6 --> Add_Norm_11
+        Add_Norm_11 --> Feed_Forward_6
+        Feed_Forward_6 --> Add_Norm_12
+        Add_Norm_12 --> [*]
+    }
+    
+    Encoder_Block_6 --> Decoder: 3×512 dimensions
+    
+    note right of Input_Processing
+        Dimensions: 3×512
+        (3 words, 512 dims each)
+    end note
+    
+    note right of Encoder_Block_1
+        Dimensions: 3×512
+        (Maintained throughout)
+    end note
+    
+    note right of Encoder_Block_2
+        Dimensions: 3×512
+        (Never changes)
+    end note
+    
+    note right of Encoder_Block_6
+        Dimensions: 3×512
+        (Consistent to the end)
+    end note
+```
+
+### Feed-Forward Network Architecture Reminder
+
+Since the feed-forward network architecture is crucial and sometimes not clearly explained, let's emphasize the exact structure:
+
+```mermaid
+graph LR
+    subgraph "Feed-Forward Network Architecture"
+        A((Input<br/>512 neurons)) --> B((Hidden Layer<br/>2048 neurons<br/>ReLU activation))
+        B --> C((Output Layer<br/>512 neurons<br/>Linear activation))
+    end
+    
+    subgraph "Parameters"
+        D((W₁: 512×2048<br/>b₁: 2048))
+        E((W₂: 2048×512<br/>b₂: 512))
+    end
+    
+    A -.-> D
+    B -.-> E
+    
+    style B fill:#ff9800
+    style C fill:#c8e6c9
+```
+
+**Architecture Summary:**
+- **Two layers**: First layer (512 → 2048 neurons) with ReLU activation
+- **Second layer**: (2048 → 512 neurons) with linear activation
+- **Total parameters**: 2,098,176 parameters per feed-forward network
+- **Purpose**: Introduces non-linearity and complex pattern recognition
 
 ### Why This Design Works
 
