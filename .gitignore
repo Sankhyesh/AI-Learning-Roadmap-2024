@@ -7,3 +7,4 @@
 /.env
 .claude/settings.local.json  
 /CLAUDE.md
+*.cph
