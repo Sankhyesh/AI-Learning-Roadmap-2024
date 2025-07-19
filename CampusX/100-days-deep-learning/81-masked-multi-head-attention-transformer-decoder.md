@@ -36,48 +36,6 @@ Before diving deep, let me present a sentence that encapsulates the entire essen
 
 This seemingly paradoxical statement holds the key to understanding why masked self-attention exists and how it enables efficient training while maintaining correct inference behavior.
 
-## 📋 Quick Access to Interactive Resources
-
-| 🎯 Resource Type | 🔗 Direct Links | 📝 Description |
-|------------------|------------------|----------------|
-| **🎮 Interactive Demos** | [Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/) | Step-by-step walkthrough |
-| **💻 Code Notebooks** | [Google Colab Demo](https://colab.research.google.com/github/huggingface/notebooks/blob/main/course/en/chapter3/section4_tf.ipynb) | Hands-on implementation |
-| **🔥 Attention Viz** | [BertViz Tool](https://github.com/jessevig/bertviz) | Live attention heatmaps |
-| **🧠 3D Visualization** | [LLM 3D Explorer](https://bbycroft.net/llm) | 3D transformer visualization |
-| **🎬 Animations** | [Attention Patterns](https://poloclub.github.io/attention-viz/) | Interactive attention exploration |
-| **🚀 Playground** | [HF Transformer Hub](https://transformer.huggingface.co/) | Live transformer experiments |
-
-## Interactive Visualizations and Animations
-
-Explore these interactive resources to visualize masked attention in action:
-
-### 🎮 Interactive Attention Visualizers
-- **The Illustrated Transformer**: [http://jalammar.github.io/illustrated-transformer/](http://jalammar.github.io/illustrated-transformer/) - Interactive step-by-step walkthrough
-- **Tensor2Tensor Visualization**: [https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb) - Live attention head visualization
-- **BertViz**: [https://github.com/jessevig/bertviz](https://github.com/jessevig/bertviz) - Interactive BERT/GPT attention visualization tool
-
-### 📊 Animated Attention Demos
-- **Attention Mechanism Animation**: [https://d2l.ai/chapter_attention-mechanisms/attention-mechanisms.html](https://d2l.ai/chapter_attention-mechanisms/attention-mechanisms.html) - Step-by-step attention calculation
-- **Masking Visualization**: [https://nlp.seas.harvard.edu/2018/04/03/attention.html#attention](https://nlp.seas.harvard.edu/2018/04/03/attention.html#attention) - Harvard's annotated transformer with live masking demo
-- **Attention Patterns**: [https://poloclub.github.io/attention-viz/](https://poloclub.github.io/attention-viz/) - Interactive attention pattern exploration
-- **Transformer Visualization**: [https://bbycroft.net/llm](https://bbycroft.net/llm) - 3D visualization of transformer operations
-
-### 💻 Interactive Code Demos
-
-**Try these live coding environments:**
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/huggingface/notebooks/blob/main/course/en/chapter3/section4_tf.ipynb)
-
-- **Masked Attention Demo**: [Interactive Implementation](https://colab.research.google.com/drive/1rjW0RBClIaKyj1NnP3TZJr1gSqvYk-dY) - Build masked attention from scratch
-- **Attention Visualization**: [BertViz Tutorial](https://github.com/jessevig/bertviz/blob/master/bertviz_tutorial.ipynb) - Step-by-step attention analysis
-
-### 🎮 Interactive Transformer Playground
-
-> **🔗 Live Transformer Demo**
-> 
-> **Visit:** [Hugging Face Transformer Playground](https://transformer.huggingface.co/)
-> 
-> Experiment with different attention patterns and see masking in real-time!
 
 ## Understanding Autoregressive Models
 
@@ -361,9 +319,127 @@ Because of teacher forcing:
 - We don't need to wait for previous predictions
 - We can process everything in parallel!
 
-## The Decoder Architecture: Looking Inside the Black Box
+## The Data Leakage Problem
+
+But wait! There's a critical issue we need to address before we can implement parallel training.
+
+### Understanding the Issue
+
+```mermaid
+graph TD
+    subgraph "Parallel Processing Problem"
+        A[Self-Attention Sees All Tokens]
+        
+        subgraph "Token: आप (Position 1)"
+            B1[Can see: आप ✓]
+            B2[Can see: कैसे ✗]
+            B3[Can see: हैं ✗]
+        end
+        
+        subgraph "Token: कैसे (Position 2)"
+            C1[Can see: आप ✓]
+            C2[Can see: कैसे ✓]
+            C3[Can see: हैं ✗]
+        end
+        
+        subgraph "Token: हैं (Position 3)"
+            D1[Can see: आप ✓]
+            D2[Can see: कैसे ✓]
+            D3[Can see: हैं ✓]
+        end
+    end
+    
+    A --> B1
+    A --> C1
+    A --> D1
+    
+    style B2 fill:#ffcdd2
+    style B3 fill:#ffcdd2
+    style C3 fill:#ffcdd2
+```
+
+When we process all tokens in parallel through self-attention:
+- Token "आप" can see future tokens "कैसे" and "हैं"
+- This is information it wouldn't have during inference
+- This creates an unfair advantage during training
+
+### Mathematical Representation of the Problem
+
+```mermaid
+graph LR
+    subgraph "Contextual Embeddings (Problematic)"
+        A[Context_आप = 0.8×Emb_आप + 0.1×Emb_कैसे + 0.1×Emb_हैं]
+        B[Context_कैसे = 0.15×Emb_आप + 0.75×Emb_कैसे + 0.1×Emb_हैं]
+        C[Context_हैं = 0.1×Emb_आप + 0.2×Emb_कैसे + 0.7×Emb_हैं]
+    end
+    
+    subgraph "Problem Areas"
+        P1[Future: 0.1×Emb_कैसे]
+        P2[Future: 0.1×Emb_हैं]
+        P3[Future: 0.1×Emb_हैं]
+    end
+    
+    A -.-> P1
+    A -.-> P2
+    B -.-> P3
+    
+    style P1 fill:#ffcdd2
+    style P2 fill:#ffcdd2
+    style P3 fill:#ffcdd2
+```
+
+The mathematical issue:
+- When computing context for "आप", we're using embeddings of "कैसे" and "हैं"
+- These tokens don't exist yet when generating "आप"
+- This is classic data leakage - using future information to predict the past
+
+### Why This is Catastrophic
+
+```mermaid
+graph TD
+    subgraph "Training vs Inference Mismatch"
+        A[Training: Has Future Information]
+        B[Inference: No Future Information]
+        C[Model Learns Wrong Patterns]
+        D[Poor Real-World Performance]
+        
+        A --> C
+        B --> C
+        C --> D
+    end
+    
+    subgraph "Analogy"
+        E[Like studying with answers visible]
+        F[Then taking test without answers]
+        G[Results in failure]
+        
+        E --> F
+        F --> G
+    end
+    
+    D -.-> G
+    
+    style C fill:#ffcdd2
+    style D fill:#f44336
+    style G fill:#f44336
+```
+
+This creates a fundamental mismatch:
+- Model trains with "cheating" (seeing future)
+- Model must inference without "cheating"
+- Performance degrades dramatically
+
+This is the core problem that masked attention solves!
+
+---
+
+## Opening the Decoder Black Box: Architecture and Self-Attention Mechanics
+
+Now that we understand the critical data leakage problem, let's examine the decoder architecture to understand how we can solve it.
 
 So far we've been treating the decoder as a black box, saying "something happens inside but we don't know what calculations are running." Now it's time to look inside and see what's actually happening in the decoder.
+
+### Complete Decoder Architecture
 
 ```mermaid
 graph TD
@@ -404,10 +480,6 @@ To simplify our discussion, let's remember what Multi-Head Attention actually is
 - If we used just one head, Multi-Head Attention = Self-Attention
 
 So let's simplify and say that the **first block in the decoder is a Self-Attention block**.
-
-## Opening the Decoder Black Box: Deep Dive into Self-Attention Mechanics
-
-So far we've been treating the decoder as a black box, saying "something happens inside but we don't know what calculations are running." Now it's time to look inside and see what's actually happening in the decoder.
 
 ### The Three Weight Matrices: WQ, WK, WV
 
@@ -619,7 +691,11 @@ graph TD
 
 **The Solution Insight**: If we can somehow make w12, w13, and w23 equal to zero, then automatically all these problematic contributions will become zero, and our problem will be solved.
 
+---
+
 ## The Masking Solution: Making Future Weights Zero
+
+This is where the genius of masked attention comes in. We've identified the exact problem and now we'll see the elegant solution.
 
 But the question arises: **How do we make these three weights zero?**
 
@@ -700,23 +776,23 @@ Now when we add these two matrices together:
 ```mermaid
 graph TD
     subgraph "Matrix Addition"
-        A[Scaled Attention Matrix] --> D[+]
+        A[Scaled Attention Matrix] --> D[Addition]
         B[Mask Matrix] --> D
         D --> E[Combined Matrix]
     end
     
     subgraph "Results"
-        E --> F[Position 1,2: Value + (-∞) = -∞]
-        E --> G[Position 1,3: Value + (-∞) = -∞] 
-        E --> H[Position 2,3: Value + (-∞) = -∞]
-        E --> I[Other Positions: Value + 0 = Value]
+        E --> F[Position 1,2: Value plus minus_inf equals minus_inf]
+        E --> G[Position 1,3: Value plus minus_inf equals minus_inf] 
+        E --> H[Position 2,3: Value plus minus_inf equals minus_inf]
+        E --> I[Other Positions: Value plus 0 equals Value]
     end
     
     subgraph "After Softmax"
-        F --> J[softmax of -∞ = 0]
-        G --> K[softmax of -∞ = 0]
-        H --> L[softmax of -∞ = 0]
-        I --> M[softmax of Value = Normal Weight]
+        F --> J[softmax of minus_inf equals 0]
+        G --> K[softmax of minus_inf equals 0]
+        H --> L[softmax of minus_inf equals 0]
+        I --> M[softmax of Value equals Normal Weight]
     end
     
     style F fill:#ffcdd2
@@ -726,6 +802,7 @@ graph TD
     style K fill:#4caf50
     style L fill:#4caf50
 ```
+![alt text](images/81/image.png)
 
 **The Magic**: When we add the mask matrix to our attention matrix:
 - Positions (1,2), (1,3), and (2,3) become -∞
@@ -807,9 +884,131 @@ This way, we're getting the **best of both worlds**:
 3. **Training efficiency** - we achieve non-autoregressive behavior during training
 4. **Inference correctness** - we maintain autoregressive logic
 
+### 🎬 Progressive Masking Visualization
+
+```mermaid
+stateDiagram-v2
+    [*] --> UnmaskedScores : Calculate Q·K^T
+    UnmaskedScores --> MaskCreation : Create triangular mask
+    MaskCreation --> MaskAddition : Add mask to scores
+    MaskAddition --> SoftmaxApplication : Apply softmax
+    SoftmaxApplication --> ZeroedWeights : Future weights = 0
+    ZeroedWeights --> ContextualEmbeddings : Multiply with values
+    ContextualEmbeddings --> [*]
+    
+    note right of MaskCreation
+        Lower triangular matrix
+        0 for valid, -∞ for future
+    end note
+    
+    note right of ZeroedWeights
+        softmax(-∞) = 0
+        Causal attention achieved
+    end note
+```
+
+### Visual Representation of Masked Attention
+
+```mermaid
+graph TD
+    subgraph "Token 1: आप"
+        A1[Sees: आप ✓]
+        A2[Sees: कैसे ✗]
+        A3[Sees: हैं ✗]
+        A4[Context from आप only]
+    end
+    
+    subgraph "Token 2: कैसे"
+        B1[Sees: आप ✓]
+        B2[Sees: कैसे ✓]
+        B3[Sees: हैं ✗]
+        B4[Context from आप and कैसे]
+    end
+    
+    subgraph "Token 3: हैं"
+        C1[Sees: आप ✓]
+        C2[Sees: कैसे ✓]
+        C3[Sees: हैं ✓]
+        C4[Context from all three tokens]
+    end
+    
+    A1 --> A4
+    B1 --> B4
+    B2 --> B4
+    C1 --> C4
+    C2 --> C4
+    C3 --> C4
+    
+    style A2 fill:#ffcdd2
+    style A3 fill:#ffcdd2
+    style B3 fill:#ffcdd2
+    style A4 fill:#c8e6c9
+    style B4 fill:#c8e6c9
+    style C4 fill:#c8e6c9
+```
+
+### 🎯 Interactive Masking Demo
+
+> **🎯 Interactive Masking Demo**
+> 
+> **📱 Try:** [Transformer Attention Visualizer](https://poloclub.github.io/transformer-attention/)
+> 
+> Watch how masking progressively zeros out future positions!
+
+*Step-by-step visualization of the masking process*
+
+---
+
+## 📋 Interactive Resources for Hands-On Learning
+
+Perfect! Now that you have a solid understanding of the theoretical concepts, let's explore some hands-on resources to deepen your learning.
+
+Now that you understand the core concepts of masked multi-head attention, these interactive resources will help you visualize and experiment with the concepts:
+
+| 🎯 Resource Type | 🔗 Direct Links | 📝 Description |
+|------------------|------------------|----------------|
+| **🎮 Interactive Demos** | [Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/) | Step-by-step walkthrough |
+| **💻 Code Notebooks** | [Google Colab Demo](https://colab.research.google.com/github/huggingface/notebooks/blob/main/course/en/chapter3/section4_tf.ipynb) | Hands-on implementation |
+| **🔥 Attention Viz** | [BertViz Tool](https://github.com/jessevig/bertviz) | Live attention heatmaps |
+| **🧠 3D Visualization** | [LLM 3D Explorer](https://bbycroft.net/llm) | 3D transformer visualization |
+| **🎬 Animations** | [Attention Patterns](https://poloclub.github.io/attention-viz/) | Interactive attention exploration |
+| **🚀 Playground** | [HF Transformer Hub](https://transformer.huggingface.co/) | Live transformer experiments |
+
+### 🎮 Interactive Attention Visualizers
+- **The Illustrated Transformer**: [http://jalammar.github.io/illustrated-transformer/](http://jalammar.github.io/illustrated-transformer/) - Interactive step-by-step walkthrough
+- **Tensor2Tensor Visualization**: [https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb) - Live attention head visualization
+- **BertViz**: [https://github.com/jessevig/bertviz](https://github.com/jessevig/bertviz) - Interactive BERT/GPT attention visualization tool
+
+### 📊 Animated Attention Demos
+- **Attention Mechanism Animation**: [https://d2l.ai/chapter_attention-mechanisms/attention-mechanisms.html](https://d2l.ai/chapter_attention-mechanisms/attention-mechanisms.html) - Step-by-step attention calculation
+- **Masking Visualization**: [https://nlp.seas.harvard.edu/2018/04/03/attention.html#attention](https://nlp.seas.harvard.edu/2018/04/03/attention.html#attention) - Harvard's annotated transformer with live masking demo
+- **Attention Patterns**: [https://poloclub.github.io/attention-viz/](https://poloclub.github.io/attention-viz/) - Interactive attention pattern exploration
+- **Transformer Visualization**: [https://bbycroft.net/llm](https://bbycroft.net/llm) - 3D visualization of transformer operations
+
+### 💻 Interactive Code Demos
+
+**Try these live coding environments:**
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/huggingface/notebooks/blob/main/course/en/chapter3/section4_tf.ipynb)
+
+- **Masked Attention Demo**: [Interactive Implementation](https://colab.research.google.com/drive/1rjW0RBClIaKyj1NnP3TZJr1gSqvYk-dY) - Build masked attention from scratch
+- **Attention Visualization**: [BertViz Tutorial](https://github.com/jessevig/bertviz/blob/master/bertviz_tutorial.ipynb) - Step-by-step attention analysis
+
+### 🎮 Interactive Transformer Playground
+
+> **🔗 Live Transformer Demo**
+> 
+> **Visit:** [Hugging Face Transformer Playground](https://transformer.huggingface.co/)
+> 
+> Experiment with different attention patterns and see masking in real-time!
+
 ### The Process: From Words to Self-Attention
 
-Let's trace through what happens with our target sentence "आप कैसे हैं":
+---
+
+## Putting It All Together: The Complete Flow
+
+Let's trace through what happens with our target sentence "आप कैसे हैं" to see how masked attention works in practice:
 
 ```mermaid
 sequenceDiagram
@@ -1029,511 +1228,13 @@ mindmap
 
 The answer lies in understanding **exactly how self-attention works** and **where we can intervene** to prevent the data leakage while maintaining parallel processing.
 
-## The Data Leakage Problem
 
-### Understanding the Issue
 
-```mermaid
-graph TD
-    subgraph "Parallel Processing Problem"
-        A[Self-Attention Sees All Tokens]
-        
-        subgraph "Token: आप (Position 1)"
-            B1[Can see: आप ✓]
-            B2[Can see: कैसे ✗]
-            B3[Can see: हैं ✗]
-        end
-        
-        subgraph "Token: कैसे (Position 2)"
-            C1[Can see: आप ✓]
-            C2[Can see: कैसे ✓]
-            C3[Can see: हैं ✗]
-        end
-        
-        subgraph "Token: हैं (Position 3)"
-            D1[Can see: आप ✓]
-            D2[Can see: कैसे ✓]
-            D3[Can see: हैं ✓]
-        end
-    end
-    
-    A --> B1
-    A --> C1
-    A --> D1
-    
-    style B2 fill:#ffcdd2
-    style B3 fill:#ffcdd2
-    style C3 fill:#ffcdd2
-```
-
-When we process all tokens in parallel through self-attention:
-- Token "आप" can see future tokens "कैसे" and "हैं"
-- This is information it wouldn't have during inference
-- This creates an unfair advantage during training
-
-### Mathematical Representation of the Problem
-
-```mermaid
-graph LR
-    subgraph "Contextual Embeddings (Problematic)"
-        A[Context_आप = 0.8×Emb_आप + 0.1×Emb_कैसे + 0.1×Emb_हैं]
-        B[Context_कैसे = 0.15×Emb_आप + 0.75×Emb_कैसे + 0.1×Emb_हैं]
-        C[Context_हैं = 0.1×Emb_आप + 0.2×Emb_कैसे + 0.7×Emb_हैं]
-    end
-    
-    subgraph "Problem Areas"
-        P1[Future: 0.1×Emb_कैसे]
-        P2[Future: 0.1×Emb_हैं]
-        P3[Future: 0.1×Emb_हैं]
-    end
-    
-    A -.-> P1
-    A -.-> P2
-    B -.-> P3
-    
-    style P1 fill:#ffcdd2
-    style P2 fill:#ffcdd2
-    style P3 fill:#ffcdd2
-```
-
-The mathematical issue:
-- When computing context for "आप", we're using embeddings of "कैसे" and "हैं"
-- These tokens don't exist yet when generating "आप"
-- This is classic data leakage - using future information to predict the past
-
-### 🎯 Animated Data Leakage Demonstration
-
-```mermaid
-flowchart TD
-    subgraph "Time Step 1: Processing आप"
-        A1[Input: आप]
-        A2{Self-Attention}
-        A3[Can see: कैसे ⚠️]
-        A4[Can see: हैं ⚠️]
-        A5[Context: Invalid!]
-        
-        A1 --> A2
-        A2 --> A3
-        A2 --> A4
-        A3 --> A5
-        A4 --> A5
-    end
-    
-    subgraph "What Should Happen"
-        B1[Input: आप]
-        B2{Masked Attention}
-        B3[Cannot see future]
-        B4[Context: Valid!]
-        
-        B1 --> B2
-        B2 --> B3
-        B3 --> B4
-    end
-    
-    style A3 fill:#ff5252
-    style A4 fill:#ff5252
-    style A5 fill:#ff5252
-    style B3 fill:#4caf50
-    style B4 fill:#4caf50
-```
-
-### 📊 Data Leakage Prevention Demo
-
-> **⚠️ Data Leakage Visualizer**
-> 
-> **🔍 Explore:** [BertViz Interactive Tool](https://github.com/jessevig/bertviz)
-> 
-> See how masking prevents future information leakage!
-
-*Interactive demonstration of causal masking effects*
-
-### Why This is Catastrophic
-
-```mermaid
-graph TD
-    subgraph "Training vs Inference Mismatch"
-        A[Training: Has Future Information]
-        B[Inference: No Future Information]
-        C[Model Learns Wrong Patterns]
-        D[Poor Real-World Performance]
-        
-        A --> C
-        B --> C
-        C --> D
-    end
-    
-    subgraph "Analogy"
-        E[Like studying with answers visible]
-        F[Then taking test without answers]
-        G[Results in failure]
-        
-        E --> F
-        F --> G
-    end
-    
-    D -.-> G
-    
-    style C fill:#ffcdd2
-    style D fill:#f44336
-    style G fill:#f44336
-```
-
-This creates a fundamental mismatch:
-- Model trains with "cheating" (seeing future)
-- Model must inference without "cheating"
-- Performance degrades dramatically
-
-## Self-Attention Deep Dive: Finding the Solution
-
-### Revisiting Self-Attention Mechanics
-
-```mermaid
-graph TD
-    subgraph "Step 1: Embeddings"
-        E1[आप_emb]
-        E2[कैसे_emb]
-        E3[हैं_emb]
-    end
-    
-    subgraph "Step 2: Linear Transformations"
-        W[Weight Matrices]
-        WQ[W_Q]
-        WK[W_K]
-        WV[W_V]
-        
-        W --> WQ
-        W --> WK
-        W --> WV
-    end
-    
-    subgraph "Step 3: Q, K, V Generation"
-        Q[Query Matrix]
-        K[Key Matrix]
-        V[Value Matrix]
-    end
-    
-    E1 --> WQ
-    E2 --> WQ
-    E3 --> WQ
-    WQ --> Q
-    
-    E1 --> WK
-    E2 --> WK
-    E3 --> WK
-    WK --> K
-    
-    E1 --> WV
-    E2 --> WV
-    E3 --> WV
-    WV --> V
-    
-    style Q fill:#e3f2fd
-    style K fill:#f3e5f5
-    style V fill:#e8f5e8
-```
-
-The self-attention process:
-1. Convert embeddings to Q, K, V vectors using learned weight matrices
-2. Each word gets its own query, key, and value vectors
-3. These are stacked into matrices for efficient computation
-
-### Attention Score Calculation
-
-```mermaid
-graph LR
-    subgraph "Attention Computation"
-        A[Q × K^T] --> B[Attention Scores]
-        B --> C[Scale by 1/√d_k]
-        C --> D[Scaled Scores]
-        D --> E[Softmax]
-        E --> F[Attention Weights]
-        F --> G[Multiply with V]
-        G --> H[Contextual Embeddings]
-    end
-    
-    subgraph "Matrix Dimensions"
-        I[Q: 3×d]
-        J[K: 3×d]
-        K[Scores: 3×3]
-        L[Output: 3×d]
-    end
-    
-    style B fill:#fff3e0
-    style F fill:#e8f5e8
-    style H fill:#c5e1a5
-```
-
-### The Bank Example: Understanding Contextual Embeddings
-
-```mermaid
-graph TD
-    subgraph "Example 1: River Bank"
-        A1[river] --> SA1[Self-Attention]
-        B1[bank] --> SA1
-        SA1 --> C1[river_context]
-        SA1 --> D1[bank_context: physical location]
-    end
-    
-    subgraph "Example 2: Money Bank"
-        A2[money] --> SA2[Self-Attention]
-        B2[bank] --> SA2
-        SA2 --> C2[money_context]
-        SA2 --> D2[bank_context: financial institution]
-    end
-    
-    subgraph "Key Insight"
-        E[Same word bank]
-        F[Different contexts]
-        G[Different embeddings]
-        
-        E --> F
-        F --> G
-    end
-    
-    D1 -.-> E
-    D2 -.-> E
-    
-    style D1 fill:#e8f5e8
-    style D2 fill:#fff3e0
-```
-
-Self-attention creates context-aware representations:
-- The word "bank" gets different embeddings based on surrounding words
-- This is the power of self-attention - contextual understanding
-- But in our decoder, this power becomes a problem when it sees the future
-
-### Identifying the Problem in Our Calculation
-
-```mermaid
-graph TD
-    subgraph "Attention Weight Matrix"
-        direction LR
-        A[w11 w12 w13]
-        B[w21 w22 w23]
-        C[w31 w32 w33]
-    end
-    
-    subgraph "Contextual Embedding Calculation"
-        D[Context_आप = w11×V_आप + w12×V_कैसे + w13×V_हैं]
-        E[Context_कैसे = w21×V_आप + w22×V_कैसे + w23×V_हैं]
-        F[Context_हैं = w31×V_आप + w32×V_कैसे + w33×V_हैं]
-    end
-    
-    subgraph "Problem Weights"
-        P1[w12: आप sees कैसे]
-        P2[w13: आप sees हैं]
-        P3[w23: कैसे sees हैं]
-    end
-    
-    A --> D
-    B --> E
-    C --> F
-    
-    D -.-> P1
-    D -.-> P2
-    E -.-> P3
-    
-    style P1 fill:#ffcdd2
-    style P2 fill:#ffcdd2
-    style P3 fill:#ffcdd2
-```
-
-The solution insight:
-- We need to zero out w12, w13, and w23
-- These represent future information flow
-- But how do we selectively zero these during training?
-
-## The Masking Solution
-
-### Creating the Mask Matrix
-
-```mermaid
-graph TD
-    subgraph "Step 1: Identify Future Positions"
-        A[3×3 Matrix] --> B[Lower Triangular Pattern]
-        B --> C["1s for valid, 0s for future"]
-    end
-    
-    subgraph "Step 2: Create Mask"
-        D[Valid: 0]
-        E[Future: -∞]
-        F[Mask Matrix with -inf values]
-    end
-    
-    C --> D
-    C --> E
-    D --> F
-    E --> F
-    
-    style E fill:#ffcdd2
-    style F fill:#e8f5e8
-```
-
-### Applying the Mask
-
-```mermaid
-sequenceDiagram
-    participant S as Scaled Scores
-    participant M as Mask Matrix
-    participant MS as Masked Scores
-    participant SM as Softmax
-    participant W as Final Weights
-    
-    S->>M: Original attention scores
-    M->>MS: Add mask values
-    Note over MS: Future positions become -∞
-    MS->>SM: Apply softmax
-    Note over SM: softmax(-∞) = 0
-    SM->>W: Future attention weights = 0
-```
-
-### 🎬 Animated Masking Process
-
-### 🎬 Masking Animation Demo
-
-> **🎯 Interactive Masking Demo**
-> 
-> **📱 Try:** [Transformer Attention Visualizer](https://poloclub.github.io/transformer-attention/)
-> 
-> Watch how masking progressively zeros out future positions!
-
-*Step-by-step visualization of the masking process*
-
-### Progressive Masking Visualization
-
-```mermaid
-stateDiagram-v2
-    [*] --> UnmaskedScores : Calculate Q·K^T
-    UnmaskedScores --> MaskCreation : Create triangular mask
-    MaskCreation --> MaskAddition : Add mask to scores
-    MaskAddition --> SoftmaxApplication : Apply softmax
-    SoftmaxApplication --> ZeroedWeights : Future weights = 0
-    ZeroedWeights --> ContextualEmbeddings : Multiply with values
-    ContextualEmbeddings --> [*]
-    
-    note right of MaskCreation
-        Lower triangular matrix
-        0 for valid, -∞ for future
-    end note
-    
-    note right of ZeroedWeights
-        softmax(-∞) = 0
-        Causal attention achieved
-    end note
-```
-
-### The Mathematical Magic
-
-```mermaid
-graph LR
-    subgraph "Before Masking"
-        A[Future weights exist]
-        B[Data leakage occurs]
-        C[Training ≠ Inference]
-    end
-    
-    subgraph "After Masking"
-        D[Future weights = 0]
-        E[No data leakage]
-        F[Training = Inference logic]
-    end
-    
-    subgraph "Result"
-        G[Parallel training ✓]
-        H[Causal consistency ✓]
-        I[Best of both worlds!]
-    end
-    
-    A --> D
-    B --> E
-    C --> F
-    
-    D --> G
-    E --> H
-    F --> I
-    
-    style A fill:#ffcdd2
-    style D fill:#c8e6c9
-    style I fill:#4caf50
-```
-
-The masking achieves:
-1. **Zeroing future contributions**: Through -∞ → softmax → 0
-2. **Maintaining causality**: Each token only sees its past
-3. **Enabling parallelism**: All computations happen simultaneously
-
-### Visual Representation of Masked Attention
-
-```mermaid
-graph TD
-    subgraph "Token 1: आप"
-        A1[Sees: आप ✓]
-        A2[Sees: कैसे ✗]
-        A3[Sees: हैं ✗]
-        A4[Context from आप only]
-    end
-    
-    subgraph "Token 2: कैसे"
-        B1[Sees: आप ✓]
-        B2[Sees: कैसे ✓]
-        B3[Sees: हैं ✗]
-        B4[Context from आप and कैसे]
-    end
-    
-    subgraph "Token 3: हैं"
-        C1[Sees: आप ✓]
-        C2[Sees: कैसे ✓]
-        C3[Sees: हैं ✓]
-        C4[Context from all three tokens]
-    end
-    
-    A1 --> A4
-    B1 --> B4
-    B2 --> B4
-    C1 --> C4
-    C2 --> C4
-    C3 --> C4
-    
-    style A2 fill:#ffcdd2
-    style A3 fill:#ffcdd2
-    style B3 fill:#ffcdd2
-    style A4 fill:#c8e6c9
-    style B4 fill:#c8e6c9
-    style C4 fill:#c8e6c9
-```
-
-### 🔥 Interactive Attention Heatmap
-
-### 🔥 Attention Heatmap Comparison
-
-> **🔥 Live Attention Heatmaps**
-> 
-> **🎮 Interactive:** [HF Attention Visualizer](https://huggingface.co/spaces/nielsr/attention-visualizer)
-> 
-> Compare masked vs unmasked attention patterns in real-time!
-
-*Real-time comparison of different attention mechanisms*
-
-### Attention Pattern Comparison
-
-```mermaid
-gitgraph
-    commit id: "Token 1"
-    commit id: "Token 2"
-    commit id: "Token 3"
-    
-    branch masked
-    checkout masked
-    commit id: "Mask Future"
-    commit id: "Causal Pattern"
-    
-    checkout main
-    branch unmasked
-    commit id: "See All"
-    commit id: "Data Leakage"
-```
+---
 
 ## Implementation Details
+
+Now let's see how to implement masked multi-head attention in code. These practical examples will help you understand the concepts at an implementation level.
 
 ### Creating the Mask in Code
 
@@ -2020,7 +1721,11 @@ xychart-beta
     line "Masked Parallel Training" [1, 2, 3, 4, 5]
 ```
 
+---
+
 ## Conclusion
+
+We've completed our comprehensive journey through masked multi-head attention - from understanding the fundamental problem to implementing the elegant solution.
 
 The masked multi-head attention mechanism represents one of the most elegant solutions in deep learning. It resolves a fundamental contradiction in sequence modeling: how to maintain causal consistency while achieving parallel training efficiency.
 
